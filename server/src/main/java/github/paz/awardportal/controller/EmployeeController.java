@@ -1,6 +1,6 @@
-package github.andermatt.springhelloworld.controller;
+package github.paz.awardportal.controller;
 
-import github.andermatt.springhelloworld.model.Employee;
+import github.paz.awardportal.model.Employee;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

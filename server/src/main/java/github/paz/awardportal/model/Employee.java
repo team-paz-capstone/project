@@ -1,4 +1,4 @@
-package github.andermatt.springhelloworld.model;
+package github.paz.awardportal.model;
 
 
 import lombok.AllArgsConstructor;

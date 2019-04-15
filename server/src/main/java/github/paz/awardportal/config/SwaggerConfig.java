@@ -1,4 +1,4 @@
-package github.andermatt.springhelloworld.config;
+package github.paz.awardportal.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
