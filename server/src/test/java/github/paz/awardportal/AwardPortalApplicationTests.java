@@ -1,4 +1,4 @@
-package github.andermatt.springhelloworld;
+package github.paz.awardportal;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringHelloWorldApplicationTests {
+public class AwardPortalApplicationTests {
 
 	@Test
 	public void contextLoads() {

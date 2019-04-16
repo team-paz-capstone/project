@@ -1,13 +1,13 @@
-package github.andermatt.springhelloworld;
+package github.paz.awardportal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringHelloWorldApplication {
+public class AwardPortalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringHelloWorldApplication.class, args);
+		SpringApplication.run(AwardPortalApplication.class, args);
 	}
 
 }
