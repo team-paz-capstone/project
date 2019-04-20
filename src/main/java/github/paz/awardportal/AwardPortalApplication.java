@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AwardPortalApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AwardPortalApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AwardPortalApplication.class, args);
+    }
 
 }

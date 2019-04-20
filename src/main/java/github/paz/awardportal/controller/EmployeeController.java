@@ -20,7 +20,7 @@ import java.util.List;
 public class EmployeeController {
 
     // TODO - for demonstration purposes only. Real implementation
-    // will retrieve employees from a service layer.
+    //   will retrieve employees from a service layer.
     private static final List<Employee> employees = Arrays.asList(
             new Employee(1, "Matthew", "Anderson", "anderma8@oregonstate.edu"),
             new Employee(2, "Patrick", "Rice", "ricep@oregonstate.edu"),
@@ -38,9 +38,9 @@ public class EmployeeController {
     // Returns employee with the given ID, or 404 NOT FOUND.
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "View an employee with the given ID")
-    @ApiResponses( value = {
-        @ApiResponse(code = 200, message = "Successfully retrieved employee with given ID."),
-        @ApiResponse(code = 404, message = "The employee with the given ID could not be found.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved employee with given ID."),
+            @ApiResponse(code = 404, message = "The employee with the given ID could not be found.")
     })
     public ResponseEntity<Employee> getEmployee(@PathVariable int id) {
 
