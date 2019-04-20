@@ -8,7 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Employee {
+public class user {
 
     private int id;
     private String firstName;

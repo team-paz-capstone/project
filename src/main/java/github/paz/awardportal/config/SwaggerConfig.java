@@ -32,6 +32,8 @@ public class SwaggerConfig {
     public CommonsRequestLoggingFilter logFilter() {
         CommonsRequestLoggingFilter filter
                 = new CommonsRequestLoggingFilter();
+        filter.setIncludeClientInfo(true);
+
         filter.setIncludeQueryString(true);
         filter.setIncludePayload(true);
         filter.setMaxPayloadLength(10000);
