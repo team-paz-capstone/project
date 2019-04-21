@@ -49,7 +49,6 @@ public class AwardController {
         return ResponseEntity.ok("Award Created!");
     }
 
-    // Returns User with the given ID, or 404 NOT FOUND.
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "View an award with the given ID")
     @ApiResponses(value = {
