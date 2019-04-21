@@ -21,9 +21,9 @@ public class UserController {
     // TODO - for demonstration purposes only. Real implementation
     //   will retrieve USERS from a service layer.
     private static final List<User> USERS = Arrays.asList(
-            new User(1, "Matthew", "Anderson", "anderma8@oregonstate.edu", ""),
-            new User(2, "Patrick", "Rice", "ricep@oregonstate.edu", ""),
-            new User(3, "Zi", "Wu", "wuzi@oregonstate.edu", "")
+            new User(1, "Matthew", "Anderson", "anderma8@oregonstate.edu", "", true),
+            new User(2, "Patrick", "Rice", "ricep@oregonstate.edu", "", true),
+            new User(3, "Zi", "Wu", "wuzi@oregonstate.edu", "", true)
     );
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
