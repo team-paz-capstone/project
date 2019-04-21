@@ -1,5 +1,6 @@
 package github.paz.awardportal.controller;
 
+import github.paz.awardportal.model.BaseUser;
 import github.paz.awardportal.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,16 +58,13 @@ public class UserController {
             @ApiResponse(code = 500, message = "Failed to create the user. Try again later.")
     })
     public ResponseEntity<String> createUser(
-            @RequestHeader("firstName") String firstName,
-            @RequestHeader("lastName") String lastName,
-            @RequestHeader("email") String email,
-            @RequestHeader("password") String password) {
+            @RequestBody BaseUser newUser) {
 
-        System.out.println("Received Request to created user: " + firstName + " " + lastName + " " + email);
+        System.out.println("Received Request to created user: " + newUser);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         // TODO: This will be the password stored.
         // TODO: Create the user.
-        String hashedPassword = passwordEncoder.encode(password);
+        String hashedPassword = passwordEncoder.encode(newUser.getPassword());
 
         return ResponseEntity.ok("User Created!");
     }
@@ -78,17 +76,17 @@ public class UserController {
             @ApiResponse(code = 500, message = "Failed to update the user. Try again later.")
     })
     public ResponseEntity<String> updateUser(
-            @RequestHeader("id") String id,
-            @RequestHeader("firstName") String firstName,
-            @RequestHeader("lastName") String lastName,
-            @RequestHeader("email") String email,
-            @RequestHeader("password") String password) {
+            @RequestBody User user) {
 
-        System.out.println("Received Request to update user: " + firstName + " " + lastName + " " + email);
+        System.out.println("Received Request to update user: "
+                + user.getFirstName() + " "
+                + user.getLastName() + " "
+                + user.getEmail());
+
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         // TODO: This will be the password stored.
         // TODO: Update the user
-        String hashedPassword = passwordEncoder.encode(password);
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
 
         return ResponseEntity.ok("User Updated!");
     }
