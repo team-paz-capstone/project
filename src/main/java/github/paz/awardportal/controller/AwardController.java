@@ -5,6 +5,8 @@ import github.paz.awardportal.model.AwardType;
 import github.paz.awardportal.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,61 @@ public class AwardController {
     @ApiOperation(value = "View list of all available awards", response = List.class)
     public ResponseEntity<List<Award>> getAllAwards() {
         return ResponseEntity.ok(AWARDS);
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ApiOperation(value = "Create an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully created Award"),
+            @ApiResponse(code = 404, message = "The Award could not be created.")
+    })
+    public ResponseEntity<String> createAward(
+            @RequestHeader("recipientId") String recipientId,
+            @RequestHeader("granterId") String granterId,
+            @RequestHeader("awardTypeId") String awardTypeId) {
+        return ResponseEntity.ok("Award Created!");
+    }
+
+    // Returns User with the given ID, or 404 NOT FOUND.
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "View an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved Award with given ID."),
+            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
+    })
+    public ResponseEntity<Award> getAward(@PathVariable int id) {
+
+        return AWARDS.stream()
+                .filter(a -> a.getId() == id)
+                .map(ResponseEntity::ok)
+                .findFirst()
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ApiOperation(value = "Update an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated Award with given ID."),
+            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
+    })
+    public ResponseEntity<String> updateAward(
+            @RequestHeader("recipientId") String recipientId,
+            @RequestHeader("granterId") String granterId,
+            @RequestHeader("awardTypeId") String awardTypeId) {
+        return ResponseEntity.ok("Award Updated!");
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ApiOperation(value = "Delete an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully delete Award with given ID."),
+            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
+    })
+    public ResponseEntity<String> deleteAward(
+            @RequestHeader("recipientId") String recipientId,
+            @RequestHeader("granterId") String granterId,
+            @RequestHeader("awardTypeId") String awardTypeId) {
+        return ResponseEntity.ok("Award Deleted!");
     }
 
 }
