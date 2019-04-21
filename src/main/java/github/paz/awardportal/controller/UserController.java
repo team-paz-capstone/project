@@ -57,10 +57,10 @@ public class UserController {
             @ApiResponse(code = 500, message = "Failed to create the user. Try again later.")
     })
     public ResponseEntity<String> createUser(
-            @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) {
+            @RequestHeader("firstName") String firstName,
+            @RequestHeader("lastName") String lastName,
+            @RequestHeader("email") String email,
+            @RequestHeader("password") String password) {
 
         System.out.println("Received Request to created user: " + firstName + " " + lastName + " " + email);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -78,11 +78,11 @@ public class UserController {
             @ApiResponse(code = 500, message = "Failed to update the user. Try again later.")
     })
     public ResponseEntity<String> updateUser(
-            @RequestParam("id") String id,
-            @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) {
+            @RequestHeader("id") String id,
+            @RequestHeader("firstName") String firstName,
+            @RequestHeader("lastName") String lastName,
+            @RequestHeader("email") String email,
+            @RequestHeader("password") String password) {
 
         System.out.println("Received Request to update user: " + firstName + " " + lastName + " " + email);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
