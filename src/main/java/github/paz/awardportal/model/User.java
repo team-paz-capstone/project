@@ -1,18 +1,15 @@
 package github.paz.awardportal.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
 @Setter
-public class User {
-
+public class User extends BaseUser {
     private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private boolean isAdmin;
+
+    public User(int id, String firstName, String lastName, String email, String password, boolean isAdmin) {
+        super(firstName, lastName, email, password, isAdmin);
+        this.id = id;
+    }
 }
