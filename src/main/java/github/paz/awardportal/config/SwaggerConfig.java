@@ -2,6 +2,10 @@ package github.paz.awardportal.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import springfox.documentation.builders.PathSelectors;
@@ -17,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  **************************************************/
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public Docket api() {
@@ -41,4 +45,23 @@ public class SwaggerConfig {
         filter.setAfterMessagePrefix("REQUEST DATA : ");
         return filter;
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    /*
+    * This disables requiring auth to access the website (including things like
+    * the API).
+    *
+    * TODO: Remove once auth tokens have been implemented.
+    * */
+    @Override
+    protected void configure(HttpSecurity security) throws Exception
+    {
+        security.httpBasic().disable();
+        security.cors().and().csrf().disable();
+    }
 }
+
