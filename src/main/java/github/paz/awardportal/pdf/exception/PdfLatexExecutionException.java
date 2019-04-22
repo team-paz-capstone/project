@@ -1,6 +1,11 @@
 package github.paz.awardportal.pdf.exception;
 
+import java.util.Collections;
+import java.util.List;
+
 public class PdfLatexExecutionException extends Exception {
+    private List<String> executedCommand;
+
     public PdfLatexExecutionException() {
         super();
     }
@@ -13,7 +18,8 @@ public class PdfLatexExecutionException extends Exception {
         super(message, cause);
     }
 
-    public PdfLatexExecutionException(Throwable cause) {
+    public PdfLatexExecutionException(List<String> command, Throwable cause) {
         super(cause);
+        executedCommand = Collections.unmodifiableList(command);
     }
 }
