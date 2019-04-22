@@ -50,7 +50,7 @@ public class PdfLatexCommandRunner {
      */
     private List<String> generateCommand(Path texTemplate) {
         String templateFileName = texTemplate.getFileName().toString();
-        String arg = COMMAND.format(templateFileName);
+        String arg = String.format(COMMAND, templateFileName);
         return Arrays.asList("bash", "-c", arg);
     }
 }
