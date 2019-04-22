@@ -9,6 +9,7 @@ stats.json
 npm-debug.log
 .idea
 logs/
+**/target
 
 
 HELP.md
