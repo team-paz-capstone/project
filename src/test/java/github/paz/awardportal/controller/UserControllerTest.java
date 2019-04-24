@@ -69,4 +69,24 @@ public class UserControllerTest extends AbstractTest {
         assertThat(200).isEqualTo(status);
     }
 
+    @Test
+    public void updateUser() throws Exception {
+        String uri = "/api/user/update";
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType("application/json")
+                .content("{\n" +
+                        "    \"id\": 1,\n" +
+                        "    \"firstName\": \"pat\",\n" +
+                        "    \"lastName\": \"rice\",\n" +
+                        "    \"email\": \"email@email.com\",\n" +
+                        "    \"password\": \"password\",\n" +
+                        "    \"isAdmin\": false\n" +
+                        "}")
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        assertThat(200).isEqualTo(status);
+    }
+
 }
