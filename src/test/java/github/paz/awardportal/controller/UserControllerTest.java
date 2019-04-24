@@ -49,4 +49,5 @@ public class UserControllerTest extends AbstractTest {
         assertThat(user.getPassword()).isEqualTo("");
         assertThat(user.isAdmin()).isEqualTo(true);
     }
+
 }
