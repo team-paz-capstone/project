@@ -30,4 +30,23 @@ public class UserControllerTest extends AbstractTest {
         User[] userList = super.mapFromJson(content, User[].class);
         assertThat(userList.length).isEqualTo(3);
     }
+
+    @Test
+    public void getUser() throws Exception {
+        String uri = "/api/user/1";
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        assertThat(200).isEqualTo(status);
+        String content = mvcResult.getResponse().getContentAsString();
+        User user = super.mapFromJson(content, User.class);
+        assertThat(user.getId()).isEqualTo(1);
+        assertThat(user.getFirstName()).isEqualTo("Matthew");
+        assertThat(user.getLastName()).isEqualTo("Anderson");
+        assertThat(user.getEmail()).isEqualTo("anderma8@oregonstate.edu");
+        assertThat(user.getPassword()).isEqualTo("");
+        assertThat(user.isAdmin()).isEqualTo(true);
+    }
 }
