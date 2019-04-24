@@ -14,4 +14,8 @@ public class BaseUser {
     private String email;
     private String password;
     private boolean isAdmin;
+
+
+    public BaseUser() {
+    } // necessary for tests
 }
