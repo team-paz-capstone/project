@@ -89,4 +89,15 @@ public class UserControllerTest extends AbstractTest {
         assertThat(200).isEqualTo(status);
     }
 
+    @Test
+    public void deleteUser() throws Exception {
+        String uri = "/api/user/delete/1";
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        assertThat(200).isEqualTo(status);
+    }
+
 }

@@ -71,22 +71,18 @@ public class AwardController {
             @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
     })
     public ResponseEntity<String> updateAward(
-            @RequestHeader("recipientId") String recipientId,
-            @RequestHeader("granterId") String granterId,
-            @RequestHeader("awardTypeId") String awardTypeId) {
+            @RequestBody Award updated) {
         return ResponseEntity.ok("Award Updated!");
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ApiOperation(value = "Delete an award with the given ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully delete Award with given ID."),
             @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
     })
     public ResponseEntity<String> deleteAward(
-            @RequestHeader("recipientId") String recipientId,
-            @RequestHeader("granterId") String granterId,
-            @RequestHeader("awardTypeId") String awardTypeId) {
+            @PathVariable int id) {
         return ResponseEntity.ok("Award Deleted!");
     }
 
