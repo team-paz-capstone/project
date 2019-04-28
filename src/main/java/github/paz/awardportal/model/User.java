@@ -12,4 +12,8 @@ public class User extends BaseUser {
         super(firstName, lastName, email, password, isAdmin);
         this.id = id;
     }
+
+    public User(){ // necessary for tests
+        super();
+    }
 }
