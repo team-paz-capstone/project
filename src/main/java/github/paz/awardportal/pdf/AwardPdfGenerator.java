@@ -1,6 +1,7 @@
 package github.paz.awardportal.pdf;
 
+import github.paz.awardportal.model.Award;
+
 public interface AwardPdfGenerator {
-// TODO - uncomment when award object has been defined.
-// byte[] generateAwardPdf(Award award);
+     byte[] generateAwardPdf(Award award);
 }

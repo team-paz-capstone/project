@@ -4,6 +4,7 @@ package github.paz.awardportal.pdf;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import github.paz.awardportal.model.Award;
 import github.paz.awardportal.pdf.exception.PdfGenerationException;
 import github.paz.awardportal.pdf.exception.PdfLatexExecutionException;
 import lombok.extern.log4j.Log4j2;
@@ -31,9 +32,12 @@ public class LatexAwardPdfGenerator implements AwardPdfGenerator {
     @Autowired
     private PdfLatexCommandRunner pdfLatexCommandRunner;
 
-//    public byte[] generateAwardPdf(Award award) {
-//        return new byte[]{};
-//    }
+    @Override
+    public byte[] generateAwardPdf(Award award) {
+        log.warn("generateAwardPdf(Award) not yet implemented! Return empty byte array...");
+        return new byte[]{};
+    }
+
     // TODO - uses hardcoded info for now.
     public byte[] generateAwardPdf(AwardPdfTemplateData data) throws PdfGenerationException {
         PdfLatexFiles generatedFiles = null;
