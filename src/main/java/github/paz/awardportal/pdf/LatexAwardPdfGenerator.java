@@ -32,10 +32,9 @@ public class LatexAwardPdfGenerator implements AwardPdfGenerator {
     @Autowired
     private PdfLatexCommandRunner pdfLatexCommandRunner;
 
-    @Override
-    public byte[] generateAwardPdf(Award award) {
-        log.warn("generateAwardPdf(Award) not yet implemented! Return empty byte array...");
-        return new byte[]{};
+    public byte[] generateAwardPdf(Award award) throws PdfGenerationException {
+        AwardPdfTemplateData data = AwardPdfTemplateData.fromAward(award);
+        return generateAwardPdf(data);
     }
 
     // TODO - uses hardcoded info for now.
