@@ -99,21 +99,11 @@
         </dependency>
         <!-- Heroku Postgres End -->
         <!-- https://mvnrepository.com/artifact/org.apache.ibatis/ibatis-sqlmap -->
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
-	</dependencies>
-
+    </dependencies>
 	<build>
 		<plugins>
 			<plugin>
