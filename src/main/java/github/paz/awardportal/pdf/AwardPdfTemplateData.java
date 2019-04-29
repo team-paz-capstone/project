@@ -34,6 +34,7 @@ public class AwardPdfTemplateData {
         // This method will convert the granter's signature to a Base64-encoded
         // string for the template.
 //        data.setSignatureImage(formatSignatureImage());
+        data.setHasSignature(false);
         return data;
 
     }

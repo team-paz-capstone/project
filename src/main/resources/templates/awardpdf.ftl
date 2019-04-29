@@ -15,7 +15,7 @@ iVBORw0KGgoAAAANSUhEUgAAAgAAAAGNCAYAAABnvslhAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAE
 
 ${recipientName} has been awarded ${awardName} by ${granterName} on ${dateAwarded}
 
-<#if hasSignature>
+<#if hasSignature??>
     there IS a signature.
 <#else>
     there is NOT a signature.
