@@ -90,8 +90,7 @@ public class UserController {
 
         System.out.println("Received Request to created user: " + newUser);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        // TODO: This will be the password stored.
-        // TODO: Create the user.
+
         String hashedPassword = passwordEncoder.encode(newUser.getPassword());
         System.out.println(hashedPassword.length());
         try {
@@ -115,9 +114,9 @@ public class UserController {
         } catch (DataAccessException e) {
             e.printStackTrace();
             /*
-            * TODO: This error handler is just taking a guess. I don't know how to interpret
-            *  the different reasons.
-            * */
+             * TODO: This error handler is just taking a guess. I don't know how to interpret
+             *  the different reasons.
+             * */
             return ResponseEntity.badRequest().body("User with that email already exists!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,11 +140,34 @@ public class UserController {
                 + user.getEmail());
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        // TODO: This will be the password stored.
-        // TODO: Update the user
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
 
-        return ResponseEntity.ok("User Updated!");
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        System.out.println(hashedPassword.length());
+        try {
+            Connection connection = dataSource.getConnection();
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            create.update(
+                    table("users"))
+                    .set(field("first_name"), user.getFirstName())
+                    .set(field("last_name"), user.getLastName())
+                    .set(field("email"), user.getEmail())
+                    .set(field("password"), hashedPassword)
+                    .where("id=" + user.getId())
+                    .returning()
+                    .fetch();
+
+            return ResponseEntity.accepted().build();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            /*
+             * TODO: This error handler is just taking a guess. I don't know how to interpret
+             *  the different reasons.
+             * */
+            return ResponseEntity.badRequest().body("User with that email already exists!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
