@@ -6,11 +6,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +24,10 @@ import java.util.List;
 @RequestMapping(value = "/api/user")
 @Api(value = "User Management System", description = "Operations pertaining to User in User Management System.")
 public class UserController {
+
+    @Autowired
+    private BasicDataSource dataSource;
+
 
     // TODO - for demonstration purposes only. Real implementation
     //   will retrieve USERS from a service layer.
@@ -29,9 +39,20 @@ public class UserController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "View list of all available USERS", response = List.class)
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<?> getAllUsers() {
         System.out.println("Get - All Users");
-        return ResponseEntity.ok(USERS);
+
+        try  {
+            Connection connection = dataSource.getConnection();
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            List<User> users  = create.select().from("USERS").fetchInto(User.class);
+            return ResponseEntity.ok(users);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to look up users");
+        }
     }
 
     // Returns User with the given ID, or 404 NOT FOUND.
