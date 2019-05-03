@@ -18,8 +18,7 @@ CREATE TABLE users (
     first_name VARCHAR(45) NOT NULL,
     last_name VARCHAR(45) NOT NULL,
     email VARCHAR(45) NOT NULL UNIQUE,
-    /* TODO - size of this field will depend on the hashing algorithm we use. */
-    password varchar(45) NOT NULL,
+    password varchar(60) NOT NULL,
     signature bytea
 );
 

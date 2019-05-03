@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.table;
 
 @RestController()
 @RequestMapping(value = "/api/user")
@@ -42,14 +46,12 @@ public class UserController {
     public ResponseEntity<?> getAllUsers() {
         System.out.println("Get - All Users");
 
-        try  {
+        try {
             Connection connection = dataSource.getConnection();
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-            List<User> users  = create.select().from("USERS").fetchInto(User.class);
+            List<User> users = create.select().from("USERS").fetchInto(User.class);
             return ResponseEntity.ok(users);
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Failed to look up users");
         }
@@ -62,15 +64,20 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successfully retrieved User with given ID."),
             @ApiResponse(code = 404, message = "The User with the given ID could not be found.")
     })
-    public ResponseEntity<User> getUser(@PathVariable int id) {
-
-        return USERS.stream()
-                .filter(u -> u.getId() == id)
-                .map(ResponseEntity::ok)
-                .findFirst()
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> getUser(@PathVariable int id) {
+        try {
+            Connection connection = dataSource.getConnection();
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            User user = create.select().from("USERS").where("id=" + id).fetchAny().into(User.class);
+            return ResponseEntity.ok(user);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to look up users");
+        }
     }
-
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ApiOperation(value = "Create an User with the given id")
@@ -78,7 +85,7 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successfully created user."),
             @ApiResponse(code = 500, message = "Failed to create the user. Try again later.")
     })
-    public ResponseEntity<String> createUser(
+    public ResponseEntity<?> createUser(
             @RequestBody BaseUser newUser) {
 
         System.out.println("Received Request to created user: " + newUser);
@@ -86,8 +93,37 @@ public class UserController {
         // TODO: This will be the password stored.
         // TODO: Create the user.
         String hashedPassword = passwordEncoder.encode(newUser.getPassword());
+        System.out.println(hashedPassword.length());
+        try {
+            Connection connection = dataSource.getConnection();
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            create.insertInto(
+                    table("users"),
+                    field("first_name"),
+                    field("last_name"),
+                    field("email"),
+                    field("password")
+            ).values(
+                    newUser.getFirstName(),
+                    newUser.getLastName(),
+                    newUser.getEmail(),
+                    hashedPassword)
+                    .returning(field("id"))
+                    .fetch();
 
-        return ResponseEntity.ok("User Created!");
+            return ResponseEntity.accepted().build();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            /*
+            * TODO: This error handler is just taking a guess. I don't know how to interpret
+            *  the different reasons.
+            * */
+            return ResponseEntity.badRequest().body("User with that email already exists!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
