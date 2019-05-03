@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -101,12 +102,14 @@ public class UserController {
                     field("first_name"),
                     field("last_name"),
                     field("email"),
-                    field("password")
+                    field("password"),
+                    field("is_admin")
             ).values(
                     newUser.getFirstName(),
                     newUser.getLastName(),
                     newUser.getEmail(),
-                    hashedPassword)
+                    hashedPassword,
+                    newUser.isAdmin())
                     .returning(field("id"))
                     .fetch();
 
@@ -137,24 +140,26 @@ public class UserController {
         System.out.println("Received Request to update user: "
                 + user.getFirstName() + " "
                 + user.getLastName() + " "
-                + user.getEmail());
+                + user.getEmail()
+                + user.isAdmin());
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         String hashedPassword = passwordEncoder.encode(user.getPassword());
-        System.out.println(hashedPassword.length());
         try {
             Connection connection = dataSource.getConnection();
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-            create.update(
+            Record userRecord = create.update(
                     table("users"))
                     .set(field("first_name"), user.getFirstName())
                     .set(field("last_name"), user.getLastName())
                     .set(field("email"), user.getEmail())
                     .set(field("password"), hashedPassword)
+                    .set(field("is_admin"), user.isAdmin())
                     .where("id=" + user.getId())
-                    .returning()
-                    .fetch();
+                    .returning(field("id"))
+                    .fetchOne();
+            System.out.println(userRecord.getValue(field("id")));
 
             return ResponseEntity.accepted().build();
         } catch (DataAccessException e) {
@@ -166,7 +171,7 @@ public class UserController {
             return ResponseEntity.badRequest().body("User with that email already exists!");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to update");
         }
     }
 

@@ -19,7 +19,8 @@ CREATE TABLE users (
     last_name VARCHAR(45) NOT NULL,
     email VARCHAR(45) NOT NULL UNIQUE,
     password varchar(60) NOT NULL,
-    signature bytea
+    signature bytea,
+    is_admin BOOLEAN
 );
 
 -- Award Type
