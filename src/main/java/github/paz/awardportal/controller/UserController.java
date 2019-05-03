@@ -184,8 +184,22 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
 
         System.out.println("Received Request to delete user: " + id);
-        // TODO: Delete the user
 
-        return ResponseEntity.ok("User Deleted!");
+        try {
+            Connection connection = dataSource.getConnection();
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            create.delete(table("users")).where("id="+id).execute();
+            return ResponseEntity.accepted().build();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            /*
+             * TODO: This error handler is just taking a guess. I don't know how to interpret
+             *  the different reasons.
+             * */
+            return ResponseEntity.badRequest().body("User with that email already exists!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to update");
+        }
     }
 }
