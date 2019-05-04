@@ -118,6 +118,84 @@ public class AwardController {
         }
     }
 
+    @RequestMapping(value = "/recipient/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "View an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved Award with given ID."),
+            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
+    })
+    public ResponseEntity<?> getAwardByRecipient(@PathVariable int id) {
+
+        try (Connection connection = dataSource.getConnection()){
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            AwardSkeleton skeleton = create
+                    .select()
+                    .from(tableName)
+                    .where("recipient_id=" + id)
+                    .fetchAny()
+                    .into(AwardSkeleton.class);
+            return ResponseEntity.ok(skeleton);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to look up awards");
+        }
+    }
+
+    @RequestMapping(value = "/granter/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "View an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved Award with given ID."),
+            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
+    })
+    public ResponseEntity<?> getAwardByGranter(@PathVariable int id) {
+
+        try (Connection connection = dataSource.getConnection()){
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            AwardSkeleton skeleton = create
+                    .select()
+                    .from(tableName)
+                    .where("granter_id=" + id)
+                    .fetchAny()
+                    .into(AwardSkeleton.class);
+            return ResponseEntity.ok(skeleton);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to look up awards");
+        }
+    }
+
+    @RequestMapping(value = "/award-type/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "View an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved Award with given ID."),
+            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
+    })
+    public ResponseEntity<?> getAwardByAwardType(@PathVariable int id) {
+
+        try (Connection connection = dataSource.getConnection()){
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            AwardSkeleton skeleton = create
+                    .select()
+                    .from(tableName)
+                    .where("award_type_id=" + id)
+                    .fetchAny()
+                    .into(AwardSkeleton.class);
+            return ResponseEntity.ok(skeleton);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to look up awards");
+        }
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ApiOperation(value = "Update an award with the given ID")
     @ApiResponses(value = {
