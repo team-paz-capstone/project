@@ -1,7 +1,7 @@
 package github.paz.awardportal.email;
 
-import github.paz.awardportal.model.Award;
-import github.paz.awardportal.model.User;
+import github.paz.awardportal.model.Award.Award;
+import github.paz.awardportal.model.User.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -63,6 +63,31 @@ public class EmailService {
     }
 
     private String getNameForTemplate(User user) {
+
         return user.getFirstName() + " " + user.getLastName();
+    }
+
+
+    /**
+     * Send a recovery email to the user.
+     *
+     * @param email  - User's Email
+     * @param token - Token generated for recovery, should not be displayed
+     *              for the user, but it required to reset the password.
+     */
+    public void sendAccountRecoveryEmail(
+            String email,
+            String token
+    ) throws MessagingException {
+
+        /* TODO: Create Template with button click to URL with token + email
+        *   token should not be displayed to user.*/
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setSubject("Account Recovery");
+        helper.setTo(email);
+        String text = "Email: " + email + " Token: " + token;
+        helper.setText(text);
+        javaMailSender.send(message);
     }
 }

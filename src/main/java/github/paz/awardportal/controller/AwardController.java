@@ -1,6 +1,6 @@
 package github.paz.awardportal.controller;
 
-import github.paz.awardportal.model.AwardSkeleton;
+import github.paz.awardportal.model.Award.AwardSkeleton;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

@@ -1,4 +1,4 @@
-package github.paz.awardportal.model;
+package github.paz.awardportal.model.User;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

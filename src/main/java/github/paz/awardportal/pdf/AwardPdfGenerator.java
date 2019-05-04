@@ -1,6 +1,6 @@
 package github.paz.awardportal.pdf;
 
-import github.paz.awardportal.model.Award;
+import github.paz.awardportal.model.Award.Award;
 import github.paz.awardportal.pdf.exception.PdfGenerationException;
 
 public interface AwardPdfGenerator {

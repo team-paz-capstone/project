@@ -1,7 +1,7 @@
 package github.paz.awardportal.controller;
 
-import github.paz.awardportal.model.BaseUser;
-import github.paz.awardportal.model.User;
+import github.paz.awardportal.model.User.BaseUser;
+import github.paz.awardportal.model.User.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

@@ -1,5 +1,7 @@
-package github.paz.awardportal.model;
+package github.paz.awardportal.model.Award;
 
+import github.paz.awardportal.model.AwardType.AwardType;
+import github.paz.awardportal.model.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package github.paz.awardportal.model;
+package github.paz.awardportal.model.User;
 
 import lombok.Getter;
 import lombok.Setter;

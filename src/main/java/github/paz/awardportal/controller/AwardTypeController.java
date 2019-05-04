@@ -1,7 +1,7 @@
 package github.paz.awardportal.controller;
 
-import github.paz.awardportal.model.AwardType;
-import github.paz.awardportal.model.BaseAwardType;
+import github.paz.awardportal.model.AwardType.AwardType;
+import github.paz.awardportal.model.AwardType.BaseAwardType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

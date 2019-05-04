@@ -43,7 +43,7 @@ CREATE TABLE award (
 
 CREATE TABLE account_recovery (
   id SERIAL PRIMARY KEY,
-  email VARCHAR(45) NOT NULL REFERENCES users,
+  email VARCHAR(45) NOT NULL REFERENCES users (email),
   token VARCHAR(60) NOT NULL,
   expiration TIMESTAMP default current_timestamp
 );
