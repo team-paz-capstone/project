@@ -34,8 +34,8 @@ CREATE TABLE award (
     id SERIAL PRIMARY KEY,
     recipient_id INTEGER NOT NULL REFERENCES users,
     granter_id INTEGER NOT NULL REFERENCES users,
-    award_type_id INTEGER NOT NULL REFERENCES users,
-    awarded_datetime TIMESTAMP
+    award_type_id INTEGER NOT NULL REFERENCES award_type,
+    awarded_datetime TIMESTAMP default current_timestamp
 
     /* TODO - figure out what kind of cascading we want, eg.
      ON DELETE NO ACTION ON UPDATE NO ACTION */

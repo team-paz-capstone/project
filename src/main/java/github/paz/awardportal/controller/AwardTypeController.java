@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.jooq.impl.DSL.field;
@@ -31,19 +30,10 @@ public class AwardTypeController {
     private BasicDataSource dataSource;
     private String tableName = "award_type";
 
-    // TODO - for demonstration purposes only. Real implementation
-    //   will retrieve AWARD_TYPES from a service layer.
-    private static final List<AwardType> AWARD_TYPES = Arrays.asList(
-            new AwardType(1, "President’s Circle"),
-            new AwardType(2, "Chairman’s Award"),
-            new AwardType(3, "President’s Award")
-    );
-
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "View list of all available awards", response = List.class)
     public ResponseEntity<?> getAllAwards() {
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             List<AwardType> awardTypes = create.select()
                     .from(tableName)
@@ -54,7 +44,7 @@ public class AwardTypeController {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("Failed to look up awards");
+            return ResponseEntity.badRequest().body("Failed to look up award types");
         }
     }
 
@@ -67,8 +57,7 @@ public class AwardTypeController {
     public ResponseEntity<String> createAwardType(
             @RequestBody BaseAwardType newAwardType) {
         System.out.println("Creating award type: " + newAwardType.getName());
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             create.insertInto(
                     table(tableName),
@@ -100,8 +89,7 @@ public class AwardTypeController {
     })
     public ResponseEntity<?> getAwardType(@PathVariable int id) {
 
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             AwardType awardType = create
                     .select()
@@ -130,8 +118,7 @@ public class AwardTypeController {
 
         System.out.println("Received Request to delete award-type: " + id);
 
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             create.delete(table(tableName)).where("id=" + id).execute();
             return ResponseEntity.accepted().build();

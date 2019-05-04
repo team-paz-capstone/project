@@ -37,8 +37,7 @@ public class UserController {
     public ResponseEntity<?> getAllUsers() {
         System.out.println("Get - All Users");
 
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             List<User> users = create.select().from("USERS").fetchInto(User.class);
             return ResponseEntity.ok(users);
@@ -56,8 +55,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "The User with the given ID could not be found.")
     })
     public ResponseEntity<?> getUser(@PathVariable int id) {
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             User user = create.select().from("USERS").where("id=" + id).fetchAny().into(User.class);
             return ResponseEntity.ok(user);
@@ -84,8 +82,7 @@ public class UserController {
 
         String hashedPassword = passwordEncoder.encode(newUser.getPassword());
         System.out.println(hashedPassword.length());
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             create.insertInto(
                     table("users"),
@@ -136,8 +133,7 @@ public class UserController {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         String hashedPassword = passwordEncoder.encode(user.getPassword());
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             Record userRecord = create.update(
                     table("users"))
@@ -175,8 +171,7 @@ public class UserController {
 
         System.out.println("Received Request to delete user: " + id);
 
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()){
             DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
             create.delete(table("users")).where("id=" + id).execute();
             return ResponseEntity.accepted().build();
