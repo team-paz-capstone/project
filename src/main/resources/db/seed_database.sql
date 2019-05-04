@@ -40,3 +40,10 @@ CREATE TABLE award (
     /* TODO - figure out what kind of cascading we want, eg.
      ON DELETE NO ACTION ON UPDATE NO ACTION */
 );
+
+CREATE TABLE account_recovery (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(45) NOT NULL REFERENCES users,
+  token VARCHAR(60) NOT NULL,
+  expiration TIMESTAMP default current_timestamp
+);
