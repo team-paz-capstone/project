@@ -1,14 +1,16 @@
 package github.paz.awardportal.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
 @Setter
-public class AwardType {
+public class AwardType extends BaseAwardType {
 
     private int id;
-    private String name;
+
+    public AwardType(int id, String name) {
+        super(name);
+        this.id = id;
+    }
 }
