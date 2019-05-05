@@ -26,8 +26,8 @@ public class AwardPdfTemplateData {
         User granter = award.getGranter();
 
         data.setAwardName(award.getAwardType().getName());
-        data.setRecipientName(recipient.getFirstName() + recipient.getLastName());
-        data.setGranterName(granter.getFirstName() + granter.getLastName());
+        data.setRecipientName(getFullUserName(recipient));
+        data.setGranterName(getFullUserName(granter));
         data.setDateAwarded(DATE_FORMATTER.format(award.getTimestamp()));
 
         // TODO - template currently uses a hard-coded image.
@@ -38,13 +38,8 @@ public class AwardPdfTemplateData {
         return data;
 
     }
-    // TODO - generate from an Award.
-    public AwardPdfTemplateData() {
-//        awardName = "Employee of the Month";
-//        recipientName = "John Doe";
-//        granterName = "Jane Doe";
-//        dateAwarded = "4/22/2019";
-////        signatureImage = getSignatureImage();  Converts granter's Signature blob to Base64 string and sets bool.
-//        hasSignature = false;
+
+    private static String getFullUserName(User user) {
+        return user.getFirstName() + " " + user.getLastName();
     }
 }

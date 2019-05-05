@@ -1,10 +1,13 @@
 package github.paz.awardportal.controller;
 
 import github.paz.awardportal.model.Award.AwardSkeleton;
+import github.paz.awardportal.model.Award.BaseAwardCreator;
+import github.paz.awardportal.service.AwardCreationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -24,10 +27,15 @@ import static org.jooq.impl.DSL.table;
 @RestController()
 @RequestMapping(value = "/api/award")
 @Api(value = "Award Management System", description = "Operations pertaining to award in Award Management System.")
+@Log4j2
 public class AwardController {
 
     @Autowired
     private BasicDataSource dataSource;
+
+    @Autowired
+    private AwardCreationService awardCreationService;
+
     private String tableName = "award";
     private String recipientID = "recipient_id";
     private String granterID = "granter_id";
@@ -60,22 +68,11 @@ public class AwardController {
             @ApiResponse(code = 404, message = "The Award could not be created.")
     })
     public ResponseEntity<String> createAward(
-            @RequestBody AwardSkeleton newAward) {
-        System.out.println("Creating award: " + newAward);
-        try (Connection connection = dataSource.getConnection()){
-            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-            create.insertInto(
-                    table(tableName),
-                    field(recipientID),
-                    field(granterID),
-                    field(awardTypeID)
-            ).values(
-                    newAward.getRecipientID(),
-                    newAward.getGranterID(),
-                    newAward.getAwardTypeID())
-                    .returning(field("id"))
-                    .fetch();
+            @RequestBody BaseAwardCreator newAward) {
+        log.info("Creating award: " + newAward);
 
+        try {
+            awardCreationService.createAward(newAward);
             return ResponseEntity.accepted().build();
         } catch (DataAccessException e) {
             e.printStackTrace();
