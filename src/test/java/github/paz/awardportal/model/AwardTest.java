@@ -1,5 +1,8 @@
 package github.paz.awardportal.model;
 
+import github.paz.awardportal.model.Award.Award;
+import github.paz.awardportal.model.AwardType.AwardType;
+import github.paz.awardportal.model.User.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;

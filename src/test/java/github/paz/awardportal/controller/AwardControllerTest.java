@@ -1,9 +1,9 @@
 package github.paz.awardportal.controller;
 
 import github.paz.awardportal.config.DatabaseConfig;
-import github.paz.awardportal.model.Award;
-import github.paz.awardportal.model.AwardType;
-import github.paz.awardportal.model.User;
+import github.paz.awardportal.model.Award.Award;
+import github.paz.awardportal.model.AwardType.AwardType;
+import github.paz.awardportal.model.User.User;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;

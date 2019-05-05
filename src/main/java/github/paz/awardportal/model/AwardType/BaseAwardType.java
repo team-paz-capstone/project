@@ -1,4 +1,4 @@
-package github.paz.awardportal.model;
+package github.paz.awardportal.model.AwardType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AwardType {
-
-    private int id;
+public class BaseAwardType {
     private String name;
 }

@@ -4,7 +4,7 @@ package github.paz.awardportal.pdf;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import github.paz.awardportal.model.Award;
+import github.paz.awardportal.model.Award.Award;
 import github.paz.awardportal.pdf.exception.PdfGenerationException;
 import github.paz.awardportal.pdf.exception.PdfLatexExecutionException;
 import lombok.extern.log4j.Log4j2;

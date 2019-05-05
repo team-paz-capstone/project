@@ -1,11 +1,8 @@
 package github.paz.awardportal.controller;
 
-import github.paz.awardportal.config.DatabaseConfig;
-import github.paz.awardportal.model.User;
-import org.apache.commons.dbcp.BasicDataSource;
+import github.paz.awardportal.model.User.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
