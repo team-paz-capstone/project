@@ -4,11 +4,13 @@ import github.paz.awardportal.model.AwardType.AwardType;
 import github.paz.awardportal.model.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Award{
