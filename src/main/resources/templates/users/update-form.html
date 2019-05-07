@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Save User</title>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h3>Admin Portal</h3>
+
+    <p class="h4 mb-4">Update User</p>
+
+    <form action="#"
+          th:action="@{/users/update}"
+          th:object="${user}"
+          method="post"
+    >
+        <!--add hidden form field to handle update-->
+        <input type="hidden" th:field="*{id}">
+
+        <input type="text" th:field="*{firstName}"
+               class="form-control mb-4 col-4"
+               placeholder="First Name"
+        >
+
+        <input type="text" th:field="*{lastName}"
+               class="form-control mb-4 col-4"
+               placeholder="Last Name"
+        >
+
+        <input type="email" th:field="*{email}"
+               class="form-control mb-4 col-4"
+               placeholder="Email"
+        >
+
+
+        <input type="password" th:field="*{password}"
+               class="form-control mb-4 col-4"
+               placeholder="Password"
+        >
+
+        <div class="form-check">
+            <input type="checkbox" th:field="*{admin}"
+                   class="form-check-input" id="isadmin">
+            <label class="form-check-label" for="isadmin">is admin</label>
+        </div>
+
+        <br>
+        <!--submit button-->
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+
+    <hr>
+    <a th:href="@{/users/list}">Back to Users</a>
+
+</div>
+
+</body>
+
+
+</html>
