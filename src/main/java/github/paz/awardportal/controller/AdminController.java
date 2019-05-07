@@ -1,7 +1,7 @@
 package github.paz.awardportal.controller;
 
-import github.paz.awardportal.dao.UserDAO;
 import github.paz.awardportal.model.User.User;
+import github.paz.awardportal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +13,16 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class AdminController {
 
+//    @Autowired
+//    private UserDAO userDAO;
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
 
     @GetMapping("/list")
     public String listUsers(Model model) {
-        List<User> users = null;
 
-        users = userDAO.getAllUsers();
+        List<User> users = userRepository.findAll();
 
         model.addAttribute("users", users);
 
@@ -40,9 +41,9 @@ public class AdminController {
 
 
     @GetMapping("/updateForm")
-    public String updateForm(@RequestParam("userId") int id, Model model) {
+    public String updateForm(@RequestParam("userId") Long id, Model model) {
 
-        User user = userDAO.getUserById(id);
+        User user = userRepository.getOne(id);
 
         model.addAttribute("user", user);
 
@@ -53,7 +54,7 @@ public class AdminController {
     @PostMapping("/create")
     public String save(@ModelAttribute("user") User user) {
 
-        userDAO.addUser(user);
+        userRepository.save(user);
 
         return "redirect:/users/list";
     }
@@ -62,23 +63,16 @@ public class AdminController {
     @PostMapping("/update")
     public String update(@ModelAttribute("user") User user) {
 
-        userDAO.updateUser(user);
+        userRepository.save(user);
 
         return "redirect:/users/list";
     }
 
 
     @GetMapping("/delete")
-    public String delete(@RequestParam("userId") int id) {
+    public String delete(@RequestParam("userId") Long id) {
 
-        User user = null;
-
-        user = userDAO.getUserById(id);
-
-        // check if user with id exists in the database
-        if (user != null) {
-            userDAO.deleteUser(id);
-        }
+        userRepository.deleteById(id);
 
         return "redirect:/users/list";
     }
