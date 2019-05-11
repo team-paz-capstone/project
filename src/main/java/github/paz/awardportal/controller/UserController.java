@@ -88,31 +88,23 @@ public class UserController {
             return ResponseEntity.badRequest().body("Failed to update");
         }
     }
-//
-//    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-//    @ApiOperation(value = "Delete an User with the given id")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Successfully deleted user."),
-//            @ApiResponse(code = 500, message = "Failed to deleted the user. Try again later.")
-//    })
-//    public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
-//
-//        System.out.println("Received Request to delete user: " + id);
-//
-//        try (Connection connection = dataSource.getConnection()){
-//            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-//            create.delete(table("users")).where("id=" + id).execute();
-//            return ResponseEntity.accepted().build();
-//        } catch (DataAccessException e) {
-//            e.printStackTrace();
-//            /*
-//             * TODO: This error handler is just taking a guess. I don't know how to interpret
-//             *  the different reasons.
-//             * */
-//            return ResponseEntity.badRequest().body("User with that email already exists!");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.badRequest().body("Failed to update");
-//        }
-//    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "Delete an User with the given id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deleted user."),
+            @ApiResponse(code = 500, message = "Failed to deleted the user. Try again later.")
+    })
+    public ResponseEntity<String> deleteUser(@PathVariable("id") long email) {
+
+        System.out.println("Received Request to delete user: " + email);
+
+        try {
+            userRepository.deleteById(email);
+            return ResponseEntity.accepted().build();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to update");
+        }
+    }
 }
