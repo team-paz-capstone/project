@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "first_name")
@@ -52,7 +54,17 @@ public class User {
     private List<Award> receivedAwards;
 
 
-
     // JPA. TODO - make private after JPA refactoring complete.
-    public User() { }
+    public User(BaseUser baseUser) {
+        this.firstName = baseUser.getFirstName();
+        this.lastName = baseUser.getLastName();
+        this.email = baseUser.getEmail();
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(baseUser.getPassword());
+        this.isAdmin = baseUser.isAdmin();
+    }
+
+    public User() {
+    }
 }

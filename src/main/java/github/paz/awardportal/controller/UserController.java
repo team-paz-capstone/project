@@ -1,5 +1,6 @@
 package github.paz.awardportal.controller;
 
+import github.paz.awardportal.model.User.BaseUser;
 import github.paz.awardportal.model.User.User;
 import github.paz.awardportal.repository.UserRepository;
 import io.swagger.annotations.Api;
@@ -9,8 +10,6 @@ import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,52 +44,24 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-//    @RequestMapping(value = "/create", method = RequestMethod.POST)
-//    @ApiOperation(value = "Create an User with the given id")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Successfully created user."),
-//            @ApiResponse(code = 500, message = "Failed to create the user. Try again later.")
-//    })
-//    public ResponseEntity<?> createUser(
-//            @RequestBody BaseUser newUser) {
-//
-//        System.out.println("Received Request to created user: " + newUser);
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//        String hashedPassword = passwordEncoder.encode(newUser.getPassword());
-//        System.out.println(hashedPassword.length());
-//        try (Connection connection = dataSource.getConnection()){
-//            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-//            create.insertInto(
-//                    table("users"),
-//                    field("first_name"),
-//                    field("last_name"),
-//                    field("email"),
-//                    field("password"),
-//                    field("is_admin")
-//            ).values(
-//                    newUser.getFirstName(),
-//                    newUser.getLastName(),
-//                    newUser.getEmail(),
-//                    hashedPassword,
-//                    newUser.isAdmin())
-//                    .returning(field("id"))
-//                    .fetch();
-//
-//            return ResponseEntity.accepted().build();
-//        } catch (DataAccessException e) {
-//            e.printStackTrace();
-//            /*
-//             * TODO: This error handler is just taking a guess. I don't know how to interpret
-//             *  the different reasons.
-//             * */
-//            return ResponseEntity.badRequest().body("User with that email already exists!");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//
-//    }
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ApiOperation(value = "Create an User with the given id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully created user."),
+            @ApiResponse(code = 500, message = "Failed to create the user. Try again later.")
+    })
+    public ResponseEntity<?> createUser(@RequestBody BaseUser newUser) {
+        System.out.println("Received Request to created user: " + newUser);
+        User user = new User(newUser);
+        try {
+            userRepository.save(user);
+            return ResponseEntity.accepted().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
 //
 //    @RequestMapping(value = "/update", method = RequestMethod.POST)
 //    @ApiOperation(value = "Update an User with the given id")
