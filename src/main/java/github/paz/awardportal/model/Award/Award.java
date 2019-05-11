@@ -21,7 +21,7 @@ public class Award{
     private Long id;
 
     @Column(name = "awarded_datetime", updatable = false)
-    @GeneratedValue  
+    @GeneratedValue
     private Timestamp timestamp;
 
     @OneToOne
