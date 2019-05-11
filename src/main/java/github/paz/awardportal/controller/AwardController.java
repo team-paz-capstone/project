@@ -1,7 +1,9 @@
 package github.paz.awardportal.controller;
 
 import github.paz.awardportal.model.Award.Award;
+import github.paz.awardportal.model.Award.BaseAwardCreator;
 import github.paz.awardportal.repository.AwardRepository;
+import github.paz.awardportal.repository.BaseAwardRepository;
 import github.paz.awardportal.service.AwardCreationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController()
 @RequestMapping(value = "/api/award")
@@ -22,6 +25,9 @@ public class AwardController {
 
     @Autowired
     private AwardRepository awardRepository;
+
+    @Autowired
+    private BaseAwardRepository baseAwardRepository;
 
     @Autowired
     private AwardCreationService awardCreationService;
@@ -41,11 +47,16 @@ public class AwardController {
             @ApiResponse(code = 404, message = "The Award could not be created.")
     })
     public ResponseEntity<String> createAward(
-            @RequestBody Award newAward) {
-        log.info("Creating award: " + newAward);
-
-            awardCreationService.createAward(newAward);
+            @RequestBody BaseAwardCreator baseAwardCreator) {
+        log.info("Creating award: " + baseAwardCreator);
+        BaseAwardCreator newAward = baseAwardRepository.save(baseAwardCreator);
+        Optional<Award> award = awardRepository.findById(newAward.getId());
+        if (award.isPresent()){
+            awardCreationService.createAward(award.get());
             return ResponseEntity.accepted().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -55,9 +66,9 @@ public class AwardController {
             @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
     })
     public ResponseEntity<Award> getAward(@PathVariable Long id) {
-            return awardRepository.findById(id)
-                    .map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
+        return awardRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 //    @RequestMapping(value = "/recipient/{id}", method = RequestMethod.GET)

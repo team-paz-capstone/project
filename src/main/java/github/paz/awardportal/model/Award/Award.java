@@ -2,13 +2,12 @@ package github.paz.awardportal.model.Award;
 
 import github.paz.awardportal.model.AwardType.AwardType;
 import github.paz.awardportal.model.User.User;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "award")
@@ -22,8 +21,8 @@ public class Award{
     private Long id;
 
     @Column(name = "awarded_datetime", updatable = false)
-    @CreationTimestamp  // TODO - make sure this actually inserts on creation.
-    private LocalDateTime timestamp;
+    @GeneratedValue  
+    private Timestamp timestamp;
 
     @OneToOne
     @JoinColumn(name = "recipient_id")
