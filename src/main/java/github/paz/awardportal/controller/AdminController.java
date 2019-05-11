@@ -3,6 +3,8 @@ package github.paz.awardportal.controller;
 import github.paz.awardportal.model.User.User;
 import github.paz.awardportal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +15,17 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class AdminController {
 
-//    @Autowired
-//    private UserDAO userDAO;
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    // set up an encoder bean
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @GetMapping("/list")
     public String listUsers(Model model) {
@@ -53,6 +61,10 @@ public class AdminController {
 
     @PostMapping("/create")
     public String save(@ModelAttribute("user") User user) {
+
+        // encode user password before saving it
+        final String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
 
         userRepository.save(user);
 

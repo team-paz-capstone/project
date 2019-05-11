@@ -37,7 +37,7 @@ function set_env_variable_in_bash_session() {
 
 function load_jdbc_variable() {
     echo "Getting JDBC_DATABASE_URL!"
-    JDBC=$(heroku run echo '$JDBC_DATABASE_URL')
+    JDBC=$(heroku run echo '$JDBC_DATABASE_URL' -a pazcapstone)
     prepared_export=JDBC_DATABASE_URL'='${JDBC}
     export ${prepared_export}
 }
