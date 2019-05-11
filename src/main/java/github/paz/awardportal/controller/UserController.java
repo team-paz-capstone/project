@@ -62,52 +62,32 @@ public class UserController {
         }
 
     }
-//
-//    @RequestMapping(value = "/update", method = RequestMethod.POST)
-//    @ApiOperation(value = "Update an User with the given id")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Successfully updated user."),
-//            @ApiResponse(code = 500, message = "Failed to update the user. Try again later.")
-//    })
-//    public ResponseEntity<String> updateUser(
-//            @RequestBody User user) {
-//
-//        System.out.println("Received Request to update user: "
-//                + user.getFirstName() + " "
-//                + user.getLastName() + " "
-//                + user.getEmail()
-//                + user.isAdmin());
-//
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//        String hashedPassword = passwordEncoder.encode(user.getPassword());
-//        try (Connection connection = dataSource.getConnection()){
-//            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-//            Record userRecord = create.update(
-//                    table("users"))
-//                    .set(field("first_name"), user.getFirstName())
-//                    .set(field("last_name"), user.getLastName())
-//                    .set(field("email"), user.getEmail())
-//                    .set(field("password"), hashedPassword)
-//                    .set(field("is_admin"), user.isAdmin())
-//                    .where("id=" + user.getId())
-//                    .returning(field("id"))
-//                    .fetchOne();
-//            System.out.println(userRecord.getValue(field("id")));
-//
-//            return ResponseEntity.accepted().build();
-//        } catch (DataAccessException e) {
-//            e.printStackTrace();
-//            /*
-//             * TODO: This error handler is just taking a guess. I don't know how to interpret
-//             *  the different reasons.
-//             * */
-//            return ResponseEntity.badRequest().body("User with that email already exists!");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.badRequest().body("Failed to update");
-//        }
-//    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ApiOperation(value = "Update an User with the given id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully updated user."),
+            @ApiResponse(code = 500, message = "Failed to update the user. Try again later.")
+    })
+    public ResponseEntity<String> updateUser(
+            @RequestBody BaseUser update) {
+
+        System.out.println("Received Request to update user: "
+                + update.getFirstName() + " "
+                + update.getLastName() + " "
+                + update.getEmail()
+                + update.isAdmin());
+
+        try {
+            User loadedUser = userRepository.findByEmail(update.getEmail());
+            loadedUser.updateUser(update);
+            userRepository.save(loadedUser);
+            return ResponseEntity.accepted().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to update");
+        }
+    }
 //
 //    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 //    @ApiOperation(value = "Delete an User with the given id")

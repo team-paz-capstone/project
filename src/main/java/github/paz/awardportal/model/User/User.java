@@ -20,7 +20,9 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Basic(optional = false)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "first_name")
@@ -63,6 +65,17 @@ public class User {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(baseUser.getPassword());
         this.isAdmin = baseUser.isAdmin();
+    }
+
+    public void updateUser(BaseUser update){
+        this.firstName = update.getFirstName();
+        this.lastName = update.getLastName();
+        this.email = update.getEmail();
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(update.getPassword());
+        this.isAdmin = update.isAdmin();
+        this.signature = update.getSignature();
     }
 
     public User() {
