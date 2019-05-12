@@ -29,11 +29,8 @@ public class AdminController {
 
     @GetMapping("/list")
     public String listUsers(Model model) {
-
         List<User> users = userRepository.findAll();
-
         model.addAttribute("users", users);
-
         return "users/list-users";
     }
 
@@ -41,20 +38,15 @@ public class AdminController {
     @GetMapping("/addForm")
     public String addForm(Model model) {
         User user = new User();
-
         model.addAttribute("user", user);
-
         return "users/create-form";
     }
 
 
     @GetMapping("/updateForm")
     public String updateForm(@RequestParam("userId") Long id, Model model) {
-
         User user = userRepository.getOne(id);
-
         model.addAttribute("user", user);
-
         return "users/update-form";
     }
 
@@ -67,25 +59,20 @@ public class AdminController {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
-
         return "redirect:/users/list";
     }
 
 
     @PostMapping("/update")
     public String update(@ModelAttribute("user") User user) {
-
         userRepository.save(user);
-
         return "redirect:/users/list";
     }
 
 
     @GetMapping("/delete")
     public String delete(@RequestParam("userId") Long id) {
-
         userRepository.deleteById(id);
-
         return "redirect:/users/list";
     }
 }
