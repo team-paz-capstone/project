@@ -58,6 +58,7 @@
 
         <p>Choose an office</p>
         <select th:field="*{office}">
+            <option th:value="0" text="Please Select">
             <option th:each="officeChoice: ${offices}"
                     th:value="${officeChoice.id}" th:text="${officeChoice.name}"
             >
