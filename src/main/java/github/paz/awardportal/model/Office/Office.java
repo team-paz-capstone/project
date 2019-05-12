@@ -1,11 +1,14 @@
 package github.paz.awardportal.model.Office;
 
+import github.paz.awardportal.model.User.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name= "offices")
@@ -25,4 +28,7 @@ public class Office {
     @Column(name = "location")
     @NotNull
     private String location;
+
+    @OneToMany(targetEntity = User.class, mappedBy = "office", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<User> users = new ArrayList<>();
 }
