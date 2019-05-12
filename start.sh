@@ -6,9 +6,13 @@ IFS=$'\n\t'
 true=1
 false=0
 
+DEVELOPMENT_MAX_CONNECTIONS=2
+PRODUCTION_MAX_CONNECTIONS=5
+
 function main() {
     get_heroku_env_variables
     load_jdbc_variable
+    set_max_connections $@
     start_server
 }
 
@@ -42,9 +46,20 @@ function load_jdbc_variable() {
     export ${prepared_export}
 }
 
-function start_server() {
-    echo "Starting server!"
-    mvn spring-boot:run
+function set_max_connections() {
+    max_connections=${DEVELOPMENT_MAX_CONNECTIONS}
+    for VAR in ${@}; do
+        if [ "$VAR" = "--production" ]; then
+            echo "Setting max connections to 10!"
+            max_connections=${PRODUCTION_MAX_CONNECTIONS}
+        fi;
+    done
+    export MAX_CONNECTIONS=${max_connections}
 }
 
-main
+function start_server() {
+    echo "Starting server!"
+    mvn clean spring-boot:run
+}
+
+main $@
