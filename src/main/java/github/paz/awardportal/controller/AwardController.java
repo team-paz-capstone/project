@@ -51,7 +51,7 @@ public class AwardController {
         log.info("Creating award: " + baseAwardCreator);
         BaseAwardCreator newAward = baseAwardRepository.save(baseAwardCreator);
         Optional<Award> award = awardRepository.findById(newAward.getId());
-        if (award.isPresent()){
+        if (award.isPresent()) {
             awardCreationService.createAward(award.get());
             return ResponseEntity.accepted().build();
         } else {
@@ -107,64 +107,15 @@ public class AwardController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-//    @RequestMapping(value = "/update", method = RequestMethod.POST)
-//    @ApiOperation(value = "Update an award with the given ID")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Successfully updated Award with given ID."),
-//            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
-//    })
-//    public ResponseEntity<String> updateAward(
-//            @RequestBody AwardSkeleton updated) {
-//        try (Connection connection = dataSource.getConnection()){
-//            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-//            Record userRecord = create.update(
-//                    table(tableName))
-//                    .set(field(recipientID), updated.getRecipientID())
-//                    .set(field(granterID), updated.getGranterID())
-//                    .set(field(awardTypeID), updated.getAwardTypeID())
-//                    .where("id=" + updated.getId())
-//                    .returning(field("id"))
-//                    .fetchOne();
-//            System.out.println(userRecord.getValue(field("id")));
-//
-//            return ResponseEntity.accepted().build();
-//        } catch (DataAccessException e) {
-//            e.printStackTrace();
-//            /*
-//             * TODO: This error handler is just taking a guess. I don't know how to interpret
-//             *  the different reasons.
-//             * */
-//            return ResponseEntity.badRequest().body(
-//                    "Error updating award!\n"
-//                            + e.getMessage());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.badRequest().body("Failed to update");
-//        }
-//    }
-//
-//    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-//    @ApiOperation(value = "Delete an award with the given ID")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Successfully delete Award with given ID."),
-//            @ApiResponse(code = 404, message = "The Award with the given ID could not be found.")
-//    })
-//    public ResponseEntity<String> deleteAward(
-//            @PathVariable int id) {
-//        try (Connection connection = dataSource.getConnection()){
-//            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
-//            create.delete(table(tableName)).where("id=" + id).execute();
-//            return ResponseEntity.accepted().build();
-//        } catch (DataAccessException e) {
-//            e.printStackTrace();
-//            /*
-//             * TODO: This error handler is just taking a guess. I don't know how to interpret
-//             *  the different reasons.
-//             * */
-//            return ResponseEntity.badRequest().body("Failed to delete:\n" + e.getMessage());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.badRequest().body("Failed to delete");
-//        }    }
-
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @ApiOperation(value = "Delete an award with the given ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully delete Award with given ID."),
+            @ApiResponse(code = 500, message = "The Award with the given ID could not be found.")
+    })
+    public ResponseEntity<String> deleteAward(
+            @PathVariable long id) {
+        awardRepository.deleteById(id);
+        return ResponseEntity.accepted().build();
+    }
 }
