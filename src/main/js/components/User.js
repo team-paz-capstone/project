@@ -12,7 +12,7 @@ class User extends React.Component {
                 <td>{this.props.user.firstName}</td>
                 <td>{this.props.user.lastName}</td>
                 <td>{this.props.user.email}</td>
-                <td>{this.props.user.isAdmin}</td>
+                <td>{this.props.user.admin.toString()}</td>
                 <td>
                     <a href={"/users/updateForm?userId=" + this.props.user.id}
                        className="btn btn-info btn-sm">
