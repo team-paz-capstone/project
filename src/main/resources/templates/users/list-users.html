@@ -17,13 +17,16 @@
 
 <div class="container">
 
-    <h3>Admin Portal: users</h3>
+    <h4>Admin: User Management</h4>
     <hr>
 
-    <!-- add a button -->
-    <a th:href="@{/users/addForm}"
-       class="btn btn-primary btn-sm mb-3"
-    >
+    <a th:href="@{/offices/list}" class="btn btn-primary btn-sm mb-3">
+        Manage Offices
+    </a>
+
+    <br>
+
+    <a th:href="@{/users/addForm}" class="btn btn-primary btn-sm mb-3">
         Add User
     </a>
 
@@ -35,6 +38,7 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Admin</th>
+            <th>Office</th>
             <th>Update</th>
             <th>Delete</th>
         </tr>
@@ -48,6 +52,7 @@
             <td th:text="${user.lastName}"/>
             <td th:text="${user.email}"/>
             <td th:text="${user.admin}"/>
+            <td th:text="${user.office?.name}"/>
 
             <!-- add an update button-->
             <td>
