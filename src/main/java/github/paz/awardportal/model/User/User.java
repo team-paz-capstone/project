@@ -2,6 +2,7 @@ package github.paz.awardportal.model.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import github.paz.awardportal.model.Award.Award;
+import github.paz.awardportal.model.Office.Office;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,10 @@ public class User {
     @NonNull
     @JsonIgnore
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "office_id")
+    private Office office;
 
     @Column(name = "is_admin")
     @NonNull
