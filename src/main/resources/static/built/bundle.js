@@ -30211,7 +30211,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/** @license MIT License (c) copyright 2010-20
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
+* SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
+* */
+!(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
   'use strict';
   /* Convert a single or array of resources into "URI1\nURI2\nURI3..." */
 
@@ -30247,7 +30250,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = (function ()
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = (function (require) {
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
+* SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
+* */
+!(__WEBPACK_AMD_DEFINE_RESULT__ = (function (require) {
   'use strict';
 
   var interceptor = __webpack_require__(/*! rest/interceptor */ "./node_modules/rest/interceptor.js");
@@ -30278,6 +30284,9 @@ var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = (function (r
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/*
+* SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
+* */
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -30316,7 +30325,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      employees: []
+      users: []
     };
     return _this;
   }
@@ -30328,18 +30337,20 @@ function (_React$Component) {
 
       client({
         method: 'GET',
-        path: '/api/users/all'
+        path: '/api/user/all'
       }).done(function (response) {
+        console.debug(response);
+
         _this2.setState({
-          employees: response.entity._embedded.employees
+          users: response.entity
         });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return React.createElement(EmployeeList, {
-        employees: this.state.employees
+      return React.createElement(UserList, {
+        users: this.state.users
       });
     }
   }]);
@@ -30347,52 +30358,53 @@ function (_React$Component) {
   return App;
 }(React.Component);
 
-var EmployeeList =
+var UserList =
 /*#__PURE__*/
 function (_React$Component2) {
-  _inherits(EmployeeList, _React$Component2);
+  _inherits(UserList, _React$Component2);
 
-  function EmployeeList() {
-    _classCallCheck(this, EmployeeList);
+  function UserList() {
+    _classCallCheck(this, UserList);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(EmployeeList).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(UserList).apply(this, arguments));
   }
 
-  _createClass(EmployeeList, [{
+  _createClass(UserList, [{
     key: "render",
     value: function render() {
-      var employees = this.props.employees.map(function (employee) {
-        return React.createElement(Employee, {
-          key: employee._links.self.href,
-          employee: employee
+      console.debug(this.props);
+      var users = this.props.users.map(function (user) {
+        return React.createElement(User, {
+          key: user.email,
+          user: user
         });
       });
-      return React.createElement("table", null, React.createElement("tbody", null, React.createElement("tr", null, React.createElement("th", null, "First Name"), React.createElement("th", null, "Last Name"), React.createElement("th", null, "Description")), employees));
+      return React.createElement("table", null, React.createElement("tbody", null, React.createElement("tr", null, React.createElement("th", null, "First Name"), React.createElement("th", null, "Last Name"), React.createElement("th", null, "email")), users));
     }
   }]);
 
-  return EmployeeList;
+  return UserList;
 }(React.Component);
 
-var Employee =
+var User =
 /*#__PURE__*/
 function (_React$Component3) {
-  _inherits(Employee, _React$Component3);
+  _inherits(User, _React$Component3);
 
-  function Employee() {
-    _classCallCheck(this, Employee);
+  function User() {
+    _classCallCheck(this, User);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Employee).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(User).apply(this, arguments));
   }
 
-  _createClass(Employee, [{
+  _createClass(User, [{
     key: "render",
     value: function render() {
-      return React.createElement("tr", null, React.createElement("td", null, this.props.employee.firstName), React.createElement("td", null, this.props.employee.lastName), React.createElement("td", null, this.props.employee.description));
+      return React.createElement("tr", null, React.createElement("td", null, this.props.user.firstName), React.createElement("td", null, this.props.user.lastName), React.createElement("td", null, this.props.user.email));
     }
   }]);
 
-  return Employee;
+  return User;
 }(React.Component);
 
 ReactDOM.render(React.createElement(App, null), document.getElementById('react'));
@@ -30407,6 +30419,9 @@ ReactDOM.render(React.createElement(App, null), document.getElementById('react')
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/*
+* SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
+* */
 
 
 var rest = __webpack_require__(/*! rest */ "./node_modules/rest/browser.js");

@@ -1,3 +1,6 @@
+/*
+* SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
+* */
 'use strict';
 
 const React = require('react');
@@ -8,26 +11,28 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {employees: []};
+        this.state = {users: []};
     }
 
     componentDidMount() {
         client({method: 'GET', path: '/api/user/all'}).done(response => {
-            this.setState({employees: response.entity._embedded.employees});
+            console.debug(response);
+            this.setState({users: response.entity});
         });
     }
 
     render() {
         return (
-            <EmployeeList employees={this.state.employees}/>
+            <UserList users={this.state.users}/>
         )
     }
 }
 
-class EmployeeList extends React.Component {
+class UserList extends React.Component {
     render() {
-        const employees = this.props.employees.map(employee =>
-            <Employee key={employee._links.self.href} employee={employee}/>
+        console.debug(this.props)
+        const users = this.props.users.map(user =>
+            <User key={user.email} user={user}/>
         );
         return (
             <table>
@@ -35,22 +40,22 @@ class EmployeeList extends React.Component {
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Description</th>
+                    <th>email</th>
                 </tr>
-                {employees}
+                {users}
                 </tbody>
             </table>
         )
     }
 }
 
-class Employee extends React.Component {
+class User extends React.Component {
     render() {
         return (
             <tr>
-                <td>{this.props.employee.firstName}</td>
-                <td>{this.props.employee.lastName}</td>
-                <td>{this.props.employee.description}</td>
+                <td>{this.props.user.firstName}</td>
+                <td>{this.props.user.lastName}</td>
+                <td>{this.props.user.email}</td>
             </tr>
         )
     }
