@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>List Office</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Admin Portal: offices</h3>
+    <hr>
+
+    <!-- add a button -->
+    <a th:href="@{/offices/addForm}"
+       class="btn btn-primary btn-sm mb-3"
+    >
+        Add Office
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="office: ${offices}">
+
+            <td th:text="${office.id}"/>
+            <td th:text="${office.name}"/>
+            <td th:text="${office.location}"/>
+
+            <!-- add an update button-->
+            <td>
+                <a th:href="@{/offices/updateForm(officeId=${office.id})}"
+                   class="btn btn-info btn-sm">
+                    Update
+                </a>
+            </td>
+
+            <!-- add a delete button-->
+            <td>
+                <a th:href="@{/offices/delete(officeId=${office.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Are you sure you want to delete this office?'))) return false"
+                >
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
+
+
+
