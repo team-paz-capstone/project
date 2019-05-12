@@ -8,13 +8,21 @@ class UserList extends Component {
             <User key={user.email} user={user}/>
         );
         return (
-            <table>
-                <tbody>
+
+            <table className="table table-bordered table-striped">
+                <thead className="thead-dark">
                 <tr>
+                    <th>Id</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>email</th>
+                    <th>Email</th>
+                    <th>Admin</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
+                </thead>
+
+                <tbody>
                 {users}
                 </tbody>
             </table>

@@ -3,10 +3,12 @@
 * */
 'use strict';
 
+import 'babel-polyfill';
+
 const React = require('react');
 const ReactDOM = require('react-dom');
-const client = require('./client');
 import UserList from "./components/UserList";
+import {getAllUsers} from './api/user'
 
 class App extends React.Component {
 
@@ -15,16 +17,29 @@ class App extends React.Component {
         this.state = {users: []};
     }
 
-    componentDidMount() {
-        client({method: 'GET', path: '/api/user/all'}).done(response => {
-            console.debug(response);
-            this.setState({users: response.entity});
-        });
+    async componentDidMount() {
+        try {
+            let users = await getAllUsers();
+            this.setState({users: users});
+        } catch (error) {
+            console.warn("Failed  to load users!")
+        }
     }
 
     render() {
         return (
-            <UserList users={this.state.users}/>
+            <div className="container">
+                <h3>Admin Portal: users</h3>
+                <hr/>
+
+                <a href="/users/addForm"
+                   className="btn btn-primary btn-sm mb-3"
+                >
+                    Add User
+                </a>
+                <UserList users={this.state.users}/>
+            </div>
+
         )
     }
 }
