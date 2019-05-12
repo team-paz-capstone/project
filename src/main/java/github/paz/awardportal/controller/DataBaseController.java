@@ -1,9 +1,12 @@
+// TODO - have Spring do DB schema creation and data seeding for us.
+// https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html
+
+
 package github.paz.awardportal.controller;
 
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,8 +29,9 @@ import java.sql.Statement;
 @Api(value = "Award Management System", description = "Operations pertaining to award in Award Management System.")
 public class DataBaseController {
 
+
     @Autowired
-    private BasicDataSource dataSource;
+    DataSource dataSource;
 
     @RequestMapping(value = "/seed", method = RequestMethod.POST)
     @ApiOperation(value = "Seed the database", response = String.class)

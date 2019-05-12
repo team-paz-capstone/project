@@ -14,6 +14,7 @@ public class BaseUser {
     private String lastName;
     private String email;
     private String password;
+    private byte[] signature;
 
     @JsonProperty
     private boolean isAdmin;

@@ -9,8 +9,10 @@ CREATE SCHEMA paz;
 
 -- Users and Award type cannot be dropped until award is dropped
 DROP TABLE IF EXISTS award;
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS award_type;
+DROP TABLE IF EXISTS account_recovery;
+
+DROP TABLE IF EXISTS users;
 
 -- Users
 CREATE TABLE users (
@@ -32,13 +34,10 @@ CREATE TABLE award_type (
 -- Award
 CREATE TABLE award (
     id SERIAL PRIMARY KEY,
-    recipient_id INTEGER NOT NULL REFERENCES users,
-    granter_id INTEGER NOT NULL REFERENCES users,
-    award_type_id INTEGER NOT NULL REFERENCES award_type,
+    recipient_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+    granter_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+    award_type_id INTEGER NOT NULL REFERENCES award_type ON DELETE CASCADE,
     awarded_datetime TIMESTAMP default current_timestamp
-
-    /* TODO - figure out what kind of cascading we want, eg.
-     ON DELETE NO ACTION ON UPDATE NO ACTION */
 );
 
 CREATE TABLE account_recovery (
