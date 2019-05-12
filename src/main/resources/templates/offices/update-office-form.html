@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>Save User</title>
+    <title>Update Office</title>
 </head>
 
 
@@ -18,44 +18,27 @@
 
 <div class="container">
 
-    <h3>Admin Portal</h3>
+    <h3>Admin Portal: offices</h3>
 
-    <p class="h4 mb-4">Update User</p>
+    <p class="h4 mb-4">Update office</p>
 
     <form action="#"
-          th:action="@{/users/update}"
-          th:object="${user}"
+          th:action="@{/offices/create}"
+          th:object="${office}"
           method="post"
     >
         <!--add hidden form field to handle update-->
         <input type="hidden" th:field="*{id}">
 
-        <input type="text" th:field="*{firstName}"
+        <input type="text" th:field="*{name}"
                class="form-control mb-4 col-4"
-               placeholder="First Name"
+               placeholder="Office Name"
         >
 
-        <input type="text" th:field="*{lastName}"
+        <input type="text" th:field="*{location}"
                class="form-control mb-4 col-4"
-               placeholder="Last Name"
+               placeholder="Location"
         >
-
-        <input type="email" th:field="*{email}"
-               class="form-control mb-4 col-4"
-               placeholder="Email"
-        >
-
-
-        <input type="password" th:field="*{password}"
-               class="form-control mb-4 col-4"
-               placeholder="Password"
-        >
-
-        <div class="form-check">
-            <input type="checkbox" th:field="*{admin}"
-                   class="form-check-input" id="isadmin">
-            <label class="form-check-label" for="isadmin">is admin</label>
-        </div>
 
         <br>
         <!--submit button-->
@@ -64,11 +47,10 @@
     </form>
 
     <hr>
-    <a th:href="@{/users/list}">Back to Users</a>
+    <a th:href="@{/offices/list}">Back to Offices</a>
 
 </div>
 
 </body>
-
 
 </html>

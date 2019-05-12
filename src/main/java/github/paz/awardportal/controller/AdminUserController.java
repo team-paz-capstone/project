@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller()
 @RequestMapping(value = "/users")
-public class AdminController {
+public class AdminUserController {
 
     @Autowired
     private UserRepository userRepository;
@@ -39,7 +39,7 @@ public class AdminController {
     public String addForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "users/create-form";
+        return "users/create-user-form";
     }
 
 
@@ -47,7 +47,7 @@ public class AdminController {
     public String updateForm(@RequestParam("userId") Long id, Model model) {
         User user = userRepository.getOne(id);
         model.addAttribute("user", user);
-        return "users/update-form";
+        return "users/update-user-form";
     }
 
 
