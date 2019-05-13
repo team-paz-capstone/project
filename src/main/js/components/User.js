@@ -13,6 +13,7 @@ class User extends React.Component {
                 <td>{this.props.user.lastName}</td>
                 <td>{this.props.user.email}</td>
                 <td>{this.props.user.admin.toString()}</td>
+                <td>{this.props.user.office == (null || undefined) ? "" : this.props.user.office.name}</td>
                 <td>
                     <a href={"/users/updateForm?userId=" + this.props.user.id}
                        className="btn btn-info btn-sm">
