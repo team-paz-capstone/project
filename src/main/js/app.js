@@ -32,6 +32,14 @@ class App extends React.Component {
                 <h3>Admin Portal: users</h3>
                 <hr/>
 
+                <a href="/offices/list"
+                   className="btn btn-primary btn-sm mb-3"
+                >
+                    Office Management
+                </a>
+
+                <br/>
+
                 <a href="/users/addForm"
                    className="btn btn-primary btn-sm mb-3"
                 >
