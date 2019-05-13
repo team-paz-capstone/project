@@ -1,5 +1,6 @@
 package github.paz.awardportal.model.Office;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import github.paz.awardportal.model.User.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,6 @@ public class Office {
     private String location;
 
     @OneToMany(targetEntity = User.class, mappedBy = "office", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     List<User> users = new ArrayList<>();
 }
