@@ -48,12 +48,18 @@ function load_jdbc_variable() {
 
 function set_max_connections() {
     max_connections=${DEVELOPMENT_MAX_CONNECTIONS}
-    for VAR in ${@}; do
-        if [ "$VAR" = "--production" ]; then
-            echo "Setting max connections to 10!"
-            max_connections=${PRODUCTION_MAX_CONNECTIONS}
-        fi;
-    done
+
+    # if DYNO variable is set, it means environment is production
+    if [ -n "${DYNO+1}" ]; then
+        echo "In production environment, set max database connection to $PRODUCTION_MAX_CONNECTIONS"
+        max_connections=${PRODUCTION_MAX_CONNECTIONS}
+
+    # if DYNO variable is unset, it means environment is local as only heroku dyno has DYNO env variable
+    else
+        echo "In local dev environment, set max database connection to $DEVELOPMENT_MAX_CONNECTIONS"
+        max_connections=${DEVELOPMENT_MAX_CONNECTIONS}
+    fi;
+
     export MAX_CONNECTIONS=${max_connections}
 }
 
