@@ -1,6 +1,8 @@
 package github.paz.awardportal.controller;
 
+import github.paz.awardportal.model.Office.Office;
 import github.paz.awardportal.model.User.User;
+import github.paz.awardportal.repository.OfficeRepository;
 import github.paz.awardportal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,9 @@ public class AdminUserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private OfficeRepository officeRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -38,15 +43,24 @@ public class AdminUserController {
     @GetMapping("/addForm")
     public String addForm(Model model) {
         User user = new User();
+        List<Office> offices = officeRepository.findAll();
+
         model.addAttribute("user", user);
+        model.addAttribute("offices", offices);
+
         return "users/create-user-form";
     }
 
 
     @GetMapping("/updateForm")
     public String updateForm(@RequestParam("userId") Long id, Model model) {
+
         User user = userRepository.getOne(id);
+        List<Office> offices = officeRepository.findAll();
+
         model.addAttribute("user", user);
+        model.addAttribute("offices", offices);
+
         return "users/update-user-form";
     }
 
@@ -65,6 +79,11 @@ public class AdminUserController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute("user") User user) {
+
+        // encode user password before saving it
+        final String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
         userRepository.save(user);
         return "redirect:/users/list";
     }

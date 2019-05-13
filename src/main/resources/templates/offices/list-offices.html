@@ -17,15 +17,21 @@
 
 <div class="container">
 
-    <h3>Admin Portal: offices</h3>
+    <h4>Admin: Office Management</h4>
     <hr>
 
     <!-- add a button -->
-    <a th:href="@{/offices/addForm}"
-       class="btn btn-primary btn-sm mb-3"
-    >
+
+    <a th:href="@{/users/list}" class="btn btn-primary btn-sm mb-3">
+        Manage Users
+    </a>
+
+    <br>
+
+    <a th:href="@{/offices/addForm}" class="btn btn-primary btn-sm mb-3">
         Add Office
     </a>
+
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
