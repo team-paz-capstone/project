@@ -26,6 +26,7 @@
           th:action="@{/users/update}"
           th:object="${user}"
           method="post"
+          enctype="multipart/form-data"
     >
         <!--add hidden form field to handle update-->
         <input type="hidden" th:field="*{id}">
@@ -65,6 +66,12 @@
         </select>
         <br/>
         <br/>
+
+        <p>Please upload a file as signature (in jpg format)</p>
+        <input class="file-upload" type="file" name="picture" accept="image/jpeg" th:field="*{signature}">
+        <br>
+        <br>
+
 
         <!--submit button-->
         <button type="submit" class="btn btn-info col-2">Save</button>
