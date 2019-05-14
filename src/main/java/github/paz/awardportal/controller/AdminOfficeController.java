@@ -44,21 +44,21 @@ public class AdminOfficeController {
 
 
         officeRepository.save(office);
-        return "redirect:/";
+        return "redirect:/offices/list";
     }
 
 
     @PostMapping("/update")
     public String update(@ModelAttribute("office") Office office) {
         officeRepository.save(office);
-        return "redirect:/";
+        return "redirect:/offices/list";
     }
 
 
     @GetMapping("/delete")
     public String delete(@RequestParam("officeId") Long id) {
         officeRepository.deleteById(id);
-        return "redirect:/";
+        return "redirect:/offices/list";
     }
 }
 

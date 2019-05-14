@@ -33,11 +33,17 @@
         <input type="text" th:field="*{name}"
                class="form-control mb-4 col-4"
                placeholder="Office Name"
+               required
+               pattern="\S.*\S"
+               title="This field is required"
         >
 
         <input type="text" th:field="*{location}"
                class="form-control mb-4 col-4"
                placeholder="Location"
+               required
+               pattern="\S.*\S"
+               title="This field is required"
         >
 
         <br>
