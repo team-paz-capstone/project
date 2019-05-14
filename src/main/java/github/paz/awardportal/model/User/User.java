@@ -107,13 +107,18 @@ public class User {
     }
 
     // set signature from Multipartfile format which supports upload using <form>
-    public void setSignature(MultipartFile file) throws IOException {
-        this.signature = file.getBytes();
+    public void setSignature(MultipartFile file) {
+        try {
+            this.signature = file.getBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // return the signature in base64 string, allow it to be displayed in html
     public String getEncodedSignature() {
         try {
+
             InputStream inputStream = new ByteArrayInputStream(getSignature());
             long length = getSignature().length;
 
@@ -126,7 +131,7 @@ public class User {
 
             return s;
         } catch (Exception e) {
-            System.out.println("Error is:" + e.getMessage());
+            e.printStackTrace();
             return "";
         }
     }
