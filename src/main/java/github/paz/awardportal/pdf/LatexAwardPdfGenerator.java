@@ -37,14 +37,15 @@ public class LatexAwardPdfGenerator implements AwardPdfGenerator {
         return generateAwardPdf(data);
     }
 
-    // TODO - uses hardcoded info for now.
     public byte[] generateAwardPdf(AwardPdfTemplateData data) throws PdfGenerationException {
         PdfLatexFiles generatedFiles = null;
 
         try {
+            Path signatureImageFile = createSignatureImageFile(data);
             Path texTemplate = createTemplateFileToConvert(data);
             generatedFiles = pdfLatexCommandRunner.convertTemplateToPdf(texTemplate);
             Path pdfFile = generatedFiles.getPdfFile();
+            Files.deleteIfExists(signatureImageFile);
             return Files.readAllBytes(pdfFile);
 
         } catch(PdfLatexExecutionException | TemplateException | IOException ex) {
@@ -52,7 +53,6 @@ public class LatexAwardPdfGenerator implements AwardPdfGenerator {
         } finally {
             doCleanup(generatedFiles);
         }
-
     }
 
     private Path createTemplateFileToConvert(AwardPdfTemplateData templateData) throws IOException, TemplateException {
@@ -66,6 +66,20 @@ public class LatexAwardPdfGenerator implements AwardPdfGenerator {
     private Path createEmptyTemplateFile() throws IOException {
         Path currentDirectory = Paths.get(".");
         return Files.createTempFile(currentDirectory, "award", ".tex");
+    }
+
+    // Creates jpg file for the signature to include in the Latex template.
+    private Path createSignatureImageFile(AwardPdfTemplateData data) throws IOException {
+        if(data.getSignatureImage() != null) {
+            Path currentDirectory = Paths.get(".");
+            Path signatureFile = Files.createTempFile(currentDirectory, "signature", ".jpg");
+//            byte[] decoded = Base64.decode(data.getSignatureImage());
+            Files.write(signatureFile, data.getSignatureImage());
+            data.setSignatureImageFile(signatureFile.getFileName().toString());
+
+            return signatureFile;
+        }
+        return null;
     }
 
     private void doCleanup(PdfLatexFiles files) {

@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 @Log4j2
 public class PdfLatexCommandRunner {
-    private static final String COMMAND = "pdflatex -escape-shell -halt-on-error %s";
+    private static final String COMMAND = "pdflatex --shell-escape -halt-on-error %s";
 
     public PdfLatexCommandRunner() { }
 
