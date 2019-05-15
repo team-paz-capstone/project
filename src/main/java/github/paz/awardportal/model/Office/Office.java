@@ -33,4 +33,20 @@ public class Office {
     @OneToMany(targetEntity = User.class, mappedBy = "office", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     List<User> users = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Office{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
+
+    public void updateOffice(Office update) {
+        this.id = update.getId();
+        this.name = update.getName();
+        this.location = update.getLocation();
+        this.users = update.getUsers();
+    }
 }
