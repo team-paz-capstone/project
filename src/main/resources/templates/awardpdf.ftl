@@ -1,6 +1,6 @@
 \documentclass{article}
 
-<#if signatureImageFile?has_content>
+<#if signatureImage?has_content>
     \usepackage{graphicx}
 </#if>
 
@@ -8,7 +8,7 @@
 
 ${recipientName} has been awarded ${awardName} by ${granterName} on ${dateAwarded}
 
-<#if signatureImageFile?has_content>
+<#if signatureImage?has_content>
     \fbox{\includegraphics[width=3cm]{${signatureImageFile}}}
 <#else>
 

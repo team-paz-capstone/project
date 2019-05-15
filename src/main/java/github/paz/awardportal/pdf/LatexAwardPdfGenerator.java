@@ -70,16 +70,12 @@ public class LatexAwardPdfGenerator implements AwardPdfGenerator {
 
     // Creates jpg file for the signature to include in the Latex template.
     private Path createSignatureImageFile(AwardPdfTemplateData data) throws IOException {
-        if(data.getSignatureImage() != null) {
-            Path currentDirectory = Paths.get(".");
-            Path signatureFile = Files.createTempFile(currentDirectory, "signature", ".jpg");
-//            byte[] decoded = Base64.decode(data.getSignatureImage());
-            Files.write(signatureFile, data.getSignatureImage());
-            data.setSignatureImageFile(signatureFile.getFileName().toString());
+        Path currentDirectory = Paths.get(".");
+        Path signatureFile = Files.createTempFile(currentDirectory, "signature", ".jpg");
+        Files.write(signatureFile, data.getSignatureImage());
+        data.setSignatureImageFile(signatureFile.getFileName().toString());
 
-            return signatureFile;
-        }
-        return null;
+        return signatureFile;
     }
 
     private void doCleanup(PdfLatexFiles files) {
