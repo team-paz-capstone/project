@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  **************************************************/
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig extends WebSecurityConfigurerAdapter {
+public class SwaggerConfig {
 
     @Bean
     public Docket api() {
@@ -44,24 +44,6 @@ public class SwaggerConfig extends WebSecurityConfigurerAdapter {
         filter.setIncludeHeaders(false);
         filter.setAfterMessagePrefix("REQUEST DATA : ");
         return filter;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /*
-    * This disables requiring auth to access the website (including things like
-    * the API).
-    *
-    * TODO: Remove once auth tokens have been implemented.
-    * */
-    @Override
-    protected void configure(HttpSecurity security) throws Exception
-    {
-        security.httpBasic().disable();
-        security.cors().and().csrf().disable();
     }
 }
 
