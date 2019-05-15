@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import User from './User';
+import Office from './Office';
 
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -8,11 +8,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-class UserList extends Component {
+class OfficeList extends Component {
   render() {
     console.debug(this.props);
-    const users = this.props.users.map((user) => (
-      <User key={user.email} user={user} />
+    const offices = this.props.offices.map((office) => (
+      <Office key={office.id} office={office} />
     ));
     return (
       <Paper>
@@ -22,18 +22,14 @@ class UserList extends Component {
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Admin</TableCell>
-              <TableCell>Office</TableCell>
-              <TableCell>Signature</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Location</TableCell>
               <TableCell>Update</TableCell>
               <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
 
-          <TableBody>{users}</TableBody>
+          <TableBody>{offices}</TableBody>
 
         </Table>
 
@@ -42,4 +38,4 @@ class UserList extends Component {
   }
 }
 
-export default UserList;
+export default OfficeList;
