@@ -1,40 +1,24 @@
 # CS467 - Capstone Project
 
 ## About
-<description>
 
-## Quickstart
-<instructions>
+A employee portal web application
 
-### Server
+## To use the application 
 
-##### Connect to the server
+Go to https://pazcapstone.herokuapp.com
+
+## Local Dev Server Setup
+
 Run this before launching the server.
 ```bash
 heroku config -a pazcapstone
 ```
 
-Take the DATABASE_URL from the output and do
-```bash
-export DATABASE_URL=postgres://RETURNEDVALUE
-```
-##### Logging into the server
-If you need to log in to the server for
-local queries:
+If you need to log in to the database server for local queries:
 ```bash
 heroku pg:psql -a pazcapstone
 ```
 
-#### Run the server
-
-```bash
-mvn spring-boot:run
-```
-
-## Contributors
-1.
-2.
-3.
-
-
-
+Start local dev server
+- Run `start.sh` in the project root.

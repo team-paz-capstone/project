@@ -9,11 +9,13 @@ false=0
 DEVELOPMENT_MAX_CONNECTIONS=2
 PRODUCTION_MAX_CONNECTIONS=5
 
+
+# Export all environmental variable needs for running the application to a 'ENV' file in project root
 function main() {
+    echo > EnvFile
     get_heroku_env_variables
     load_jdbc_variable
     set_max_connections $@
-    start_server
 }
 
 function get_heroku_env_variables() {
@@ -35,7 +37,7 @@ function set_env_variable_in_bash_session() {
         name=$(echo ${VAR} | awk '{print substr($1, 1, length($1)-1)}')
         value=$(echo ${VAR} | awk '{print $2}')
         prepared_export=${name}'='${value}
-        export ${prepared_export}
+        echo ${prepared_export} >> EnvFile
     done
 }
 
@@ -43,6 +45,7 @@ function load_jdbc_variable() {
     echo "Getting JDBC_DATABASE_URL!"
     JDBC=$(heroku run echo '$JDBC_DATABASE_URL' -a pazcapstone)
     prepared_export=JDBC_DATABASE_URL'='${JDBC}
+    echo ${prepared_export} >> EnvFile
     export ${prepared_export}
 }
 
@@ -60,12 +63,7 @@ function set_max_connections() {
         max_connections=${DEVELOPMENT_MAX_CONNECTIONS}
     fi;
 
-    export MAX_CONNECTIONS=${max_connections}
-}
-
-function start_server() {
-    echo "Starting server!"
-    mvn clean spring-boot:run
+    echo MAX_CONNECTIONS=${max_connections} >> EnvFile
 }
 
 main $@

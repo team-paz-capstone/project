@@ -41,3 +41,8 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+src/main/resources/static/built/
+StorageService.java
+
+# ignore EnvFile which contains all environemntal variable required for running application
+EnvFile

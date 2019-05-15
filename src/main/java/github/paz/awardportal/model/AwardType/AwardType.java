@@ -1,16 +1,28 @@
 package github.paz.awardportal.model.AwardType;
 
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "award_type")
 @Getter
 @Setter
-public class AwardType extends BaseAwardType {
+@RequiredArgsConstructor
+public class AwardType {
 
-    private int id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    public AwardType(int id, String name) {
-        super(name);
-        this.id = id;
-    }
+    @Column(name = "name")
+    @NonNull
+    private String name;
+
+    // JPA
+    private AwardType() {}
+
 }
