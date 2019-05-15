@@ -16,12 +16,11 @@ public class AwardPdfTemplateData {
     private String recipientName;
     private String granterName;
     private String dateAwarded;
-    private String signatureImage;  // Base64-encoded signature image.
-    private Boolean hasSignature;
+    private byte[] signatureImage;
+    private String signatureImageFile;  // jpg of the base64 encoded string. Included in the template.
 
     public static AwardPdfTemplateData fromAward(Award award) {
         AwardPdfTemplateData data = new AwardPdfTemplateData();
-        // TODO - nullptr protection.
         User recipient = award.getRecipient();
         User granter = award.getGranter();
 
@@ -29,12 +28,7 @@ public class AwardPdfTemplateData {
         data.setRecipientName(getFullUserName(recipient));
         data.setGranterName(getFullUserName(granter));
         data.setDateAwarded(DATE_FORMATTER.format(award.getTimestamp()));
-
-        // TODO - template currently uses a hard-coded image.
-        // This method will convert the granter's signature to a Base64-encoded
-        // string for the template.
-//        data.setSignatureImage(formatSignatureImage());
-        data.setHasSignature(false);
+        data.setSignatureImage(award.getGranter().getSignature());
         return data;
 
     }

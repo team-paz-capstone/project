@@ -7,15 +7,13 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
-import java.io.InputStream;
 
 @Entity
 @Table(name = "users")
@@ -117,23 +115,12 @@ public class User {
 
     // return the signature in base64 string, allow it to be displayed in html
     public String getEncodedSignature() {
-        try {
-
-            InputStream inputStream = new ByteArrayInputStream(getSignature());
-            long length = getSignature().length;
-
-            byte[] bytes = new byte[(int) length];
-
-            inputStream.read(bytes);
-            inputStream.close();
-
-            String s = Base64Utils.encodeToString(bytes);
-
-            return s;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+        String encodedSignature = "";
+        // Users aren't required to have a signature (unless we make changes), so we need NPE protection here.
+        // Otherwise, the Thymeleaf template throws a NPE when trying to create the image source string.
+        if(signature != null) {
+            encodedSignature = Base64.getEncoder().encodeToString(signature);
         }
+        return encodedSignature;
     }
-
 }
