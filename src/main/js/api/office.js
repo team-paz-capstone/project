@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export async function getAllUsers() {
+export async function getAllOffices() {
   return new Promise((resolve, reject) => {
-    axios.get('/api/user/all').then((response) => {
+    axios.get('/api/office/all').then((response) => {
       resolve(response.data);
     }).catch((error) => {
       reject(error);
@@ -10,9 +10,9 @@ export async function getAllUsers() {
   });
 }
 
-export async function getUser(id) {
+export async function getOffice(id) {
   return new Promise((resolve, reject) => {
-    axios.get('/api/user/' + id).then((response) => {
+    axios.get('/api/office/' + id).then((response) => {
       resolve(response.data);
     }).catch((error) => {
       reject(error);
@@ -21,9 +21,9 @@ export async function getUser(id) {
 }
 
 /* TODO: Needs to be tested */
-export async function createUser(id, data) {
+export async function createOffice(id, data) {
   return new Promise((resolve, reject) => {
-    axios.post('/api/user/create', data).then((response) => {
+    axios.post('/api/office/create', data).then((response) => {
       resolve(response);
     }).catch((error) => {
       reject(error);
@@ -32,9 +32,9 @@ export async function createUser(id, data) {
 }
 
 /* TODO: Needs to be tested */
-export async function updateUser(id, data) {
+export async function updateOffice(id, data) {
   return new Promise((resolve, reject) => {
-    axios.post('/api/user/update', data).then((response) => {
+    axios.post('/api/office/update', data).then((response) => {
       resolve(response);
     }).catch((error) => {
       reject(error);
@@ -43,9 +43,9 @@ export async function updateUser(id, data) {
 }
 
 /* TODO: Needs to be tested */
-export async function deleteUser(id) {
+export async function deleteOffice(id) {
   return new Promise((resolve, reject) => {
-    axios.get('/api/user/delete/' + id).then((response) => {
+    axios.get('/api/office/delete/' + id).then((response) => {
       resolve(response.data);
     }).catch((error) => {
       reject(error);
