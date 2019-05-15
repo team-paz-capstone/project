@@ -18,6 +18,7 @@ class UserList extends Component {
                     <th>Email</th>
                     <th>Admin</th>
                     <th>Office</th>
+                    <th>Signature</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>

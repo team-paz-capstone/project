@@ -26,23 +26,35 @@
           th:action="@{/users/create}"
           th:object="${user}"
           method="post"
+          enctype="multipart/form-data"
     >
         <!--add hidden form field to handle update-->
         <input type="hidden" th:field="*{id}">
 
+        <!-- regular expression to prevent any white space in beginning or end of the string-->
         <input type="text" th:field="*{firstName}"
                class="form-control mb-4 col-4"
                placeholder="First Name"
+               required
+               pattern="\S.*\S"
+               title="This field is required"
         >
 
         <input type="text" th:field="*{lastName}"
                class="form-control mb-4 col-4"
                placeholder="Last Name"
+               required
+               pattern="\S.*\S"
+               title="This field is required"
         >
 
+        <!-- regular expression prevent any white space in string-->
         <input type="email" th:field="*{email}"
                class="form-control mb-4 col-4"
                placeholder="Email"
+               required
+               pattern="\S+"
+               title="This field is required"
         >
 
 
@@ -50,6 +62,10 @@
                th:field="*{password}"
                class="form-control mb-4 col-4"
                placeholder="Password"
+               minlength="8"
+               required
+               pattern="\S+"
+               title="This field is required"
         >
 
         <p>Is admin?</p>
@@ -63,13 +79,20 @@
                     th:value="${officeChoice.id}" th:text="${officeChoice.name}"
             >
         </select>
+
         <br>
         <br>
+
+        <p>Please upload a file as signature (in jpg format)</p>
+        <input class="file-upload" type="file" name="picture" accept="image/jpeg" th:field="*{signature}">
+        <br>
+        <br>
+
 
         <!--submit button-->
         <button type="submit" class="btn btn-info col-2">Save</button>
-
     </form>
+
 
     <hr>
     <a th:href="@{/users/list}">Back to Users</a>

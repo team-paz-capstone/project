@@ -3,15 +3,19 @@ package github.paz.awardportal.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import github.paz.awardportal.model.Award.Award;
 import github.paz.awardportal.model.Office.Office;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.io.InputStream;
 
 @Entity
 @Table(name = "users")
@@ -53,8 +57,8 @@ public class User {
 
     @Column(name = "signature")
     @JsonIgnore
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] signature;
-
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipient") // TODO - cascade types.
     @JsonIgnore
@@ -72,7 +76,7 @@ public class User {
         this.isAdmin = baseUser.isAdmin();
     }
 
-    public void updateUser(BaseUser update){
+    public void updateUser(BaseUser update) {
         this.firstName = update.getFirstName();
         this.lastName = update.getLastName();
         this.email = update.getEmail();
@@ -85,4 +89,51 @@ public class User {
 
     public User() {
     }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", office=" + office +
+                ", isAdmin=" + isAdmin +
+                ", signature=" + Arrays.toString(signature) +
+                ", receivedAwards=" + receivedAwards +
+                '}';
+    }
+
+    // set signature from Multipartfile format which supports upload using <form>
+    public void setSignature(MultipartFile file) {
+        try {
+            this.signature = file.getBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // return the signature in base64 string, allow it to be displayed in html
+    public String getEncodedSignature() {
+        try {
+
+            InputStream inputStream = new ByteArrayInputStream(getSignature());
+            long length = getSignature().length;
+
+            byte[] bytes = new byte[(int) length];
+
+            inputStream.read(bytes);
+            inputStream.close();
+
+            String s = Base64Utils.encodeToString(bytes);
+
+            return s;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 }

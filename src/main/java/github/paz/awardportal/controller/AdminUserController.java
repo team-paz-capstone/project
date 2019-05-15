@@ -64,6 +64,15 @@ public class AdminUserController {
         return "users/update-user-form";
     }
 
+    @GetMapping("/viewSignature")
+    public String viewSignature(@RequestParam("userId") Long id, Model model) {
+        User user = userRepository.getOne(id);
+
+        model.addAttribute("user", user);
+
+        return "users/view-signature";
+    }
+
 
     @PostMapping("/create")
     public String save(@ModelAttribute("user") User user) {
@@ -73,6 +82,7 @@ public class AdminUserController {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
+
         return "redirect:/users/list";
     }
 
