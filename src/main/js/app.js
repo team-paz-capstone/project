@@ -9,6 +9,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 import UserList from './components/UserList';
 import OfficeList from './components/OfficeList';
+import LoadingBar from './components/LoadingBar';
+
 import {getAllUsers} from './api/user';
 import {getAllOffices} from './api/office';
 
@@ -23,7 +25,7 @@ import red from '@material-ui/core/colors/red';
 
 import localStorage from 'local-storage';
 
-
+// setup the color for primary and secondary using theming
 const theme = createMuiTheme({
   palette: {
     primary: blue,
@@ -38,6 +40,7 @@ class App extends React.Component {
     this.state = {
       users: [],
       offices: [],
+      finishedLoadingData: false,
       viewUserList: true,
     };
 
@@ -62,6 +65,9 @@ class App extends React.Component {
       // load office data
       const offices = await getAllOffices();
       this.setState({offices: offices});
+
+      // data loading is finished
+      this.setState({finishedLoadingData: true});
     } catch (error) {
       console.warn('Failed  to load users/offices!');
     }
@@ -117,7 +123,13 @@ class App extends React.Component {
         {/* allow customize theme color*/}
         <MuiThemeProvider theme={theme}>
 
-          <Grid container direction="row" justify="center" alignItems="center">
+
+          {/* rendering a loading animation if data has not finished loading*/}
+          {this.state.finishedLoadingData === false && <LoadingBar/>}
+
+          {/* only load the page if data has finished loading */}
+          {this.state.finishedLoadingData &&
+          <Grid container direction="row" justify="center" alignItems="center" >
             <div>
               <br />
               {title}
@@ -131,6 +143,9 @@ class App extends React.Component {
               {list}
             </div>
           </Grid>
+          }
+
+
         </MuiThemeProvider>
       </React.Fragment>
     );
