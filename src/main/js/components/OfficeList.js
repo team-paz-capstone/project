@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import Office from './Office';
+import React, { Component } from 'react';
 
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -7,18 +6,15 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Office from './Office';
 
 class OfficeList extends Component {
   render() {
     console.debug(this.props);
-    const offices = this.props.offices.map((office) => (
-      <Office key={office.id} office={office} />
-    ));
+    const offices = this.props.offices.map(office => <Office key={office.id} office={office} />);
     return (
       <Paper>
-
         <Table>
-
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
@@ -30,9 +26,7 @@ class OfficeList extends Component {
           </TableHead>
 
           <TableBody>{offices}</TableBody>
-
         </Table>
-
       </Paper>
     );
   }

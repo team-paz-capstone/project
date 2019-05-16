@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import TableCell from '@material-ui/core/TableCell';
@@ -12,7 +12,6 @@ class Office extends React.Component {
   render() {
     return (
       <TableRow>
-
         <TableCell>{this.props.office.id}</TableCell>
         <TableCell>{this.props.office.name}</TableCell>
         <TableCell>{this.props.office.location}</TableCell>
@@ -21,9 +20,9 @@ class Office extends React.Component {
           <Button
             color="primary"
             variant="outlined"
-            href={'/offices/updateForm?officeId=' + this.props.office.id}
+            href={`/offices/updateForm?officeId=${this.props.office.id}`}
           >
-                        Update
+            Update
           </Button>
         </TableCell>
 
@@ -31,13 +30,12 @@ class Office extends React.Component {
           <Button
             color="secondary"
             variant="outlined"
-            href={'/offices/delete?officeId=' + this.props.office.id}
+            href={`/offices/delete?officeId=${this.props.office.id}`}
             onClick={this.handleClick}
           >
-                        Delete
+            Delete
           </Button>
         </TableCell>
-
       </TableRow>
     );
   }
