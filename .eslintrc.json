@@ -3,7 +3,7 @@
         "browser": true,
         "es6": true
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "extends":  ["airbnb", "prettier"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -16,9 +16,11 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
-        "react/jsx-uses-vars": 2
+        "react/jsx-uses-vars": 2,
+        "prettier/prettier": ["error"]
     }
 }
