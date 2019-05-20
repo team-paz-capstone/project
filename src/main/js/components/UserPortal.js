@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-class UserPortal extends React.Component {
-
+class UserPortal extends Component {
   render() {
     return (
-      <div>The User Portal</div>
+      <div><h1>Welcome!</h1></div>
     );
   }
 }
