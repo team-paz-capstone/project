@@ -65,7 +65,7 @@ function set_max_connections() {
 
 function start_server() {
     echo "Starting server!"
-    mvn clean spring-boot:run
+    mvn spring-boot:run
 }
 
 main $@
