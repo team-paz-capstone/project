@@ -7,12 +7,6 @@ const LoadingBar = () => {
       <br />
       <br />
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <LinearProgress />
     </div>
   );
