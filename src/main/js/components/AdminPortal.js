@@ -5,10 +5,9 @@
 import 'babel-polyfill';
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import localStorage from 'local-storage';
+import Grid from '@material-ui/core/Grid';
 import { getAllOffices } from '../api/office';
 import { getAllUsers } from '../api/user';
 import LoadingBar from './LoadingBar';
@@ -119,17 +118,22 @@ class AdminPortal extends React.Component {
       list = <OfficeList offices={offices} />;
     }
 
+    const queryButton = (
+      <Button color="primary" variant="contained" href="/query">
+        View Queries
+      </Button>
+    );
+
     return (
       <React.Fragment>
-        {/* ensure css consistency across browser */}
-        <CssBaseline />
+        <Grid container direction="row" justify="center" alignItems="center">
+          {/* ensure css consistency across browser */}
 
-        {/* rendering a loading animation if data has not finished loading */}
-        {finishedLoadingData === false && <LoadingBar />}
+          {/* rendering a loading animation if data has not finished loading */}
+          {finishedLoadingData === false && <LoadingBar />}
 
-        {/* only load the page if data has finished loading */}
-        {finishedLoadingData && (
-          <Grid container direction="row" justify="center" alignItems="center">
+          {/* only load the page if data has finished loading */}
+          {finishedLoadingData && (
             <div>
               <br />
               {title}
@@ -143,10 +147,18 @@ class AdminPortal extends React.Component {
               <br />
 
               <br />
+              {queryButton}
+              <br />
+
+              <br />
               {list}
+
+              <br />
+              <br />
+              <br />
             </div>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </React.Fragment>
     );
   }
