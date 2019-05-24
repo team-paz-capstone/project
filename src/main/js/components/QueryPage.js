@@ -109,7 +109,7 @@ class QueryPage extends Component {
 
     const csvDownload = (
       <div>
-        <CSVLink data={data}>
+        <CSVLink data={data} filename="user_count_by_office.csv">
           <Button color="primary" variant="contained">
             Download CSV
           </Button>
