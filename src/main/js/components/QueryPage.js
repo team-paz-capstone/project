@@ -80,7 +80,7 @@ class QueryPage extends Component {
             label={{ value: 'User Count', angle: -90, position: 'insideLeft' }}
           />
           <Tooltip />
-          <Bar dataKey="user_count" fill={blue[500]} />
+          <Bar dataKey="user_count" fill={blue[500]} name="User Count" />
         </BarChart>
       </div>
     );
