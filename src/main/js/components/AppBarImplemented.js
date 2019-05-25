@@ -3,6 +3,7 @@
 * https://material-ui.com/demos/app-bar/
 * */
 import React from 'react';
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,6 +17,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import {logIn, logOut} from "../actions"
 
 const styles = {
   root: {
@@ -32,12 +34,18 @@ const styles = {
 
 class AppBarImplemented extends React.Component {
   state = {
-    auth: true,
     anchorEl: null,
   };
 
-  handleChange = event => {
-    this.setState({auth: event.target.checked});
+  handleChange = () => {
+    if (this.props.auth) {
+      console.debug("Logging out!");
+      this.props.dispatch(logOut());
+      return
+    }
+
+    console.debug("Logging in!");
+    this.props.dispatch(logIn("Test Token"));
   };
 
   handleMenu = event => {
@@ -49,60 +57,60 @@ class AppBarImplemented extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
-    const {auth, anchorEl} = this.state;
+    const {classes, auth} = this.props;
+    const {anchorEl} = this.state;
     const open = Boolean(anchorEl);
 
     return (
-      <div className={classes.root}>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch"/>
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon/>
-            </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              Employee Award Recognition
-            </Typography>
-            {auth && (
-              <div>
-                <IconButton
-                  aria-owns={open ? 'menu-appbar' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle/>
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu>
-              </div>
-            )}
-          </Toolbar>
-        </AppBar>
-      </div>
+        <div className={classes.root}>
+          <FormGroup>
+            <FormControlLabel
+                control={
+                  <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch"/>
+                }
+                label={auth ? 'Logout' : 'Login'}
+            />
+          </FormGroup>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                <MenuIcon/>
+              </IconButton>
+              <Typography variant="h6" color="inherit" className={classes.grow}>
+                Employee Award Recognition
+              </Typography>
+              {auth && (
+                  <div>
+                    <IconButton
+                        aria-owns={open ? 'menu-appbar' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleMenu}
+                        color="inherit"
+                    >
+                      <AccountCircle/>
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={this.handleClose}
+                    >
+                      <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    </Menu>
+                  </div>
+              )}
+            </Toolbar>
+          </AppBar>
+        </div>
     );
   }
 }
@@ -111,4 +119,10 @@ AppBarImplemented.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AppBarImplemented);
+
+const mapStateToProps = (state) => ({
+  auth: state.authentication.auth,
+  token: state.authentication.token,
+});
+
+export default withStyles(styles)(connect(mapStateToProps)(AppBarImplemented));

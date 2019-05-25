@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-class User extends React.Component {
+class User extends Component {
   handleClick(e) {
     if (!confirm('Are you sure you want to delete this user?')) return false;
   }
