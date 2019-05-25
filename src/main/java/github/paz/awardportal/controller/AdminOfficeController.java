@@ -19,7 +19,7 @@ public class AdminOfficeController {
     public String listOffices(Model model) {
         List<Office> offices = officeRepository.findAll();
         model.addAttribute("offices", offices);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
 

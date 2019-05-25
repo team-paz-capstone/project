@@ -15,4 +15,9 @@ public class HomeController {
     public String admin() {
         return "index";
     }
+
+    @RequestMapping(value = "/query")
+    public String query() {
+        return "index";
+    }
 }

@@ -5,27 +5,14 @@
 import 'babel-polyfill';
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
 import localStorage from 'local-storage';
-import {getAllOffices} from '../api/office';
-import {getAllUsers} from '../api/user';
-import LoadingBar from '../components/LoadingBar';
-import UserList from '../components/UserList';
-import OfficeList from '../components/OfficeList';
-
-// setup the color for primary and secondary using theming
-const theme = createMuiTheme({
-  palette: {
-    primary: blue,
-    secondary: red
-  },
-  typography: {useNextVariants: true}
-});
+import Grid from '@material-ui/core/Grid';
+import { getAllOffices } from '../api/office';
+import { getAllUsers } from '../api/user';
+import LoadingBar from './LoadingBar';
+import UserList from './UserList';
+import OfficeList from './OfficeList';
 
 class AdminPortal extends React.Component {
   constructor(props) {
@@ -49,21 +36,21 @@ class AdminPortal extends React.Component {
       if (localStorage('viewUserList') !== null && localStorage('viewUserList') === false) {
         viewUserList = false;
       }
-      console.debug("TEST");
-      console.debug("viewUserList: " + localStorage('viewUserList'));
+      console.debug('TEST');
+      console.debug(`viewUserList: ${localStorage('viewUserList')}`);
 
-      this.setState({viewUserList});
+      this.setState({ viewUserList });
 
       // load user data
       const users = await getAllUsers();
-      this.setState({users});
+      this.setState({ users });
 
       // load office data
       const offices = await getAllOffices();
-      this.setState({offices});
+      this.setState({ offices });
 
       // data loading is finished
-      this.setState({finishedLoadingData: true});
+      this.setState({ finishedLoadingData: true });
     } catch (error) {
       console.warn('Failed  to load users/offices!');
     }
@@ -90,7 +77,7 @@ class AdminPortal extends React.Component {
   }
 
   render() {
-    const {viewUserList, offices, users, finishedLoadingData} = this.state;
+    const { viewUserList, offices, users, finishedLoadingData } = this.state;
 
     let title;
     let viewButton;
@@ -112,7 +99,7 @@ class AdminPortal extends React.Component {
         </Button>
       );
 
-      list = <UserList users={users}/>;
+      list = <UserList users={users} />;
     } else {
       title = <Typography variant="h5">Admin Portal: offices</Typography>;
 
@@ -128,40 +115,50 @@ class AdminPortal extends React.Component {
         </Button>
       );
 
-      list = <OfficeList offices={offices}/>;
+      list = <OfficeList offices={offices} />;
     }
+
+    const queryButton = (
+      <Button color="primary" variant="contained" href="/query">
+        View Queries
+      </Button>
+    );
 
     return (
       <React.Fragment>
-        {/* ensure css consistency across browser */}
-        <CssBaseline/>
+        <Grid container direction="row" justify="center" alignItems="center">
+          {/* ensure css consistency across browser */}
 
-        {/* allow customize theme color */}
-        <MuiThemeProvider theme={theme}>
           {/* rendering a loading animation if data has not finished loading */}
-          {finishedLoadingData === false && <LoadingBar/>}
+          {finishedLoadingData === false && <LoadingBar />}
 
           {/* only load the page if data has finished loading */}
           {finishedLoadingData && (
-            <Grid container direction="row" justify="center" alignItems="center">
-              <div>
-                <br/>
-                {title}
+            <div>
+              <br />
+              {title}
 
-                <br/>
-                {viewButton}
-                <br/>
+              <br />
+              {viewButton}
+              <br />
 
-                <br/>
-                {addButton}
-                <br/>
+              <br />
+              {addButton}
+              <br />
 
-                <br/>
-                {list}
-              </div>
-            </Grid>
+              <br />
+              {queryButton}
+              <br />
+
+              <br />
+              {list}
+
+              <br />
+              <br />
+              <br />
+            </div>
           )}
-        </MuiThemeProvider>
+        </Grid>
       </React.Fragment>
     );
   }
