@@ -12,3 +12,16 @@ export async function getOfficeByUserCount() {
       });
   });
 }
+
+export async function getUserByAwardCount() {
+  return new Promise((resolve, reject) => {
+    axios
+      .get('/api/query/user_by_award_count')
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
