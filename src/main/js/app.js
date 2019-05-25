@@ -6,11 +6,9 @@ import 'babel-polyfill';
 import React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom'
 import ReactDOM from 'react-dom';
-
 import AppBarImplemented from "./components/AppBarImplemented"
 import AdminPortal from "./components/AdminPortal";
 import UserPortal from "./components/UserPortal";
-
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import {createLogger} from 'redux-logger'
@@ -26,15 +24,12 @@ const store = createStore(
   applyMiddleware(...middleware)
 );
 
-// store.dispatch(getAllProducts()); // TODO: fetch all the users via dispatch
-
 class App extends React.Component {
 
   render() {
     console.debug("Rendering App!");
     return (
       <Provider store={store}>
-        {/*<p>{store.getState()}</p>*/}
         <div>
           <AppBarImplemented/>
           <BrowserRouter>

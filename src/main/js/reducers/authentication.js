@@ -1,15 +1,25 @@
-/**
- * I was looking at this documentation when modeling:
- * https://github.com/reduxjs/redux/tree/master/examples/shopping-cart/src/reducers
- * */
+import {LOG_IN, LOG_OUT} from "../action-types";
+
 const initialState = {
-  auth: true,
+    auth: false,
+    token: ''
 };
 
-const authentication = (state = initialState, action) => {
-  return state.auth;
+export default function (state = initialState, action) {
+    console.debug(action);
+    switch (action.type) {
+        case LOG_IN:
+            return {
+                auth: true,
+                token: action.token
+            };
+        case LOG_OUT:
+            return {
+                auth: false,
+                token: undefined
+            };
+        default:
+            return state;
+    }
 };
 
-export const isAuthenticated = (state) => state.auth;
-
-export default authentication;

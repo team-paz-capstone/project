@@ -1,24 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {authenticated} from '../reducers'
-import {bool} from "prop-types";
 
-const UserPortal = ({auth}) => (
-  <div>
-    <h1>Welcome! Authenticated={auth}</h1>
-    <p>State: </p>
-  </div>
-);
-
-UserPortal.propTypes = {
-  auth: bool
-};
+class UserPortal extends Component {
+    render() {
+        return (
+            <div>
+                <h1>Welcome!</h1>
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = (state) => ({
-  auth: authenticated(state),
+    auth: state.authentication.auth,
+    token: state.authentication.token
 });
 
-export default connect(
-  mapStateToProps,
-  {authenticated}
-)(UserPortal)
+export default connect(mapStateToProps)(UserPortal)
