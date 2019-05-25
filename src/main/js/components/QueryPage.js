@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BarChart, Line, XAxis, YAxis, Tooltip, Bar, Label } from 'recharts';
+import { BarChart, XAxis, YAxis, Tooltip, Bar, Label, CartesianGrid, Line } from 'recharts';
 import 'babel-polyfill';
 import blue from '@material-ui/core/colors/blue';
 import Grid from '@material-ui/core/Grid';
@@ -11,7 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { CSVLink, CSVDownload } from 'react-csv';
+import { CSVLink } from 'react-csv';
 import { getOfficeByUserCount } from '../api/query';
 import LoadingBar from './LoadingBar';
 
@@ -38,10 +38,10 @@ class QueryPage extends Component {
       const dataArray = Object.entries(data).sort(Comparator);
 
       const dataArrayTransformed = [];
-      for (let i = 0; i < dataArray.length; i++) {
+      for (let i = 0; i < dataArray.length; i += 1) {
         const officeName = dataArray[i][0];
         const userCount = dataArray[i][1];
-        const entry = { name: officeName, count: userCount };
+        const entry = { office_name: officeName, user_count: userCount };
         dataArrayTransformed.push(entry);
       }
 
@@ -71,14 +71,16 @@ class QueryPage extends Component {
         <h4>User Count By Office</h4>
         <BarChart data={data} width={960} height={300}>
           <Label value="User Count By Office" position="top" />
-          <Line type="monotone" dataKey="name" />
-          <XAxis dataKey="name" />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Line type="monotone" dataKey="office_name" />
+          <XAxis dataKey="office_name" />
           <YAxis
+            dataKey="user_count"
             allowDecimals={false}
             label={{ value: 'User Count', angle: -90, position: 'insideLeft' }}
           />
           <Tooltip />
-          <Bar dataKey="count" fill={blue[500]} />
+          <Bar dataKey="user_count" fill={blue[500]} />
         </BarChart>
       </div>
     );
@@ -96,9 +98,9 @@ class QueryPage extends Component {
           <TableBody>
             {data.map(entry => {
               return (
-                <TableRow>
-                  <TableCell>{entry.name}</TableCell>
-                  <TableCell>{entry.count}</TableCell>
+                <TableRow key={entry.office_name}>
+                  <TableCell>{entry.office_name}</TableCell>
+                  <TableCell>{entry.user_count}</TableCell>
                 </TableRow>
               );
             })}
