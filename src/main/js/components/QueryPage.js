@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { CSVLink } from 'react-csv';
+import Divider from '@material-ui/core/Divider';
 import { getOfficeByUserCount, getUserByAwardCount } from '../api/query';
 import LoadingBar from './LoadingBar';
 
@@ -237,11 +238,10 @@ class QueryPage extends Component {
               {this.renderOfficeByUserCountQuerySection()}
               <br />
               <br />
-              <br />
-              <br />
-              <br />
+              <Divider />
               <br />
               {this.renderUserByAwardCountSection()}
+              <br />
               <br />
             </div>
           </Grid>
