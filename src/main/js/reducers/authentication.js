@@ -6,7 +6,6 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-    console.debug(action);
     switch (action.type) {
         case LOG_IN:
             return {
