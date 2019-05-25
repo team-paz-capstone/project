@@ -2,7 +2,21 @@
 
 ## About
 
-A employee portal web application
+This is the Oregon State University capstone project for the 
+contributors of the project. 
+
+### Technology
+
+#### The backend server
+- Java - Spring Boot Server
+- JPA for ORM
+- PostGres SQL
+
+#### The frontend
+
+- React with Redux
+- MaterialUI
+- Javascript served via Spring Boot.
 
 ## To use the application 
 
@@ -10,15 +24,23 @@ Go to https://pazcapstone.herokuapp.com
 
 ## Local Dev Server Setup
 
-Run this before launching the server.
+### Configure your local heroku installation
 ```bash
 heroku config -a pazcapstone
 ```
 
-If you need to log in to the database server for local queries:
+### Logging into the database
 ```bash
 heroku pg:psql -a pazcapstone
 ```
 
-Start local dev server
-- Run `start.sh` in the project root.
+### Start the local server
+```bash
+./start.sh
+``` 
+
+## Contributors
+1. Matthew Anderson - 
+2. Patrick Rice - ricep@oregonstate.edu
+3. Zi Wei Wu - 
+
