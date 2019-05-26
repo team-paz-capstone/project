@@ -2,9 +2,8 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
+import {blue, red} from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import red from '@material-ui/core/colors/red';
 import Main from './components/Main';
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
@@ -15,16 +14,18 @@ import reducer from './reducers'
 const middleware = [thunk];
 middleware.push(createLogger());
 
-const store = createStore(
-    reducer,
-    applyMiddleware(...middleware)
-);
+const store = createStore(reducer, applyMiddleware(...middleware));
 
 // setup the color for primary and secondary using theming
 const theme = createMuiTheme({
   palette: {
     primary: blue,
     secondary: red
+  },
+  props: {
+    Snackbar: {
+      backgroundColor: red
+    }
   },
   typography: {useNextVariants: true}
 });
@@ -38,7 +39,7 @@ class App extends React.Component {
             {/* allow customize theme color */}
             <CssBaseline/>
             <MuiThemeProvider theme={theme}>
-              <Main></Main>
+              <Main/>
             </MuiThemeProvider>
           </div>
         </Provider>

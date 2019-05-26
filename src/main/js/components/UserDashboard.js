@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
 import {
   fetchAwards,
   fetchAwardTypes,
   fetchOffices,
   fetchUsers
 } from "../actions";
+import React, {Component} from 'react';
+import {connect} from 'react-redux'
+import BaseError from "./BaseError";
 
 class UserDashboard extends Component {
 
@@ -17,25 +18,29 @@ class UserDashboard extends Component {
   }
 
   render() {
+    let error = this.props.users.error +
+        this.props.awards.error +
+        this.props.awardTypes.error +
+        this.props.offices.error;
     return (
         <div>
+          <BaseError error={error}/>
           <h1>Welcome!</h1>
-          <p>Users: {JSON.stringify(this.props.users)}</p>
-          <p>Awards: {JSON.stringify(this.props.awards)}</p>
-          <p>AwardTypes: {JSON.stringify(this.props.awardTypes)}</p>
-          <p>Offices: {JSON.stringify(this.props.offices)}</p>
+          <p>Users: {JSON.stringify(this.props.users.items)}</p>
+          <p>Awards: {JSON.stringify(this.props.awards.items)}</p>
+          <p>AwardTypes: {JSON.stringify(this.props.awardTypes.items)}</p>
+          <p>Offices: {JSON.stringify(this.props.offices.items)}</p>
         </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.authentication.auth,
-  awards: state.awards.items,
-  awardTypes: state.awardTypes.items,
-  token: state.authentication.token,
-  offices: state.offices.items,
-  users: state.users.items,
+  authentication: state.authentication,
+  awards: state.awards,
+  awardTypes: state.awardTypes,
+  offices: state.offices,
+  users: state.users,
 });
 
 export default connect(mapStateToProps)(UserDashboard)

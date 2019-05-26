@@ -125,4 +125,4 @@ const mapStateToProps = (state) => ({
   token: state.authentication.token,
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(AppBarImplemented));
+export default connect(mapStateToProps)(withStyles(styles)(AppBarImplemented));
