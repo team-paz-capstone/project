@@ -1,54 +1,35 @@
 import axios from 'axios';
 
+const BASE_URL = "/api/user/";
+const ALL = BASE_URL + 'all';
+const CREATE = BASE_URL + "create";
+const UPDATE = BASE_URL + "update";
+const DELETE = BASE_URL + "delete";
+
 export async function getAllUsers() {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/user/all').then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.get(ALL);
 }
 
 export async function getUser(id) {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/user/' + id).then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.get(BASE_URL + id);
 }
 
-/* TODO: Needs to be tested */
 export async function createUser(id, data) {
-  return new Promise((resolve, reject) => {
-    axios.post('/api/user/create', data).then((response) => {
-      resolve(response);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.post(CREATE, data);
 }
 
-/* TODO: Needs to be tested */
 export async function updateUser(id, data) {
-  return new Promise((resolve, reject) => {
-    axios.post('/api/user/update', data).then((response) => {
-      resolve(response);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.post(UPDATE, data);
 }
 
-/* TODO: Needs to be tested */
 export async function deleteUser(id) {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/user/delete/' + id).then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.get(DELETE + id);
+}
+
+export default {
+  getAllUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
 }
