@@ -1,8 +1,10 @@
 package github.paz.awardportal.controller;
 
 
+import github.paz.awardportal.model.Award.Award;
 import github.paz.awardportal.model.Office.Office;
 import github.paz.awardportal.model.User.User;
+import github.paz.awardportal.repository.AwardRepository;
 import github.paz.awardportal.repository.OfficeRepository;
 import github.paz.awardportal.repository.UserRepository;
 import io.swagger.annotations.Api;
@@ -26,9 +28,12 @@ public class AdminQueryController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AwardRepository awardRepository;
+
     @RequestMapping(value = "/office_by_user_count", method = RequestMethod.GET)
     @ApiOperation(value = "list office ranked by user count", response = List.class)
-    public ResponseEntity<Map<String, Integer>> getAllOffices() {
+    public ResponseEntity<Map<String, Integer>> getOfficeByUserCount() {
         log.info("Get - Office By User Count");
 
         Map<String, Integer> res = new HashMap<>();
@@ -50,6 +55,24 @@ public class AdminQueryController {
             } else {
                 res.put("None", res.get("None") + 1);
             }
+        }
+
+        return ResponseEntity.ok(res);
+    }
+
+
+    @RequestMapping(value = "/user_by_award_count", method = RequestMethod.GET)
+    @ApiOperation(value = "list user ranked by award count", response = List.class)
+    public ResponseEntity<Map<String, Integer>> getUserByAwardCount() {
+        log.info("Get - User By Office Count");
+
+        Map<String, Integer> res = new HashMap<>();
+
+        // Iterate through the award list, put the user and count of all award received in the hashmap
+        List<Award> awards = awardRepository.findAll();
+        for (Award award : awards) {
+            String email = award.getRecipient().getEmail();
+            res.put(email, res.getOrDefault(email, 0)+1);
         }
 
         return ResponseEntity.ok(res);

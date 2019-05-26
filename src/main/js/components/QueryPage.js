@@ -12,7 +12,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { CSVLink } from 'react-csv';
-import { getOfficeByUserCount } from '../api/query';
+import Divider from '@material-ui/core/Divider';
+import { getOfficeByUserCount, getUserByAwardCount } from '../api/query';
 import LoadingBar from './LoadingBar';
 
 // sort by count from largest to smallest
@@ -26,27 +27,45 @@ class QueryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      officeByUserData: [],
+      userByAwardData: [],
       finishedLoadingData: false
     };
+
+    this.renderOfficeByUserCountQuerySection = this.renderOfficeByUserCountQuerySection.bind(this);
+    this.renderUserByAwardCountSection = this.renderUserByAwardCountSection.bind(this);
   }
 
   // noinspection JSCheckFunctionSignatures
   async componentDidMount() {
     try {
-      const data = await getOfficeByUserCount();
-      const dataArray = Object.entries(data).sort(Comparator);
+      // get office by user count data
+      const officeByUserData = await getOfficeByUserCount();
+      const officeByUserDataArray = Object.entries(officeByUserData).sort(Comparator);
 
-      const dataArrayTransformed = [];
-      for (let i = 0; i < dataArray.length; i += 1) {
-        const officeName = dataArray[i][0];
-        const userCount = dataArray[i][1];
+      const officeByUserDataArrayTransformed = [];
+      for (let i = 0; i < officeByUserDataArray.length; i += 1) {
+        const officeName = officeByUserDataArray[i][0];
+        const userCount = officeByUserDataArray[i][1];
         const entry = { office_name: officeName, user_count: userCount };
-        dataArrayTransformed.push(entry);
+        officeByUserDataArrayTransformed.push(entry);
       }
 
-      this.setState({ data: dataArrayTransformed });
-      console.log(dataArrayTransformed);
+      this.setState({ officeByUserData: officeByUserDataArrayTransformed });
+
+      // get user by award count data
+      const userByAwardData = await getUserByAwardCount();
+      const userByAwardDataArray = Object.entries(userByAwardData).sort(Comparator);
+
+      const userByAwardDataArrayTransformed = [];
+      for (let i = 0; i < userByAwardDataArray.length; i += 1) {
+        const userEmail = userByAwardDataArray[i][0];
+        const awardCount = officeByUserDataArray[i][1];
+        const entry = { user_email: userEmail, award_count: awardCount };
+        userByAwardDataArrayTransformed.push(entry);
+      }
+
+      this.setState({ userByAwardData: userByAwardDataArrayTransformed });
 
       // data loading is finished
       this.setState({ finishedLoadingData: true });
@@ -55,21 +74,14 @@ class QueryPage extends Component {
     }
   }
 
-  render() {
-    const { data, finishedLoadingData } = this.state;
-
-    const title = <Typography variant="h5">Admin Portal: users</Typography>;
-
-    const backButton = (
-      <Button color="primary" variant="contained" href="/admin">
-        Back to Admin Portal
-      </Button>
-    );
+  // Render bar, chart, csv download for office by user count
+  renderOfficeByUserCountQuerySection() {
+    const { officeByUserData } = this.state;
 
     const renderChart = (
-      <div>
-        <h4>User Count By Office</h4>
-        <BarChart data={data} width={960} height={300}>
+      <React.Fragment>
+        <h4>Office By User Count</h4>
+        <BarChart data={officeByUserData} width={960} height={300}>
           <Label value="User Count By Office" position="top" />
           <CartesianGrid strokeDasharray="3 3" />
           <Line type="monotone" dataKey="office_name" />
@@ -82,7 +94,7 @@ class QueryPage extends Component {
           <Tooltip />
           <Bar dataKey="user_count" fill={blue[500]} name="User Count" />
         </BarChart>
-      </div>
+      </React.Fragment>
     );
 
     const renderTable = (
@@ -96,7 +108,7 @@ class QueryPage extends Component {
           </TableHead>
 
           <TableBody>
-            {data.map(entry => {
+            {officeByUserData.map(entry => {
               return (
                 <TableRow key={entry.office_name}>
                   <TableCell>{entry.office_name}</TableCell>
@@ -110,44 +122,130 @@ class QueryPage extends Component {
     );
 
     const csvDownload = (
-      <div>
-        <CSVLink data={data} filename="user_count_by_office.csv">
+      <React.Fragment>
+        <CSVLink data={officeByUserData} filename="office_by_user_count.csv">
           <Button color="primary" variant="contained">
             Download CSV
           </Button>
         </CSVLink>
-      </div>
+      </React.Fragment>
+    );
+
+    const querySection = (
+      <React.Fragment>
+        {renderChart}
+        <br />
+        {renderTable}
+        <br />
+        {csvDownload}
+      </React.Fragment>
+    );
+    return querySection;
+  }
+
+  // Render bar, chart, csv download for user by award count
+  renderUserByAwardCountSection() {
+    const { userByAwardData } = this.state;
+
+    const renderChart = (
+      <React.Fragment>
+        <h4>User By Award Count</h4>
+        <BarChart data={userByAwardData} width={960} height={300}>
+          <Label value="User Award Count" position="top" />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Line type="monotone" dataKey="user_email" />
+          <XAxis dataKey="user_email" />
+          <YAxis
+            dataKey="award_count"
+            allowDecimals={false}
+            label={{ value: 'Award Count', angle: -90, position: 'insideLeft' }}
+          />
+          <Tooltip />
+          <Bar dataKey="award_count" fill={blue[500]} name="Award Count" />
+        </BarChart>
+      </React.Fragment>
+    );
+
+    const renderTable = (
+      <Paper>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>User Email</TableCell>
+              <TableCell>Award Count</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {userByAwardData.map(entry => {
+              return (
+                <TableRow key={entry.user_email}>
+                  <TableCell>{entry.user_email}</TableCell>
+                  <TableCell>{entry.award_count}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </Paper>
+    );
+
+    const csvDownload = (
+      <React.Fragment>
+        <CSVLink data={userByAwardData} filename="user_by_award_count.csv">
+          <Button color="primary" variant="contained">
+            Download CSV
+          </Button>
+        </CSVLink>
+      </React.Fragment>
+    );
+
+    const querySection = (
+      <React.Fragment>
+        {renderChart}
+        <br />
+        {renderTable}
+        <br />
+        {csvDownload}
+      </React.Fragment>
+    );
+    return querySection;
+  }
+
+  render() {
+    const { finishedLoadingData } = this.state;
+
+    const title = <Typography variant="h5">Admin Portal: users</Typography>;
+
+    const backButton = (
+      <Button color="primary" variant="contained" href="/admin">
+        Back to Admin Portal
+      </Button>
     );
 
     return (
       <React.Fragment>
-        <Grid container direction="row" justify="center" alignItems="center">
-          {finishedLoadingData === false && <LoadingBar />}
-          {finishedLoadingData && (
+        {finishedLoadingData === false && <LoadingBar />}
+        {finishedLoadingData && (
+          <Grid container direction="row" justify="center" alignItems="center">
             <div>
               <br />
               {title}
-
               <br />
               {backButton}
               <br />
-
               <br />
-              {renderChart}
+              {this.renderOfficeByUserCountQuerySection()}
               <br />
-
               <br />
-              {renderTable}
+              <Divider />
               <br />
-
-              {csvDownload}
-
-              <br />
+              {this.renderUserByAwardCountSection()}
               <br />
               <br />
             </div>
-          )}
-        </Grid>
+          </Grid>
+        )}
       </React.Fragment>
     );
   }
