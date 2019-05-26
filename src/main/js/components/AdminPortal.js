@@ -127,14 +127,12 @@ class AdminPortal extends React.Component {
 
     return (
       <React.Fragment>
-        <Grid container direction="row" justify="center" alignItems="center">
-          {/* ensure css consistency across browser */}
+        {/* rendering a loading animation if data has not finished loading */}
+        {finishedLoadingData === false && <LoadingBar />}
 
-          {/* rendering a loading animation if data has not finished loading */}
-          {finishedLoadingData === false && <LoadingBar />}
-
-          {/* only load the page if data has finished loading */}
-          {finishedLoadingData && (
+        {/* only load the page if data has finished loading */}
+        {finishedLoadingData && (
+          <Grid container direction="row" justify="center" alignItems="center">
             <div>
               <br />
               {title}
@@ -158,8 +156,8 @@ class AdminPortal extends React.Component {
               <br />
               <br />
             </div>
-          )}
-        </Grid>
+          </Grid>
+        )}
       </React.Fragment>
     );
   }
