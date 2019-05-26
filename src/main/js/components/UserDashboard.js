@@ -7,7 +7,7 @@ import {
   fetchUsers
 } from "../actions";
 
-class UserPortal extends Component {
+class UserDashboard extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchUsers());
@@ -38,4 +38,4 @@ const mapStateToProps = (state) => ({
   users: state.users.items,
 });
 
-export default connect(mapStateToProps)(UserPortal)
+export default connect(mapStateToProps)(UserDashboard)
