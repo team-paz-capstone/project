@@ -1,5 +1,6 @@
 export * from "./awards"
 export * from "./award-types"
+export * from "./offices"
 export * from "./users"
 
 export const LOG_IN = "LOG_IN";

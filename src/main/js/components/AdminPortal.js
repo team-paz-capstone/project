@@ -1,15 +1,11 @@
-/*
- * SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
- * */
-
 import 'babel-polyfill';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import localStorage from 'local-storage';
 import Grid from '@material-ui/core/Grid';
-import { getAllOffices } from '../api/office';
-import { getAllUsers } from '../api/user';
+import {getAllOffices} from '../api/office';
+import {getAllUsers} from '../api/user';
 import LoadingBar from './LoadingBar';
 import UserList from './UserList';
 import OfficeList from './OfficeList';
@@ -39,19 +35,20 @@ class AdminPortal extends React.Component {
       console.debug('TEST');
       console.debug(`viewUserList: ${localStorage('viewUserList')}`);
 
-      this.setState({ viewUserList });
+      this.setState({viewUserList});
 
       // load user data
-      const response = await getAllUsers();
-      const users = response.data;
-      this.setState({ users });
+      let response = await getAllUsers();
+      let users = response.data;
+      this.setState({users});
 
       // load office data
-      const offices = await getAllOffices();
-      this.setState({ offices });
+      response = await getAllOffices();
+      let offices = response.data;
+      this.setState({offices});
 
       // data loading is finished
-      this.setState({ finishedLoadingData: true });
+      this.setState({finishedLoadingData: true});
     } catch (error) {
       console.warn('Failed  to load users/offices!');
     }
@@ -78,7 +75,7 @@ class AdminPortal extends React.Component {
   }
 
   render() {
-    const { viewUserList, offices, users, finishedLoadingData } = this.state;
+    const {viewUserList, offices, users, finishedLoadingData} = this.state;
 
     let title;
     let viewButton;
@@ -89,76 +86,76 @@ class AdminPortal extends React.Component {
       title = <Typography variant="h5">Admin Portal: users</Typography>;
 
       viewButton = (
-        <Button color="primary" variant="contained" onClick={this.handleClickViewOffices}>
-          View Offices
-        </Button>
+          <Button color="primary" variant="contained" onClick={this.handleClickViewOffices}>
+            View Offices
+          </Button>
       );
 
       addButton = (
-        <Button color="primary" variant="contained" href="/users/addForm">
-          Add User
-        </Button>
+          <Button color="primary" variant="contained" href="/users/addForm">
+            Add User
+          </Button>
       );
 
-      list = <UserList users={users} />;
+      list = <UserList users={users}/>;
     } else {
       title = <Typography variant="h5">Admin Portal: offices</Typography>;
 
       viewButton = (
-        <Button color="primary" variant="contained" onClick={this.handleClickViewUsers}>
-          View Users
-        </Button>
+          <Button color="primary" variant="contained" onClick={this.handleClickViewUsers}>
+            View Users
+          </Button>
       );
 
       addButton = (
-        <Button color="primary" variant="contained" href="/offices/addForm">
-          Add Office
-        </Button>
+          <Button color="primary" variant="contained" href="/offices/addForm">
+            Add Office
+          </Button>
       );
 
-      list = <OfficeList offices={offices} />;
+      list = <OfficeList offices={offices}/>;
     }
 
     const queryButton = (
-      <Button color="primary" variant="contained" href="/query">
-        View Queries
-      </Button>
+        <Button color="primary" variant="contained" href="/query">
+          View Queries
+        </Button>
     );
 
     return (
-      <React.Fragment>
-        {/* rendering a loading animation if data has not finished loading */}
-        {finishedLoadingData === false && <LoadingBar />}
+        <React.Fragment>
+          {/* rendering a loading animation if data has not finished loading */}
+          {finishedLoadingData === false && <LoadingBar/>}
 
-        {/* only load the page if data has finished loading */}
-        {finishedLoadingData && (
-          <Grid container direction="row" justify="center" alignItems="center">
-            <div>
-              <br />
-              {title}
+          {/* only load the page if data has finished loading */}
+          {finishedLoadingData && (
+              <Grid container direction="row" justify="center" alignItems="center">
+                <div>
+                  <br/>
+                  {title}
 
-              <br />
-              {viewButton}
-              <br />
+                  <br/>
+                  {viewButton}
+                  <br/>
 
-              <br />
-              {addButton}
-              <br />
+                  <br/>
+                  {addButton}
+                  <br/>
 
-              <br />
-              {queryButton}
-              <br />
+                  <br/>
+                  {queryButton}
+                  <br/>
 
-              <br />
-              {list}
+                  <br/>
+                  {list}
 
-              <br />
-              <br />
-              <br />
-            </div>
-          </Grid>
-        )}
-      </React.Fragment>
+                  <br/>
+                  <br/>
+                  <br/>
+                </div>
+              </Grid>
+          )}
+        </React.Fragment>
     );
   }
 }
