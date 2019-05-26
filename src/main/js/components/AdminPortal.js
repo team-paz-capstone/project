@@ -42,7 +42,8 @@ class AdminPortal extends React.Component {
       this.setState({ viewUserList });
 
       // load user data
-      const users = await getAllUsers();
+      const response = await getAllUsers();
+      const users = response.data;
       this.setState({ users });
 
       // load office data
