@@ -1,7 +1,7 @@
-const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  entry: './src/main/js/app.js',
+  entry: './src/main/js/index.js',
   devtool: 'sourcemaps',
   mode: 'development',
   output: {
@@ -9,15 +9,18 @@ module.exports = {
     filename: './src/main/resources/static/built/bundle.js'
   },
 
-  watchOptions: {
-    ignored: /node_modules/,
-    poll: true
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        parallel: true
+      })
+    ]
   },
 
   module: {
     rules: [
       {
-        test: path.join(__dirname, '.'),
+        test: /\.js$/,
         exclude: /(node_modules)/,
         use: [
           {
