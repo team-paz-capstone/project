@@ -1,5 +1,4 @@
 import Api from "../api/award-types"
-
 import ActionTypes from "../action-types/award-types"
 
 export function fetchAwardTypes() {
