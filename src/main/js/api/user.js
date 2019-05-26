@@ -6,19 +6,37 @@ const CREATE = BASE_URL + "create";
 const UPDATE = BASE_URL + "update";
 const DELETE = BASE_URL + "delete";
 
+/**
+ * @return { Object } - Axios Response:
+ *  Data - List of User Objects
+* */
 export async function getAllUsers() {
   return axios.get(ALL);
 }
 
+/**
+ * @return { Object } - Axios Response:
+ *  Data - User Object
+ * */
 export async function getUser(id) {
   return axios.get(BASE_URL + id);
 }
 
-export async function createUser(id, data) {
+/**
+ * @param data {Object}:
+ *  - firstName
+ *  - lastName
+ *  - email
+ *  - password
+ *  - isAdmin
+ *
+ * @return { Object } - Axios Response:
+ * */
+export async function createUser(data) {
   return axios.post(CREATE, data);
 }
 
-export async function updateUser(id, data) {
+export async function updateUser(data) {
   return axios.post(UPDATE, data);
 }
 

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {fetchUsers} from "../actions";
+import {fetchUsers, fetchAwardTypes} from "../actions";
 
 class UserPortal extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchUsers());
+    this.props.dispatch(fetchAwardTypes());
   }
 
   render() {
@@ -13,6 +14,7 @@ class UserPortal extends Component {
         <div>
           <h1>Welcome!</h1>
           <p>Users: {JSON.stringify(this.props.users)}</p>
+          <p>AwardTypes: {JSON.stringify(this.props.awardTypes)}</p>
         </div>
     );
   }
@@ -21,7 +23,8 @@ class UserPortal extends Component {
 const mapStateToProps = (state) => ({
   auth: state.authentication.auth,
   token: state.authentication.token,
-  users: state.users.items
+  users: state.users.items,
+  awardTypes: state.awardTypes.items
 });
 
 export default connect(mapStateToProps)(UserPortal)
