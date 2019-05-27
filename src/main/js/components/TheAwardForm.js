@@ -5,7 +5,8 @@ import {connect} from "react-redux";
 
 class TheAwardForm extends Component {
   createAward = (event) => {
-    
+    console.debug(event);
+    console.debug("Create Award Clicked...")
   };
 
   render() {
@@ -16,6 +17,7 @@ class TheAwardForm extends Component {
 
     return (
         <div>
+          <h2>Recognize Hard Work!</h2>
           <BaseSelect
               name={"Recipient"}
               items={users}
