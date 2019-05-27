@@ -18,6 +18,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import {logIn, logOut} from "../actions"
+import BaseSelect from "./BaseSelect";
 
 const styles = {
   root: {
@@ -61,6 +62,11 @@ class TheAppBar extends React.Component {
     const {anchorEl} = this.state;
     const open = Boolean(anchorEl);
 
+    let users = this.props.users.items.map(user => {
+      user.display = user["firstName"] + " " + user["lastName"];
+      return user;
+    });
+
     return (
         <div className={classes.root}>
           <FormGroup>
@@ -70,6 +76,12 @@ class TheAppBar extends React.Component {
                 }
                 label={auth ? 'Logout' : 'Login'}
             />
+            <BaseSelect
+                name={"Logged In As"}
+                items={users}
+                nameKey={"display"}
+                valueKey={"id"}/>
+            <br/>
           </FormGroup>
           <AppBar position="static">
             <Toolbar>
@@ -123,6 +135,8 @@ TheAppBar.propTypes = {
 const mapStateToProps = (state) => ({
   auth: state.authentication.auth,
   token: state.authentication.token,
+  select: state.select,
+  users: state.users,
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(TheAppBar));

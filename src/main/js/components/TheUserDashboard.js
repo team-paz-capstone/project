@@ -23,11 +23,12 @@ class TheUserDashboard extends Component {
         this.props.awards.error +
         this.props.awardTypes.error +
         this.props.offices.error;
-
+    let loggedInUser = this.props.select.items["Logged In As"];
+    let name = loggedInUser ? loggedInUser["display"]: "Invalid User Logged In";
     return (
         <div>
           <BaseError error={error}/>
-          <h1>Welcome!</h1>
+          <h1>Welcome {name}!</h1>
           <br/>
           <TheAwardForm/>
           <br/>
@@ -45,6 +46,7 @@ const mapStateToProps = (state) => ({
   awards: state.awards,
   awardTypes: state.awardTypes,
   offices: state.offices,
+  select: state.select,
   users: state.users,
 });
 
