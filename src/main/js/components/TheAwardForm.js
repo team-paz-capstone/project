@@ -1,0 +1,55 @@
+import React, {Component} from 'react';
+import Button from "@material-ui/core/Button";
+import BaseSelect from "./BaseSelect";
+import {connect} from "react-redux";
+
+class TheAwardForm extends Component {
+  createAward = (event) => {
+    
+  };
+
+  render() {
+    let users = this.props.users.items.map(user => {
+      user.display = user["firstName"] + " " + user["lastName"];
+      return user;
+    });
+
+    return (
+        <div>
+          <BaseSelect
+              name={"Recipient"}
+              items={users}
+              nameKey={"display"}
+              valueKey={"id"}/>
+          <br/>
+          <BaseSelect
+              name={"Office Filter"}
+              items={this.props.offices.items}
+              nameKey={"name"}
+              valueKey={"id"}/>
+          <br/>
+          <BaseSelect
+              name={"Award Type"}
+              items={this.props.awardTypes.items}
+              nameKey={"name"}
+              valueKey={"id"}/>
+          <br/>
+          <Button
+              variant="contained"
+              color="primary"
+              onClick={this.createAward}>
+            Send Award
+          </Button>
+        </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  awards: state.awards,
+  awardTypes: state.awardTypes,
+  offices: state.offices,
+  users: state.users,
+});
+
+export default connect(mapStateToProps)(TheAwardForm);

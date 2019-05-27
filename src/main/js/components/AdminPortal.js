@@ -6,7 +6,7 @@ import localStorage from 'local-storage';
 import Grid from '@material-ui/core/Grid';
 import {getAllOffices} from '../api/office';
 import {getAllUsers} from '../api/user';
-import LoadingBar from './LoadingBar';
+import BaseLoadingBar from './BaseLoadingBar';
 import UserList from './UserList';
 import OfficeList from './OfficeList';
 
@@ -125,7 +125,7 @@ class AdminPortal extends React.Component {
     return (
         <React.Fragment>
           {/* rendering a loading animation if data has not finished loading */}
-          {finishedLoadingData === false && <LoadingBar/>}
+          {finishedLoadingData === false && <BaseLoadingBar/>}
 
           {/* only load the page if data has finished loading */}
           {finishedLoadingData && (

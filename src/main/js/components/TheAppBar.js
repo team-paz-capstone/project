@@ -32,7 +32,7 @@ const styles = {
   },
 };
 
-class AppBarImplemented extends React.Component {
+class TheAppBar extends React.Component {
   state = {
     anchorEl: null,
   };
@@ -115,7 +115,7 @@ class AppBarImplemented extends React.Component {
   }
 }
 
-AppBarImplemented.propTypes = {
+TheAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -125,4 +125,4 @@ const mapStateToProps = (state) => ({
   token: state.authentication.token,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(AppBarImplemented));
+export default connect(mapStateToProps)(withStyles(styles)(TheAppBar));

@@ -7,8 +7,9 @@ import {
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import BaseError from "./BaseError";
+import TheAwardForm from "./TheAwardForm";
 
-class UserDashboard extends Component {
+class TheUserDashboard extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchUsers());
@@ -22,10 +23,14 @@ class UserDashboard extends Component {
         this.props.awards.error +
         this.props.awardTypes.error +
         this.props.offices.error;
+
     return (
         <div>
           <BaseError error={error}/>
           <h1>Welcome!</h1>
+          <br/>
+          <TheAwardForm/>
+          <br/>
           <p>Users: {JSON.stringify(this.props.users.items)}</p>
           <p>Awards: {JSON.stringify(this.props.awards.items)}</p>
           <p>AwardTypes: {JSON.stringify(this.props.awardTypes.items)}</p>
@@ -43,4 +48,4 @@ const mapStateToProps = (state) => ({
   users: state.users,
 });
 
-export default connect(mapStateToProps)(UserDashboard)
+export default connect(mapStateToProps)(TheUserDashboard)

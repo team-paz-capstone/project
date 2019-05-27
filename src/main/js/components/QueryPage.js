@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { CSVLink } from 'react-csv';
 import Divider from '@material-ui/core/Divider';
 import { getOfficeByUserCount, getUserByAwardCount } from '../api/query';
-import LoadingBar from './LoadingBar';
+import BaseLoadingBar from './BaseLoadingBar';
 
 // sort by count from largest to smallest
 function Comparator(a, b) {
@@ -225,7 +225,7 @@ class QueryPage extends Component {
 
     return (
       <React.Fragment>
-        {finishedLoadingData === false && <LoadingBar />}
+        {finishedLoadingData === false && <BaseLoadingBar />}
         {finishedLoadingData && (
           <Grid container direction="row" justify="center" alignItems="center">
             <div>

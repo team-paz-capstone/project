@@ -1,7 +1,7 @@
 import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-const LoadingBar = () => {
+const BaseLoadingBar = () => {
   return (
     <div>
       <br />
@@ -12,4 +12,4 @@ const LoadingBar = () => {
   );
 };
 
-export default LoadingBar;
+export default BaseLoadingBar;

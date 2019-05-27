@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import AppBarImplemented from "./AppBarImplemented";
+import AppBarImplemented from "./TheAppBar";
 import {BrowserRouter, Redirect, Route} from "react-router-dom";
 import PublicHomePage from "./PublicHomePage";
-import UserDashboard from "./UserDashboard";
+import UserDashboard from "./TheUserDashboard";
 import AdminPortal from "./AdminPortal";
 import QueryPage from "./QueryPage";
 
