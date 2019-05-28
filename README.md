@@ -22,7 +22,11 @@ contributors of the project.
 
 Go to https://pazcapstone.herokuapp.com
 
-## Local Dev Server Setup
+## Local Backend Dev Server Setup
+- Start the backend server using `./start.sh`
+
+## Local Frontend Dev Server Setup 
+- After started the backend server, run `npm run dev-server` and go to `localhost:3000` in the browser 
 
 ### Configure your local heroku installation
 ```bash
@@ -42,5 +46,5 @@ heroku pg:psql -a pazcapstone
 ## Contributors
 1. Matthew Anderson - 
 2. Patrick Rice - ricep@oregonstate.edu
-3. Zi Wei Wu - 
+3. Zi Wei Wu - wuzi@oregonstate.edu 
 
