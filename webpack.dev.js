@@ -53,5 +53,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './dev-server-template/index.html'
     })
-  ]
+  ],
+  // A patch to ensure all features of newer react-dom can be hot reloaded
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
+  }
 };
