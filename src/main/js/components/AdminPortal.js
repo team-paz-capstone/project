@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import {hot} from 'react-hot-loader';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -76,7 +77,6 @@ class AdminPortal extends React.Component {
 
   render() {
     const {viewUserList, offices, users, finishedLoadingData} = this.state;
-
     let title;
     let viewButton;
     let addButton;
@@ -160,4 +160,4 @@ class AdminPortal extends React.Component {
   }
 }
 
-export default AdminPortal;
+export default hot(module)(AdminPortal);
