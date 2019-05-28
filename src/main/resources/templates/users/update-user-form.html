@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Update User</title>
+</head>
+
+
+<body>
+
+<br>
+
+<div class="container">
+
+    <p class="h4 mb-4">Update User</p>
+
+    <form action="#"
+          th:action="@{/users/update}"
+          th:object="${user}"
+          method="post"
+          enctype="multipart/form-data"
+    >
+        <!--add hidden form field to handle update-->
+        <input type="hidden" th:field="*{id}">
+
+        <input type="text" th:field="*{firstName}"
+               class="form-control mb-4 col-4"
+               placeholder="First Name"
+               required
+               pattern="\S.*\S"
+               title="This field is required"
+        >
+
+        <input type="text" th:field="*{lastName}"
+               class="form-control mb-4 col-4"
+               placeholder="Last Name"
+               required
+               pattern="\S.*\S"
+               title="This field is required"
+        >
+
+        <input type="email" th:field="*{email}"
+               class="form-control mb-4 col-4"
+               placeholder="Email"
+               required
+               pattern="\S+"
+               title="This field is required"
+        >
+
+
+        <input type="password" th:field="*{password}"
+               class="form-control mb-4 col-4"
+               placeholder="Password"
+               minlength="8"
+               required
+               pattern="\S+"
+               title="This field is required"
+        >
+
+        <p>Is admin?</p>
+        <input type="radio" th:field="*{admin}" name="isAdmin" value="true"> Yes <br>
+        <input type="radio" th:field="*{admin}" name="isAdmin" value="false"> No <br>
+        <br>
+
+        <p>Choose an office</p>
+        <select th:field="*{office}">
+            <option th:value="0" text="Please Select">
+            <option th:each="officeChoice: ${offices}"
+                    th:value="${officeChoice.id}" th:text="${officeChoice.name}"
+            >
+        </select>
+        <br/>
+        <br/>
+
+        <p>Please upload a file as signature (in jpg format)</p>
+        <input class="file-upload" type="file" name="picture" accept="image/jpeg" th:field="*{signature}">
+        <br>
+        <br>
+
+
+        <!--submit button-->
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+
+    <hr>
+    <a th:href="@{/users/list}">Back to Users</a>
+
+</div>
+
+</body>
+
+
+</html>
