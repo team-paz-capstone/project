@@ -1,6 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -26,21 +24,4 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    contentBase: 'dist',
-    watchContentBase: true,
-    port: 3000,
-    historyApiFallback: true,
-    proxy: {
-      '**': {
-        target: 'http://localhost:8080/',
-        secure: false
-      }
-    }
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.html'
-    })
-  ]
 };

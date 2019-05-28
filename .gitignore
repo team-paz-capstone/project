@@ -3,7 +3,7 @@ coverage
 build
 node_modules
 stats.json
-
+out/
 # Cruft
 .DS_Store
 npm-debug.log
@@ -34,10 +34,22 @@ HELP.md
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
-/dist/
 /nbdist/
 /.nb-gradle/
+
+### folders ###
 /build/
+/dist/
+/logs/
+/sample_signatures/
 
 ### VS Code ###
 .vscode/
+src/main/resources/static/built/
+StorageService.java
+
+# ignore EnvFile which contains all environemntal variable required for running application
+EnvFile
+.factorypath
+.project
+.classpath
