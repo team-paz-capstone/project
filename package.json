@@ -48,7 +48,7 @@
     "watch": "webpack --watch",
     "build": "webpack --config webpack.prod.js",
     "start": "webpack --config webpack.dev.js",
-    "dev-server": "webpack-dev-server --open --hot --config webpack.dev.js"
+    "dev-server": "webpack-dev-server --open --config webpack.dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.1.0",
