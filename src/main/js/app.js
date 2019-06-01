@@ -1,140 +1,48 @@
-/*
- * SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
- * */
-'use strict';
-
 import 'babel-polyfill';
-
-const React = require('react');
-const ReactDOM = require('react-dom');
-import UserList from './components/UserList';
-import OfficeList from './components/OfficeList';
-import {getAllUsers} from './api/user';
-import {getAllOffices} from './api/office';
-
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import React from 'react';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { blue, red } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
+import Main from './components/Main';
+import reducer from './reducers';
 
-import localStorage from 'local-storage';
+const middleware = [thunk];
+middleware.push(createLogger());
 
+const store = createStore(reducer, applyMiddleware(...middleware));
 
+// setup the color for primary and secondary using theming
 const theme = createMuiTheme({
   palette: {
     primary: blue,
-    secondary: red,
+    secondary: red
   },
-  typography: {useNextVariants: true},
+  props: {
+    Snackbar: {
+      backgroundColor: red
+    }
+  },
+  typography: { useNextVariants: true }
 });
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: [],
-      offices: [],
-      viewUserList: true,
-    };
-
-    this.handleClickViewUsers = this.handleClickViewUsers.bind(this);
-    this.handleClickViewOffices = this.handleClickViewOffices.bind(this);
-  }
-
-  async componentDidMount() {
-    try {
-      // check if there is local storage for current view of the page
-      let viewUserList = true;
-      if (localStorage('viewUserList') !== null && localStorage('viewUserList') === 'false') {
-        viewUserList = false;
-      }
-      this.setState({viewUserList: viewUserList});
-
-
-      // load user data
-      const users = await getAllUsers();
-      this.setState({users: users});
-
-      // load office data
-      const offices = await getAllOffices();
-      this.setState({offices: offices});
-    } catch (error) {
-      console.warn('Failed  to load users/offices!');
-    }
-  }
-
-  handleClickViewUsers() {
-    this.setState((state) => ({
-      viewUserList: true,
-    }));
-
-    // allow state to persist using local session
-    // so that page refresh doesn't reset the current view of the page
-    localStorage('viewUserList', 'true');
-  }
-
-  handleClickViewOffices() {
-    this.setState((state) => ({
-      viewUserList: false,
-    }));
-
-    // allow state to persist using local session
-    // so that page refresh doesn't reset the current view of the page
-    localStorage('viewUserList', 'false');
-  }
-
   render() {
-    const viewUserList = this.state.viewUserList;
-
-    let title;
-    let viewButton;
-    let addButton;
-    let list;
-
-    if (viewUserList) {
-      title = <Typography variant="h5">Admin Portal: users</Typography>;
-      viewButton = <Button color="primary" variant="contained" onClick = {this.handleClickViewOffices}>View Offices</Button>;
-      addButton= <Button color="primary" variant="contained" href="/users/addForm">Add User</Button>;
-      list = <UserList users={this.state.users} />;
-    } else {
-      title = <Typography variant="h5">Admin Portal: offices</Typography>;
-      viewButton = <Button color="primary" variant="contained" onClick = {this.handleClickViewUsers}>View Users</Button>;
-      addButton= <Button color="primary" variant="contained" href="/offices/addForm">Add Office</Button>;
-      list = <OfficeList offices={this.state.offices} />;
-    }
-
-
     return (
-      <React.Fragment>
-
-        {/* ensure css consistency across browser*/}
-        <CssBaseline />
-
-        {/* allow customize theme color*/}
-        <MuiThemeProvider theme={theme}>
-
-          <Grid container direction="row" justify="center" alignItems="center">
-            <div>
-              <br />
-              {title}
-              <br />
-              {viewButton}
-              <br />
-              <br />
-              {addButton}
-              <br />
-              <br />
-              {list}
-            </div>
-          </Grid>
-        </MuiThemeProvider>
-      </React.Fragment>
+      <Provider store={store}>
+        <div>
+          {/* allow customize theme color */}
+          <CssBaseline />
+          <MuiThemeProvider theme={theme}>
+            <Main />
+          </MuiThemeProvider>
+        </div>
+      </Provider>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('react'));
+export default App;

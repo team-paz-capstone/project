@@ -1,54 +1,53 @@
 import axios from 'axios';
 
+const BASE_URL = "/api/user/";
+const ALL = BASE_URL + 'all';
+const CREATE = BASE_URL + "create";
+const UPDATE = BASE_URL + "update";
+const DELETE = BASE_URL + "delete";
+
+/**
+ * @return { Object } - Axios Response:
+ *  Data - List of User Objects
+* */
 export async function getAllUsers() {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/user/all').then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.get(ALL);
 }
 
+/**
+ * @return { Object } - Axios Response:
+ *  Data - User Object
+ * */
 export async function getUser(id) {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/user/' + id).then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.get(BASE_URL + id);
 }
 
-/* TODO: Needs to be tested */
-export async function createUser(id, data) {
-  return new Promise((resolve, reject) => {
-    axios.post('/api/user/create', data).then((response) => {
-      resolve(response);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+/**
+ * @param data {Object}:
+ *  - firstName
+ *  - lastName
+ *  - email
+ *  - password
+ *  - isAdmin
+ *
+ * @return { Object } - Axios Response:
+ * */
+export async function createUser(data) {
+  return axios.post(CREATE, data);
 }
 
-/* TODO: Needs to be tested */
-export async function updateUser(id, data) {
-  return new Promise((resolve, reject) => {
-    axios.post('/api/user/update', data).then((response) => {
-      resolve(response);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+export async function updateUser(data) {
+  return axios.post(UPDATE, data);
 }
 
-/* TODO: Needs to be tested */
 export async function deleteUser(id) {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/user/delete/' + id).then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.get(DELETE + id);
+}
+
+export default {
+  getAllUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
 }

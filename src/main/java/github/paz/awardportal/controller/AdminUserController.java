@@ -36,7 +36,7 @@ public class AdminUserController {
     public String listUsers(Model model) {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
 

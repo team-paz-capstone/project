@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import User from './User';
+import React, { Component } from 'react';
 
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -7,18 +6,15 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import User from './User';
 
 class UserList extends Component {
   render() {
     console.debug(this.props);
-    const users = this.props.users.map((user) => (
-      <User key={user.email} user={user} />
-    ));
+    const users = this.props.users.map(user => <User key={user.email} user={user} />);
     return (
       <Paper>
-
         <Table>
-
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
@@ -34,9 +30,7 @@ class UserList extends Component {
           </TableHead>
 
           <TableBody>{users}</TableBody>
-
         </Table>
-
       </Paper>
     );
   }

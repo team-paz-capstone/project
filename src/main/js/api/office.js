@@ -1,54 +1,29 @@
 import axios from 'axios';
 
-export async function getAllOffices() {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/office/all').then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+export function getAllOffices() {
+  return axios.get('/api/office/all')
 }
 
-export async function getOffice(id) {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/office/' + id).then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+export function getOffice(id) {
+  return axios.get('/api/office/' + id);
 }
 
-/* TODO: Needs to be tested */
-export async function createOffice(id, data) {
-  return new Promise((resolve, reject) => {
-    axios.post('/api/office/create', data).then((response) => {
-      resolve(response);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+export function createOffice(id, data) {
+  return axios.post('/api/office/create', data);
 }
 
-/* TODO: Needs to be tested */
-export async function updateOffice(id, data) {
-  return new Promise((resolve, reject) => {
-    axios.post('/api/office/update', data).then((response) => {
-      resolve(response);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+export function updateOffice(id, data) {
+  return axios.post('/api/office/update', data);
 }
 
-/* TODO: Needs to be tested */
 export async function deleteOffice(id) {
-  return new Promise((resolve, reject) => {
-    axios.get('/api/office/delete/' + id).then((response) => {
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
-  });
+  return axios.get('/api/office/delete/' + id);
+}
+
+export default {
+  getAllOffices,
+  getOffice,
+  createOffice,
+  updateOffice,
+  deleteOffice
 }
