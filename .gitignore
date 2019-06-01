@@ -53,3 +53,10 @@ EnvFile
 .factorypath
 .project
 .classpath
+
+### pdflatex output ###
+*.64
+*.aux
+*.log
+*.tex
+signature*
