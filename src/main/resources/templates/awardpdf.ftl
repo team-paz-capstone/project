@@ -4,16 +4,41 @@
     \usepackage{graphicx}
 </#if>
 
-\begin{document}
+\usepackage{color}
+\definecolor{goldenpoppy}{rgb}{0.99, 0.76, 0.0}
+\pagenumbering{gobble}
 
-${recipientName} has been awarded ${awardName} by ${granterName} on ${dateAwarded}
+\begin{document}
+\begin{center}
+\textcolor{goldenpoppy}{{\Huge ${awardName}}}
+
+\bigskip
+
+has been awarded to
+
+\bigskip
+
+{\Huge ${recipientName}}
+
+\bigskip
+
+by
+
+\bigskip
+
+{\large ${granterName}}
+
+\bigskip
 
 <#if signatureImage?has_content>
-    \fbox{\includegraphics[width=3cm]{${signatureImageFile}}}
+    \fbox{\includegraphics[width=10cm]{${signatureImageFile}}}
 <#else>
-
-    (${granterName} has no signature on file.)
-
+    (no signature image on file)
 </#if>
 
+\bigskip
+
+{\large ${dateAwarded}}
+
+\end{center}
 \end{document}
