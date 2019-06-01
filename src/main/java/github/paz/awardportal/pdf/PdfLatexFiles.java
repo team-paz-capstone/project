@@ -16,24 +16,25 @@ public class PdfLatexFiles {
     private Path pdfFile;
     private Path auxFile;
     private Path logFile;
-    // Other byproducts?
+    private Path temp64File;
 
     public PdfLatexFiles(Path texTemplate) {
         String texTemplateFileName = getFileName(texTemplate);
         String pdfFileName = changeExtension(texTemplateFileName, "pdf");
         String auxFileName = changeExtension(texTemplateFileName, "aux");
         String logFileName = changeExtension(texTemplateFileName, "log");
+        String temp64FileName = changeExtension(texTemplateFileName, "64");
 
-        // TODO - need to worry about parent directories, not just file name?
         this.texTemplate = texTemplate;
         pdfFile = Paths.get(pdfFileName);
         auxFile = Paths.get(auxFileName);
         logFile = Paths.get(logFileName);
+        temp64File = Paths.get(temp64FileName);
 
     }
 
     public List<Path> getAll() {
-        return Arrays.asList(texTemplate, pdfFile, auxFile, logFile);
+        return Arrays.asList(texTemplate, pdfFile, auxFile, logFile, temp64File);
     }
 
     private String getFileName(Path path) {
