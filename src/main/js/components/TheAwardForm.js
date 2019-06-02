@@ -72,9 +72,22 @@ class TheAwardForm extends Component {
 
   render() {
     const {classes} = this.props;
-    let users = this.props.users.items.map(user => {
-      user.display = user["firstName"] + " " + user["lastName"];
-      return user;
+    let selectedOffice = this.props.select.items["Office Filter"];
+    console.debug(selectedOffice);
+    let users = this.props.users.items.filter((user)=>{
+      console.debug(user);
+      if (selectedOffice === undefined) {
+        return true;
+      } else if (
+          user["office"] !== null &&
+          user["office"]["id"] === selectedOffice["id"]) {
+        return true;
+      } else {
+        return false;
+      }
+    }).map(user => {
+        user.display = user["firstName"] + " " + user["lastName"];
+        return user;
     });
 
     let error = this.props.awards.error ? this.props.awards.error : this.state.error;
