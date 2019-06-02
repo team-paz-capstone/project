@@ -40,7 +40,7 @@ class BaseSelect extends Component {
     console.debug("Rendered: " + JSON.stringify(value));
 
     return (
-        <FormControl>
+        <FormControl row>
           <InputLabel htmlFor={id}>{name}</InputLabel>
           <Select
               value={value}
