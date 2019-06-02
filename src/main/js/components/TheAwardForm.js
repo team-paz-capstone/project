@@ -6,10 +6,12 @@ import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core";
 import BaseError from "./BaseError";
 import {createAward} from "../actions"
+import Paper from '@material-ui/core/Paper';
 
 const styles = {
   root: {
     flexGrow: 1,
+    padding: 1,
   },
   formControl: {
     margin: 1,
@@ -17,7 +19,11 @@ const styles = {
   },
   grow: {
     flexGrow: 1,
-  }
+  },
+  paper: {
+    padding: 50,
+    textAlign: "center"
+  },
 };
 
 class TheAwardForm extends Component {
@@ -71,41 +77,43 @@ class TheAwardForm extends Component {
       return user;
     });
 
-    let error = this.props.awards.error?  this.props.awards.error : this.state.error;
+    let error = this.props.awards.error ? this.props.awards.error : this.state.error;
     let created = !this.props.awards.error && this.state.created
         ? this.state.created
         : null;
 
     return (
-        <FormGroup className={classes.root}>
-          <h2>Recognize Hard Work!</h2>
-          <h3>{created}</h3>
-          <BaseError error={error}/>
-          <BaseSelect
-              name={"Recipient"}
-              items={users}
-              nameKey={"display"}
-              valueKey={"id"}/>
-          <br/>
-          <BaseSelect
-              name={"Office Filter"}
-              items={this.props.offices.items}
-              nameKey={"name"}
-              valueKey={"id"}/>
-          <br/>
-          <BaseSelect
-              name={"Award Type"}
-              items={this.props.awardTypes.items}
-              nameKey={"name"}
-              valueKey={"id"}/>
-          <br/>
-          <Button
-              variant="contained"
-              color="primary"
-              onClick={this.createAward}>
-            Send Award
-          </Button>
-        </FormGroup>
+        <Paper className={classes.paper}>
+          <FormGroup className={classes.root}>
+            <h2>Recognize Hard Work!</h2>
+            <h3>{created}</h3>
+            <BaseError error={error}/>
+            <BaseSelect
+                name={"Recipient"}
+                items={users}
+                nameKey={"display"}
+                valueKey={"id"}/>
+            <br/>
+            <BaseSelect
+                name={"Office Filter"}
+                items={this.props.offices.items}
+                nameKey={"name"}
+                valueKey={"id"}/>
+            <br/>
+            <BaseSelect
+                name={"Award Type"}
+                items={this.props.awardTypes.items}
+                nameKey={"name"}
+                valueKey={"id"}/>
+            <br/>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={this.createAward}>
+              Send Award
+            </Button>
+          </FormGroup>
+        </Paper>
     );
   }
 }

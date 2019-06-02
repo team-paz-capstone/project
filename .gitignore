@@ -60,3 +60,4 @@ EnvFile
 *.log
 *.tex
 signature*
+dev-server/

@@ -6,8 +6,16 @@ import {
 } from "../actions";
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import BaseError from "./BaseError";
 import TheAwardForm from "./TheAwardForm";
+import Container from '@material-ui/core/Container';
+import {withStyles} from "@material-ui/core";
+
+
+const styles = {
+  Container: {
+    padding: 1,
+  }
+};
 
 class TheUserDashboard extends Component {
 
@@ -19,35 +27,21 @@ class TheUserDashboard extends Component {
   }
 
   render() {
-    let error = this.props.users.error +
-        this.props.awards.error +
-        this.props.awardTypes.error +
-        this.props.offices.error;
     let loggedInUser = this.props.select.items["Logged In As"];
     let name = loggedInUser ? loggedInUser["display"]: "Invalid User Logged In";
     return (
-        <div>
-          <BaseError error={error}/>
-          <h1>Welcome {name}!</h1>
+        <Container maxWidth="sm">
+          <h2>Welcome {name}!</h2>
           <br/>
           <TheAwardForm/>
           <br/>
-          <p>Users: {JSON.stringify(this.props.users.items)}</p>
-          <p>Awards: {JSON.stringify(this.props.awards.items)}</p>
-          <p>AwardTypes: {JSON.stringify(this.props.awardTypes.items)}</p>
-          <p>Offices: {JSON.stringify(this.props.offices.items)}</p>
-        </div>
+        </Container>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  authentication: state.authentication,
-  awards: state.awards,
-  awardTypes: state.awardTypes,
-  offices: state.offices,
   select: state.select,
-  users: state.users,
 });
 
-export default connect(mapStateToProps)(TheUserDashboard)
+export default connect(mapStateToProps)(withStyles(styles)(TheUserDashboard))
