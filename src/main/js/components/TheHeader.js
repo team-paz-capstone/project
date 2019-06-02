@@ -16,8 +16,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import {logIn, logOut} from "../actions"
 import DeveloperControls from "./DeveloperControls";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
 
 const styles = {
   root: {
@@ -32,7 +30,7 @@ const styles = {
   },
 };
 
-class TheAppBar extends React.Component {
+class TheHeader extends React.Component {
   state = {
     anchorEl: null,
   };
@@ -120,7 +118,7 @@ class TheAppBar extends React.Component {
   }
 }
 
-TheAppBar.propTypes = {
+TheHeader.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -132,4 +130,4 @@ const mapStateToProps = (state) => ({
   users: state.users,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(TheAppBar));
+export default connect(mapStateToProps)(withStyles(styles)(TheHeader));

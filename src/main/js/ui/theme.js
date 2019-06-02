@@ -14,13 +14,3 @@ export const theme = createMuiTheme({
   },
   typography: {useNextVariants: true}
 });
-
-export const darkTheme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    background: {
-      default: "#1A174C"
-    },
-  },
-  typography: {useNextVariants: true}
-});

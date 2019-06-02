@@ -8,7 +8,7 @@ import BaseError from "./BaseError";
 import {createAward} from "../actions"
 import Paper from '@material-ui/core/Paper';
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
     padding: 1,
@@ -24,9 +24,9 @@ const styles = {
     padding: 50,
     textAlign: "center"
   },
-};
+});
 
-class TheAwardForm extends Component {
+class AwardForm extends Component {
   constructor(props) {
     super(props);
     this.state = {error: "", created: false};
@@ -146,4 +146,4 @@ const mapStateToProps = (state) => ({
   users: state.users,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(TheAwardForm));
+export default connect(mapStateToProps)(withStyles(styles)(AwardForm));

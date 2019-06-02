@@ -7,10 +7,9 @@ import {withStyles} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
-import {theme} from "../ui/theme";
 import {logIn, logOut} from "../actions"
 
-const styles = {
+const styles = theme =>({
   root: {
     padding: 20,
   },
@@ -20,7 +19,7 @@ const styles = {
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
-};
+});
 
 
 class DeveloperControls extends Component {

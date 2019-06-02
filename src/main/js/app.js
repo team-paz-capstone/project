@@ -6,7 +6,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
-import Main from './components/Main';
+import Main from './components/MainLayout';
 import reducer from './reducers';
 import {theme} from "./ui/theme"
 

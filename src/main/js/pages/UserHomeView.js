@@ -6,9 +6,9 @@ import {
 } from "../actions";
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import TheAwardForm from "./TheAwardForm";
-import Container from '@material-ui/core/Container';
-import {withStyles} from "@material-ui/core";
+import TheAwardForm from "../components/AwardForm";
+import Container from '@material-ui/core/Container/index';
+import {withStyles} from "@material-ui/core/index";
 
 
 const styles = {
@@ -17,7 +17,7 @@ const styles = {
   }
 };
 
-class TheUserDashboard extends Component {
+class UserHomeView extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchUsers());
@@ -44,4 +44,4 @@ const mapStateToProps = (state) => ({
   select: state.select,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(TheUserDashboard))
+export default connect(mapStateToProps)(withStyles(styles)(UserHomeView))

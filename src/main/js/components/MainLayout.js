@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Redirect, Route } from 'react-router-dom';
-import AppBarImplemented from './TheAppBar';
-import PublicHomePage from './PublicHomePage';
-import UserDashboard from './TheUserDashboard';
-import AdminPortal from './AdminPortal';
-import QueryPage from './QueryPage';
+import TheHeader from './TheHeader';
+import PublicHomePage from '../pages/PublicHomeView';
+import UserDashboard from '../pages/UserHomeView';
+import AdminPortal from '../pages/AdminView';
+import QueryView from '../pages/QueryView';
 
-class Main extends Component {
+class MainLayout extends Component {
   render() {
     return (
       <div>
-        <AppBarImplemented />
+        <TheHeader />
         <BrowserRouter>
           {/* If we are not logged in, redirect to home */}
           <Route
@@ -31,7 +31,7 @@ class Main extends Component {
           <Route
             exact
             path="/query"
-            render={() => (this.props.auth ? <QueryPage /> : <Redirect to="/" />)}
+            render={() => (this.props.auth ? <QueryView /> : <Redirect to="/" />)}
           />
         </BrowserRouter>
       </div>
@@ -43,4 +43,4 @@ const mapStateToProps = state => ({
   auth: state.authentication.auth
 });
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps)(MainLayout);
