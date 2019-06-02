@@ -66,6 +66,11 @@ class TheAwardForm extends Component {
     }
   };
 
+  createAnother = () => {
+    this.setState({error: "", created: ""});
+  };
+
+
   render() {
     const {classes} = this.props;
     let selectedOffice = this.props.select.items["Office Filter"];
@@ -87,35 +92,47 @@ class TheAwardForm extends Component {
 
     return (
         <Paper className={classes.paper}>
-          <FormGroup className={classes.root}>
-            <h2>Recognize Hard Work!</h2>
-            <h3>{created}</h3>
-            <BaseError error={error}/>
-            <BaseSelect
-                name={"Recipient"}
-                items={users}
-                nameKey={"display"}
-                valueKey={"id"}/>
-            <br/>
-            <BaseSelect
-                name={"Office Filter"}
-                items={this.props.offices.items}
-                nameKey={"name"}
-                valueKey={"id"}/>
-            <br/>
-            <BaseSelect
-                name={"Award Type"}
-                items={this.props.awardTypes.items}
-                nameKey={"name"}
-                valueKey={"id"}/>
-            <br/>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={this.createAward}>
-              Send Award
-            </Button>
-          </FormGroup>
+          {created ? (
+              <div>
+                <h3>{created}</h3>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.createAnother}>
+                  Create Another Award
+                </Button>
+              </div>
+          ) : (
+              <FormGroup className={classes.root}>
+                <h2>Recognize Hard Work!</h2>
+                <h3>{created}</h3>
+                <BaseError error={error}/>
+                <BaseSelect
+                    name={"Recipient"}
+                    items={users}
+                    nameKey={"display"}
+                    valueKey={"id"}/>
+                <br/>
+                <BaseSelect
+                    name={"Office Filter"}
+                    items={this.props.offices.items}
+                    nameKey={"name"}
+                    valueKey={"id"}/>
+                <br/>
+                <BaseSelect
+                    name={"Award Type"}
+                    items={this.props.awardTypes.items}
+                    nameKey={"name"}
+                    valueKey={"id"}/>
+                <br/>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.createAward}>
+                  Send Award
+                </Button>
+              </FormGroup>
+          )}
         </Paper>
     );
   }
