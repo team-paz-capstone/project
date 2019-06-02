@@ -64,30 +64,20 @@ class TheAwardForm extends Component {
         awardTypeID: awardTypeID
       }))
     }
-
-    console.debug(selectedGranter);
-    console.debug(selectedRecipient);
-    console.debug(selectedAwardType);
   };
 
   render() {
     const {classes} = this.props;
     let selectedOffice = this.props.select.items["Office Filter"];
-    console.debug(selectedOffice);
-    let users = this.props.users.items.filter((user)=>{
-      console.debug(user);
+    let users = this.props.users.items.filter((user) => {
       if (selectedOffice === undefined) {
         return true;
-      } else if (
-          user["office"] !== null &&
-          user["office"]["id"] === selectedOffice["id"]) {
-        return true;
-      } else {
-        return false;
       }
+      return user["office"] !== null &&
+          user["office"]["id"] === selectedOffice["id"];
     }).map(user => {
-        user.display = user["firstName"] + " " + user["lastName"];
-        return user;
+      user.display = user["firstName"] + " " + user["lastName"];
+      return user;
     });
 
     let error = this.props.awards.error ? this.props.awards.error : this.state.error;

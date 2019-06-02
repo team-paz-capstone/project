@@ -9,7 +9,7 @@ export function fetchAwardTypes() {
       let awardTypes = response.data;
       dispatch(fetchAwardTypesSuccess(awardTypes));
     } catch (error) {
-      dispatch(fetchAwardTypesFailure(error));
+      dispatch(fetchAwardTypesFailure(error.response.statusText));
     }
   };
 }
@@ -22,7 +22,7 @@ export function fetchAwardType(id) {
       let awardType = response.data;
       dispatch(fetchAwardTypeSuccess(awardType));
     } catch (error) {
-      dispatch(fetchAwardTypeFailure(error));
+      dispatch(fetchAwardTypeFailure(error.response.statusText));
     }
   };
 }
@@ -35,7 +35,7 @@ export function createAwardType(data) {
       let awardType = response.data;
       dispatch(createAwardTypeSuccess(awardType));
     } catch (error) {
-      dispatch(createAwardTypeFailure(error));
+      dispatch(createAwardTypeFailure(error.response.statusText));
     }
   };
 }
@@ -47,7 +47,7 @@ export function deleteAwardType(data) {
       let response = await Api.deleteAwardType(data);
       dispatch(deleteAwardTypeSuccess(response.data));
     } catch (error) {
-      dispatch(deleteAwardTypeFailure(error));
+      dispatch(deleteAwardTypeFailure(error.response.statusText));
     }
   };
 }
