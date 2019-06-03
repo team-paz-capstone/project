@@ -1,4 +1,5 @@
 import {LOG_IN, LOG_OUT} from "../action-types"
+export * from "./account-recovery"
 export * from "./award-types"
 export * from "./awards"
 export * from "./offices"

@@ -119,12 +119,6 @@ function RegistrationForm(props) {
 
   return (
       <div>
-        <Paper className={classes.paper}
-               bgcolor="primary.main"
-               color="primary.contrastText"
-               p={2} m={1}>
-          <h2>Welcome {name}!</h2>
-        </Paper>
         {values.requested ? (
             <Card className={classes.card}>
               <h2>{requestStatusMessage}</h2>

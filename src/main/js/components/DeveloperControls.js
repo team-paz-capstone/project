@@ -8,6 +8,10 @@ import Paper from "@material-ui/core/Paper";
 import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
 import {logIn, logOut} from "../actions"
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import {Link, BrowserRouter} from "react-router-dom";
+import Card from "@material-ui/core/Card";
 
 const styles = theme => ({
   root: {
@@ -39,35 +43,45 @@ function DeveloperControls(props) {
   });
 
   return (
-      <Grid
-          container
-          className={classes.root}
-          spacing={0}
-          alignContent={"center"}
-          alignItems="center"
-          justify="center"
-      >
-        <Grid item xs={7}>
-          <Paper className={classes.paper}>
-            <h2>Developer Tools</h2>
-            <FormGroup>
-              <FormControlLabel
-                  control={
-                    <Switch checked={props.auth} onChange={handleChange} aria-label="LoginSwitch"/>
-                  }
-                  label={props.auth ? 'Logout' : 'Login'}
-                  className={classes.formControl}
-              />
-              <BaseSelect
-                  name={"Logged In As"}
-                  items={users}
-                  nameKey={"display"}
-                  valueKey={"id"}/>
-              <br/>
-            </FormGroup>
-          </Paper>
+        <Grid
+            container
+            className={classes.root}
+            spacing={0}
+            alignContent={"center"}
+            alignItems="center"
+            justify="center"
+        >
+          <Grid item xs={7}>
+            <Card className={classes.paper}>
+              <h2>Developer Tools</h2>
+              <FormGroup>
+                <FormControlLabel
+                    control={
+                      <Switch checked={props.auth} onChange={handleChange} aria-label="LoginSwitch"/>
+                    }
+                    label={props.auth ? 'Logout' : 'Login'}
+                    className={classes.formControl}
+                />
+                <BaseSelect
+                    name={"Logged In As"}
+                    items={users}
+                    nameKey={"display"}
+                    valueKey={"id"}/>
+                <br/>
+              </FormGroup>
+              <CardActions>
+                <Button
+                    size="small"
+                ><Link to="/admin">Admin Console</Link></Button>
+              </CardActions>
+              <CardActions>
+                <Button
+                    size="small"
+                ><Link to="/query">Query Console</Link></Button>
+              </CardActions>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
   );
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter, Redirect, Route} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import TheHeader from './TheHeader';
 import PublicHomeView from '../pages/PublicHomeView';
 import UserHomeView from '../pages/UserHomeView';
@@ -22,33 +22,35 @@ const styles = theme => ({
 
 function MainLayout(props) {
   const {classes} = props;
+  console.debug(props.auth);
   return (
       <div>
-        <TheHeader/>
-        <div className={classes.main}>
-          <BrowserRouter>
-            {/* If we are not logged in, redirect to home */}
-            <Route
-                path="/"
-                render={() => (props.auth ? <UserHomeView/> : <PublicHomeView/>)}
-            />
+        <BrowserRouter>
+          <TheHeader/>
+          <div className={classes.main}>
+            <Switch>
+              {/* If the user isn't logged in, they will be redirected */}
+              <Route
+                  exact
+                  path="/admin"
+                  render={() => (props.auth ? <AdminPortal/> : <Redirect to="/"/>)}
+              />
 
-            {/* If the user isn't logged in, they will be redirected */}
-            <Route
-                exact
-                path="/admin"
-                render={() => (props.auth ? <AdminPortal/> : <Redirect to="/"/>)}
-            />
+              {/* If the user isn't logged in, they will be redirected */}
+              <Route
+                  exact
+                  path="/query"
+                  render={() => (props.auth ? <QueryView/> : <Redirect to="/"/>)}
+              />
+              {/* If we are not logged in, redirect to home */}
+              <Route
 
-            {/* If the user isn't logged in, they will be redirected */}
-            <Route
-                exact
-                path="/query"
-                render={() => (props.auth ? <QueryView/> : <Redirect to="/"/>)}
-            />
-          </BrowserRouter>
-        </div>
-        <TheFooter/>
+                  render={() => (props.auth ? <UserHomeView/> : <PublicHomeView/>)}
+              />
+            </Switch>
+          </div>
+          <TheFooter/>
+        </BrowserRouter>BrowserRouter>
       </div>
   );
 

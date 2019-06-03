@@ -16,7 +16,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,17 +59,10 @@ function LoginForm(props) {
     console.debug("Log in clicked!");
   };
 
-
   let error = '';
 
   return (
       <div>
-        <Paper className={classes.paper}
-            bgcolor="primary.main"
-            color="primary.contrastText"
-            p={2} m={1}>
-          <h2>Welcome {name}!</h2>
-        </Paper>
         <Card className={classes.card}>
           <BaseError error={error}/>
           <form onSubmit={logIn}>

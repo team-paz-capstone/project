@@ -67,36 +67,6 @@ export function deleteUser(data) {
   };
 }
 
-/* TODO: Update User Password*/
-// export function updatePassword(data) {
-//   return async dispatch => {
-//     dispatch(updateUserPasswordBegin());
-//     try {
-//       let response = await Api.(data);
-//       let user = response.data;
-//       dispatch(deleteUserSuccess(user));
-//     } catch (error) {
-//       dispatch(deleteUserFailure(error));
-//     }
-//   };
-// }
-
-/* TODO: Request Password Update/
-// export function updatePassword(data) {
-//   return async dispatch => {
-//     dispatch(updateUserPasswordBegin());
-//     try {
-//       let response = await Api.(data);
-//       let user = response.data;
-//       dispatch(deleteUserSuccess(user));
-//     } catch (error) {
-//       dispatch(deleteUserFailure(error));
-//     }
-//   };
-// }
-
-
- */
 /*
 * Fetch Users
 * */
