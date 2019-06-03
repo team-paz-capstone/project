@@ -2,13 +2,26 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import LoginForm from "../components/LoginForm"
 import Container from "@material-ui/core/Container";
-
+import {Route} from "react-router";
+import {BrowserRouter} from "react-router-dom";
+import RegisterForm from "../components/RegisterForm"
 class UserPortal extends Component {
 
   render() {
     return (
         <Container maxWidth="sm">
-          <LoginForm/>
+          <BrowserRouter>
+          <Route
+              exact
+              path="/"
+              component={LoginForm}
+          />
+            <Route
+                exact
+                path="/register"
+                component={RegisterForm}
+            />
+          </BrowserRouter>
         </Container>
     );
   }

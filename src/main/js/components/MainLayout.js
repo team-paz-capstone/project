@@ -29,7 +29,6 @@ function MainLayout(props) {
           <BrowserRouter>
             {/* If we are not logged in, redirect to home */}
             <Route
-                exact
                 path="/"
                 render={() => (props.auth ? <UserHomeView/> : <PublicHomeView/>)}
             />

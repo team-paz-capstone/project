@@ -41,6 +41,8 @@ const useStyles = makeStyles(theme => ({
 function LoginForm(props) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
+    firstName: "",
+    lastName: "",
     email: '',
     password: '',
     showPassword: false,
@@ -65,9 +67,9 @@ function LoginForm(props) {
   return (
       <div>
         <Paper className={classes.paper}
-            bgcolor="primary.main"
-            color="primary.contrastText"
-            p={2} m={1}>
+               bgcolor="primary.main"
+               color="primary.contrastText"
+               p={2} m={1}>
           <h2>Welcome {name}!</h2>
         </Paper>
         <Card className={classes.card}>
@@ -76,7 +78,29 @@ function LoginForm(props) {
             <FormGroup className={classes.root}>
               <h2>Log In</h2>
               <TextField
-                  id="standard-name"
+                  id="first-name"
+                  label="First Name"
+                  type="text"
+                  name="firstName"
+                  autoComplete="given-name"
+                  className={classes.textField}
+                  value={values.firstName}
+                  onChange={handleChange('firstName')}
+                  margin="normal"
+              />
+              <TextField
+                  id="last-name"
+                  label="Last Name"
+                  type="text"
+                  name="lastName"
+                  autoComplete="family-name"
+                  className={classes.textField}
+                  value={values.lastName}
+                  onChange={handleChange('lastName')}
+                  margin="normal"
+              />
+              <TextField
+                  id="email"
                   label="Email"
                   type="email"
                   name="email"
@@ -118,12 +142,7 @@ function LoginForm(props) {
           <CardActions>
             <Button
                 size="small"
-            ><Link to="/register">Register new account</Link></Button>
-          </CardActions>
-          <CardActions>
-            <Button
-                size="small"
-            ><Link to="/account-recovery">Account Recovery</Link></Button>
+            ><Link to="/">Already have an account?</Link></Button>
           </CardActions>
         </Card>
       </div>
