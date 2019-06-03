@@ -49,6 +49,7 @@ public class AccountRecoveryController {
     ) {
         try {
             email = java.net.URLDecoder.decode(email, StandardCharsets.UTF_8.name());
+            email = email.substring(0, email.length() - 1);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

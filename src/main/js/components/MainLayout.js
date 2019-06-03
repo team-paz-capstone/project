@@ -50,7 +50,7 @@ function MainLayout(props) {
             </Switch>
           </div>
           <TheFooter/>
-        </BrowserRouter>BrowserRouter>
+        </BrowserRouter>
       </div>
   );
 
