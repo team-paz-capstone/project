@@ -37,10 +37,9 @@ class BaseSelect extends Component {
     let fallback = {};
     fallback[nameKey] = "";
     let value = selected? selected[nameKey] : fallback[nameKey] ;
-    console.debug("Rendered: " + JSON.stringify(value));
 
     return (
-        <FormControl row>
+        <FormControl>
           <InputLabel htmlFor={id}>{name}</InputLabel>
           <Select
               value={value}

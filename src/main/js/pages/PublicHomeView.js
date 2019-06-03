@@ -8,10 +8,7 @@ class UserPortal extends Component {
   render() {
     return (
         <Container maxWidth="sm">
-          <h2>Welcome {name}!</h2>
-          <br/>
           <LoginForm/>
-          <br/>
         </Container>
     );
   }

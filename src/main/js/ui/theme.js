@@ -1,4 +1,3 @@
-// setup the color for primary and secondary using theming
 import {createMuiTheme} from '@material-ui/core/styles';
 import {blue, red} from '@material-ui/core/colors';
 
@@ -13,6 +12,12 @@ export const theme = createMuiTheme({
   paper: {
     padding: 50,
     textAlign: "center",
+    margin: 10
+  },
+  card: {
+    padding: 50,
+    textAlign: "center",
+    margin: 10
   },
   typography: {useNextVariants: true}
 });

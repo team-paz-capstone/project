@@ -11,11 +11,7 @@ import Container from '@material-ui/core/Container/index';
 import {withStyles} from "@material-ui/core/index";
 
 
-const styles = {
-  Container: {
-    padding: 1,
-  }
-};
+const styles = {Container: {padding: 1}};
 
 class UserHomeView extends Component {
 
@@ -27,11 +23,8 @@ class UserHomeView extends Component {
   }
 
   render() {
-    let loggedInUser = this.props.select.items["Logged In As"];
-    let name = loggedInUser ? loggedInUser["display"]: "Invalid User Logged In";
     return (
         <Container maxWidth="sm">
-          <h2>Welcome {name}!</h2>
           <br/>
           <TheAwardForm/>
           <br/>

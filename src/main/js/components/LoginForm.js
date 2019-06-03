@@ -14,6 +14,9 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +28,14 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: 'auto',
   },
-  paper: theme.paper
+  card: {
+    ...theme.card,
+    color: theme.palette.text.secondary,
+  },
+  paper: {
+    ...theme.paper,
+    color: theme.palette.text.secondary,
+  }
 }));
 
 function LoginForm(props) {
@@ -37,12 +47,12 @@ function LoginForm(props) {
   });
 
   const handleChange = name => event => {
-    console.debug(name + ": " +  event.target.value);
+    console.debug(name + ": " + event.target.value);
     setValues({...values, [name]: event.target.value});
   };
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setValues({...values, showPassword: !values.showPassword});
   };
 
   const logIn = () => {
@@ -53,52 +63,65 @@ function LoginForm(props) {
   let error = '';
 
   return (
-      <Paper className={classes.paper}>
-        <BaseError error={error}/>
-        <form onSubmit={logIn}>
-          <FormGroup className={classes.root}>
-            <h2>Log In</h2>
-            <TextField
-                id="standard-name"
-                label="Email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                className={classes.textField}
-                value={values.name}
-                onChange={handleChange('email')}
-                margin="normal"
-            />
-            <FormControl className={clsx(classes.margin, classes.textField)}>
-              <InputLabel htmlFor="adornment-password">Password</InputLabel>
-              <Input
-                  id="adornment-password"
-                  type={values.showPassword ? 'text' : 'password'}
-                  label="Password"
-                  name="password"
-                  autoComplete="password"
-                  value={values.password}
-                  onChange={handleChange('password')}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton onClick={handleClickShowPassword}
-                          aria-label="Toggle password visibility"
-                          >
-                        {values.showPassword ? <Visibility/> : <VisibilityOff/>}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+      <div>
+        <Paper className={classes.paper}
+            bgcolor="primary.main"
+            color="primary.contrastText"
+            p={2} m={1}>
+          <h2>Welcome {name}!</h2>
+        </Paper>
+        <Card className={classes.card}>
+          <BaseError error={error}/>
+          <form onSubmit={logIn}>
+            <FormGroup className={classes.root}>
+              <h2>Log In</h2>
+              <TextField
+                  id="standard-name"
+                  label="Email"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  className={classes.textField}
+                  value={values.name}
+                  onChange={handleChange('email')}
+                  margin="normal"
               />
-            </FormControl>
-            <Button className={clsx(classes.margin, classes.textField)}
-                    variant="contained"
-                    color="primary"
-                    onClick={logIn}>
-              Log In
-            </Button>
-          </FormGroup>
-        </form>
-      </Paper>
+              <FormControl className={clsx(classes.margin, classes.textField)}>
+                <InputLabel htmlFor="adornment-password">Password</InputLabel>
+                <Input
+                    id="adornment-password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    label="Password"
+                    name="password"
+                    autoComplete="password"
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleClickShowPassword}
+                                    aria-label="Toggle password visibility"
+                        >
+                          {values.showPassword ? <Visibility/> : <VisibilityOff/>}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                />
+              </FormControl>
+              <Button className={clsx(classes.margin, classes.textField)}
+                      variant="contained"
+                      color="primary"
+                      onClick={logIn}>
+                Log In
+              </Button>
+            </FormGroup>
+          </form>
+          <CardActions>
+            <Button
+                size="small"
+            ><Link to="/register">Register new account</Link></Button>
+          </CardActions>
+        </Card>
+      </div>
   );
 }
 

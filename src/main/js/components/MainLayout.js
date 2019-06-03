@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom';
 import TheHeader from './TheHeader';
-import PublicHomePage from '../pages/PublicHomeView';
-import UserDashboard from '../pages/UserHomeView';
+import PublicHomeView from '../pages/PublicHomeView';
+import UserHomeView from '../pages/UserHomeView';
 import AdminPortal from '../pages/AdminView';
 import QueryView from '../pages/QueryView';
 import TheFooter from "./TheFooter"
@@ -31,7 +31,7 @@ function MainLayout(props) {
             <Route
                 exact
                 path="/"
-                render={() => (props.auth ? <UserDashboard/> : <PublicHomePage/>)}
+                render={() => (props.auth ? <UserHomeView/> : <PublicHomeView/>)}
             />
 
             {/* If the user isn't logged in, they will be redirected */}
