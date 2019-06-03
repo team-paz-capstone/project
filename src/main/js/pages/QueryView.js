@@ -13,8 +13,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { CSVLink } from 'react-csv';
 import Divider from '@material-ui/core/Divider';
-import { getOfficeByUserCount, getUserByAwardCount } from '../api/query';
+import { connect } from 'react-redux';
 import BaseLoadingBar from '../components/BaseLoadingBar';
+import { fetchUserByAwardCount, fetchOfficeByUserCount } from '../actions';
 
 // sort by count from largest to smallest
 function Comparator(a, b) {
@@ -26,57 +27,51 @@ function Comparator(a, b) {
 class QueryView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      officeByUserData: [],
-      userByAwardData: [],
-      finishedLoadingData: false
-    };
-
     this.renderOfficeByUserCountQuerySection = this.renderOfficeByUserCountQuerySection.bind(this);
     this.renderUserByAwardCountSection = this.renderUserByAwardCountSection.bind(this);
+    this.transformOfficeByUserData = this.transformOfficeByUserData.bind(this);
+    this.transformUserByAwardData = this.transformUserByAwardData.bind(this);
   }
 
-  // noinspection JSCheckFunctionSignatures
-  async componentDidMount() {
-    try {
-      // get office by user count data
-      const officeByUserData = await getOfficeByUserCount();
-      const officeByUserDataArray = Object.entries(officeByUserData).sort(Comparator);
+  // fetch query data from redux
+  componentDidMount() {
+    this.props.dispatch(fetchUserByAwardCount());
+    this.props.dispatch(fetchOfficeByUserCount());
+  }
 
-      const officeByUserDataArrayTransformed = [];
-      for (let i = 0; i < officeByUserDataArray.length; i += 1) {
-        const officeName = officeByUserDataArray[i][0];
-        const userCount = officeByUserDataArray[i][1];
-        const entry = { office_name: officeName, user_count: userCount };
-        officeByUserDataArrayTransformed.push(entry);
-      }
-
-      this.setState({ officeByUserData: officeByUserDataArrayTransformed });
-
-      // get user by award count data
-      const userByAwardData = await getUserByAwardCount();
-      const userByAwardDataArray = Object.entries(userByAwardData).sort(Comparator);
-
-      const userByAwardDataArrayTransformed = [];
-      for (let i = 0; i < userByAwardDataArray.length; i += 1) {
-        const userEmail = userByAwardDataArray[i][0];
-        const awardCount = officeByUserDataArray[i][1];
-        const entry = { user_email: userEmail, award_count: awardCount };
-        userByAwardDataArrayTransformed.push(entry);
-      }
-
-      this.setState({ userByAwardData: userByAwardDataArrayTransformed });
-
-      // data loading is finished
-      this.setState({ finishedLoadingData: true });
-    } catch (error) {
-      console.warn('Failed to load users/offices!' + error);
+  // transform data from redux into a format can be used by the chart
+  transformOfficeByUserData(data) {
+    const officeByUserData = data;
+    const officeByUserDataArray = Object.entries(officeByUserData).sort(Comparator);
+    console.log(officeByUserDataArray);
+    const officeByUserDataArrayTransformed = [];
+    for (let i = 0; i < officeByUserDataArray.length; i += 1) {
+      const officeName = officeByUserDataArray[i][0];
+      const userCount = officeByUserDataArray[i][1];
+      const entry = { office_name: officeName, user_count: userCount };
+      officeByUserDataArrayTransformed.push(entry);
     }
+    return officeByUserDataArrayTransformed;
+  }
+
+  transformUserByAwardData(data) {
+    const userByAwardData = data;
+    const userByAwardDataArray = Object.entries(userByAwardData).sort(Comparator);
+
+    const userByAwardDataArrayTransformed = [];
+    for (let i = 0; i < userByAwardDataArray.length; i += 1) {
+      const userEmail = userByAwardDataArray[i][0];
+      const awardCount = userByAwardDataArray[i][1];
+      const entry = { user_email: userEmail, award_count: awardCount };
+      userByAwardDataArrayTransformed.push(entry);
+    }
+
+    return userByAwardDataArrayTransformed;
   }
 
   // Render bar, chart, csv download for office by user count
   renderOfficeByUserCountQuerySection() {
-    const { officeByUserData } = this.state;
+    const officeByUserData = this.transformOfficeByUserData(this.props.queries.officeByUser);
 
     const renderChart = (
       <React.Fragment>
@@ -145,7 +140,7 @@ class QueryView extends Component {
 
   // Render bar, chart, csv download for user by award count
   renderUserByAwardCountSection() {
-    const { userByAwardData } = this.state;
+    const userByAwardData = this.transformUserByAwardData(this.props.queries.userByAward);
 
     const renderChart = (
       <React.Fragment>
@@ -213,7 +208,7 @@ class QueryView extends Component {
   }
 
   render() {
-    const { finishedLoadingData } = this.state;
+    const finishedLoadingData = !this.props.queries.loading;
 
     const title = <Typography variant="h5">Admin Portal: users</Typography>;
 
@@ -251,4 +246,8 @@ class QueryView extends Component {
   }
 }
 
-export default QueryView;
+const mapStateToProps = state => ({
+  queries: state.queries
+});
+
+export default connect(mapStateToProps)(QueryView);
