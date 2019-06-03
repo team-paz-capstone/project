@@ -11,15 +11,13 @@ import reducer from './reducers';
 import {theme} from "./ui/theme"
 
 let store;
+const middleware = [thunk];
 if (process.env.NODE_ENV === 'development') {
   console.warn(
       "Using Redux logger in development. Expect lower performance");
-  const middleware = [thunk];
   middleware.push(createLogger());
-  store = createStore(reducer, applyMiddleware(...middleware));
-} else {
-  store = createStore(reducer);
 }
+store = createStore(reducer, applyMiddleware(...middleware));
 
 
 class App extends React.Component {

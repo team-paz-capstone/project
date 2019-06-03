@@ -4,7 +4,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import BaseSelect from "./BaseSelect";
 import {withStyles} from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
 import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
 import {logIn, logOut} from "../actions"

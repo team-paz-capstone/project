@@ -7,7 +7,6 @@ export * from "./select"
 export * from "./users"
 
 export function logIn(token) {
-    // TODO: api fetch instead
     return {
         type: LOG_IN,
         token
