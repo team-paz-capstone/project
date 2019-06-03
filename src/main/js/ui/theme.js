@@ -2,15 +2,17 @@
 import {createMuiTheme} from '@material-ui/core/styles';
 import {blue, red} from '@material-ui/core/colors';
 
+const primary = blue;
+const secondary = red;
+
 export const theme = createMuiTheme({
   palette: {
-    primary: blue,
-    secondary: red
+    primary: primary,
+    secondary: secondary
   },
-  overrides: {
-    paper: {
-      background: red
-    }
+  paper: {
+    padding: 50,
+    textAlign: "center",
   },
   typography: {useNextVariants: true}
 });
