@@ -5,6 +5,7 @@ import Container from "@material-ui/core/Container";
 import {Route} from "react-router";
 import {BrowserRouter} from "react-router-dom";
 import RegisterForm from "../components/RegisterForm"
+import AccountRecovery from "../components/AccountRecoveryForm";
 class UserPortal extends Component {
 
   render() {
@@ -20,6 +21,11 @@ class UserPortal extends Component {
                 exact
                 path="/register"
                 component={RegisterForm}
+            />
+            <Route
+                exact
+                path="/account-recovery"
+                component={AccountRecovery}
             />
           </BrowserRouter>
         </Container>

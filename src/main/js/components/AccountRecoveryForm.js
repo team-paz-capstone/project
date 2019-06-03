@@ -38,11 +38,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function RegistrationForm(props) {
+function AccountRecoveryForm(props) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    firstName: "",
-    lastName: "",
     email: '',
     password: '',
     showPassword: false,
@@ -76,31 +74,9 @@ function RegistrationForm(props) {
           <BaseError error={error}/>
           <form onSubmit={logIn}>
             <FormGroup className={classes.root}>
-              <h2>Register</h2>
+              <h2>Account Recovery</h2>
               <TextField
-                  id="first-name"
-                  label="First Name"
-                  type="text"
-                  name="firstName"
-                  autoComplete="given-name"
-                  className={classes.textField}
-                  value={values.firstName}
-                  onChange={handleChange('firstName')}
-                  margin="normal"
-              />
-              <TextField
-                  id="last-name"
-                  label="Last Name"
-                  type="text"
-                  name="lastName"
-                  autoComplete="family-name"
-                  className={classes.textField}
-                  value={values.lastName}
-                  onChange={handleChange('lastName')}
-                  margin="normal"
-              />
-              <TextField
-                  id="email"
+                  id="standard-name"
                   label="Email"
                   type="email"
                   name="email"
@@ -110,44 +86,23 @@ function RegistrationForm(props) {
                   onChange={handleChange('email')}
                   margin="normal"
               />
-              <FormControl className={clsx(classes.margin, classes.textField)}>
-                <InputLabel htmlFor="adornment-password">Password</InputLabel>
-                <Input
-                    id="adornment-password"
-                    type={values.showPassword ? 'text' : 'password'}
-                    label="Password"
-                    name="password"
-                    autoComplete="password"
-                    value={values.password}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleClickShowPassword}
-                                    aria-label="Toggle password visibility"
-                        >
-                          {values.showPassword ? <Visibility/> : <VisibilityOff/>}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                />
-              </FormControl>
               <Button className={clsx(classes.margin, classes.textField)}
                       variant="contained"
                       color="primary"
                       onClick={logIn}>
-                Register
+                Send Recovery Email
               </Button>
             </FormGroup>
           </form>
           <CardActions>
             <Button
                 size="small"
-            ><Link to="/">Already have an account?</Link></Button>
+            ><Link to="/register">Register new account</Link></Button>
           </CardActions>
           <CardActions>
             <Button
                 size="small"
-            ><Link to="/account-recovery">Account Recovery</Link></Button>
+            ><Link to="/">Back to Log In</Link></Button>
           </CardActions>
         </Card>
       </div>
@@ -162,4 +117,4 @@ const mapStateToProps = (state) => ({
   users: state.users,
 });
 
-export default connect(mapStateToProps)(RegistrationForm);
+export default connect(mapStateToProps)(AccountRecoveryForm);
