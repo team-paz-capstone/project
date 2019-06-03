@@ -54,8 +54,8 @@ public class UserController {
         System.out.println("Received Request to created user: " + newUser);
         User user = new User(newUser);
         try {
-            userRepository.save(user);
-            return ResponseEntity.accepted().build();
+            User result =  userRepository.save(user);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());

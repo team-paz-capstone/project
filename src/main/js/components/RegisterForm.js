@@ -16,7 +16,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import UserHomeView from "../pages/UserHomeView";
+import PublicHomeView from "../pages/PublicHomeView";
+import {createAward, createUser} from "../actions";
+import Toolbar from "@material-ui/core/Toolbar";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,11 +49,20 @@ function RegistrationForm(props) {
     lastName: "",
     email: '',
     password: '',
+    confirmPassword: '',
     showPassword: false,
+    formError: {
+      firstName: false,
+      lastName: false,
+      email: false,
+      password: false,
+      confirmPassword: false
+    },
+    error: "",
+    requested: false,
   });
 
   const handleChange = name => event => {
-    console.debug(name + ": " + event.target.value);
     setValues({...values, [name]: event.target.value});
   };
 
@@ -57,12 +70,52 @@ function RegistrationForm(props) {
     setValues({...values, showPassword: !values.showPassword});
   };
 
-  const logIn = () => {
-    console.debug("Log in clicked!");
+  const register = () => {
+    console.debug(values);
+    let validationError = false;
+    let textError = "";
+    let formError = values.formError;
+
+    let formValues = ["firstName", "lastName", "email", "password", "confirmPassword"]
+    let form = {};
+    if (values.password !== values.confirmPassword) {
+      validationError = true;
+      textError = "Passwords must match!"
+    }
+
+    formValues.forEach(value => {
+      if (values[value] === "") {
+        validationError = true;
+        formError[value] = true;
+      } else {
+        formError[value] = false;
+        form[value] = values[value]
+      }
+    });
+
+    if (validationError) {
+      setValues({...values, formError: formError, error: textError});
+      return;
+    }
+
+    props.dispatch(createUser(form));
+    setValues({
+      ...values,
+      formError: formError,
+      error: textError,
+      requested: true,
+    });
   };
 
+  let requestStatusMessage = '';
+  if (props.users.createLoading === true) {
+    requestStatusMessage = "Loading..."
+  } else if (props.users.createError !== null) {
+    requestStatusMessage = "Problem Creating your account: " + props.users.createError
+  } else {
+    requestStatusMessage = "Successfully created your account!"
+  }
 
-  let error = '';
 
   return (
       <div>
@@ -72,84 +125,128 @@ function RegistrationForm(props) {
                p={2} m={1}>
           <h2>Welcome {name}!</h2>
         </Paper>
-        <Card className={classes.card}>
-          <BaseError error={error}/>
-          <form onSubmit={logIn}>
-            <FormGroup className={classes.root}>
-              <h2>Register</h2>
-              <TextField
-                  id="first-name"
-                  label="First Name"
-                  type="text"
-                  name="firstName"
-                  autoComplete="given-name"
-                  className={classes.textField}
-                  value={values.firstName}
-                  onChange={handleChange('firstName')}
-                  margin="normal"
-              />
-              <TextField
-                  id="last-name"
-                  label="Last Name"
-                  type="text"
-                  name="lastName"
-                  autoComplete="family-name"
-                  className={classes.textField}
-                  value={values.lastName}
-                  onChange={handleChange('lastName')}
-                  margin="normal"
-              />
-              <TextField
-                  id="email"
-                  label="Email"
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  className={classes.textField}
-                  value={values.name}
-                  onChange={handleChange('email')}
-                  margin="normal"
-              />
-              <FormControl className={clsx(classes.margin, classes.textField)}>
-                <InputLabel htmlFor="adornment-password">Password</InputLabel>
-                <Input
-                    id="adornment-password"
-                    type={values.showPassword ? 'text' : 'password'}
-                    label="Password"
-                    name="password"
-                    autoComplete="password"
-                    value={values.password}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleClickShowPassword}
-                                    aria-label="Toggle password visibility"
-                        >
-                          {values.showPassword ? <Visibility/> : <VisibilityOff/>}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                />
-              </FormControl>
-              <Button className={clsx(classes.margin, classes.textField)}
-                      variant="contained"
-                      color="primary"
-                      onClick={logIn}>
-                Register
-              </Button>
-            </FormGroup>
-          </form>
-          <CardActions>
-            <Button
-                size="small"
-            ><Link to="/">Already have an account?</Link></Button>
-          </CardActions>
-          <CardActions>
-            <Button
-                size="small"
-            ><Link to="/account-recovery">Account Recovery</Link></Button>
-          </CardActions>
-        </Card>
+        {values.requested ? (
+            <Card className={classes.card}>
+              <h2>{requestStatusMessage}</h2>
+              <CardActions>
+                <Button size="small">
+                  <Link to="/">Log In</Link>
+                </Button>
+              </CardActions>
+            </Card>
+        ) : (
+            <Card className={classes.card}>
+              <BaseError error={values.error}/>
+              <form>
+                <FormGroup className={classes.root}>
+                  <h2>Register</h2>
+                  <TextField
+                      required
+                      id="first-name"
+                      label="First Name"
+                      type="text"
+                      name="firstName"
+                      autoComplete="given-name"
+                      className={classes.textField}
+                      value={values.firstName}
+                      onChange={handleChange('firstName')}
+                      margin="normal"
+                      error={values.formError.firstName}
+                  />
+                  <TextField
+                      required
+                      id="last-name"
+                      label="Last Name"
+                      type="text"
+                      name="lastName"
+                      autoComplete="family-name"
+                      className={classes.textField}
+                      value={values.lastName}
+                      onChange={handleChange('lastName')}
+                      margin="normal"
+                      error={values.formError.lastName}
+                  />
+                  <TextField
+                      required
+                      id="email"
+                      label="Email"
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      className={classes.textField}
+                      value={values.name}
+                      onChange={handleChange('email')}
+                      margin="normal"
+                      error={values.formError.email}
+                  />
+                  <FormControl className={clsx(classes.margin, classes.textField)}>
+                    <InputLabel
+                        required
+                        error={values.formError.password}
+                        htmlFor="adornment-password">Password</InputLabel>
+                    <Input
+                        required
+                        id="adornment-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        label="Password"
+                        name="password"
+                        autoComplete="password"
+                        value={values.password}
+                        onChange={handleChange('password')}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleClickShowPassword}
+                                        aria-label="Toggle password visibility"
+                            >
+                              {values.showPassword ? <Visibility/> : <VisibilityOff/>}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                    />
+                  </FormControl>
+                  <FormControl className={clsx(classes.margin, classes.textField)}>
+                    <InputLabel
+                        required
+                        error={values.formError.confirmPassword}
+                        htmlFor="adornment-password">Confirm Password</InputLabel>
+                    <Input
+                        id="confirm-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        label="Confirm Password"
+                        name="confirm-password"
+                        value={values.confirmPassword}
+                        onChange={handleChange('confirmPassword')}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleClickShowPassword}
+                                        aria-label="Toggle password visibility"
+                            >
+                              {values.showPassword ? <Visibility/> : <VisibilityOff/>}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                    />
+                  </FormControl>
+                  <Button className={clsx(classes.margin, classes.textField)}
+                          variant="contained"
+                          color="primary"
+                          onClick={register}>
+                    Register
+                  </Button>
+                </FormGroup>
+              </form>
+              <CardActions>
+                <Button
+                    size="small"
+                ><Link to="/">Already have an account?</Link></Button>
+              </CardActions>
+              <CardActions>
+                <Button
+                    size="small"
+                ><Link to="/account-recovery">Account Recovery</Link></Button>
+              </CardActions>
+            </Card>
+        )}
       </div>
   );
 }
