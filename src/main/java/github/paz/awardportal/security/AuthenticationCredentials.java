@@ -15,4 +15,6 @@ public class AuthenticationCredentials {
 
     private String email;
     private String password;
+
+    public AuthenticationCredentials(){}
 }
