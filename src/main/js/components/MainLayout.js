@@ -22,7 +22,6 @@ const styles = theme => ({
 
 function MainLayout(props) {
   const {classes} = props;
-  console.debug(props.auth);
   return (
       <div>
         <BrowserRouter>

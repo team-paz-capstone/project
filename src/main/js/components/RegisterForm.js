@@ -184,7 +184,7 @@ function RegistrationForm(props) {
                         type={values.showPassword ? 'text' : 'password'}
                         label="Password"
                         name="password"
-                        autoComplete="password"
+                        autoComplete="new-password"
                         value={values.password}
                         onChange={handleChange('password')}
                         endAdornment={
@@ -208,6 +208,7 @@ function RegistrationForm(props) {
                         type={values.showPassword ? 'text' : 'password'}
                         label="Confirm Password"
                         name="confirm-password"
+                        autoComplete="new-password"
                         value={values.confirmPassword}
                         onChange={handleChange('confirmPassword')}
                         endAdornment={

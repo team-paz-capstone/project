@@ -70,7 +70,7 @@ class QueryView extends Component {
       // data loading is finished
       this.setState({ finishedLoadingData: true });
     } catch (error) {
-      console.warn('Failed to load users/offices!');
+      console.warn('Failed to load users/offices!' + error);
     }
   }
 

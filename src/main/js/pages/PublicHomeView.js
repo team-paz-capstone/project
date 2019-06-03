@@ -8,6 +8,7 @@ import RegisterForm from "../components/RegisterForm"
 import AccountRecovery from "../components/AccountRecoveryForm";
 import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core";
+import PasswordResetForm from "../components/PasswordResetForm";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -36,6 +37,10 @@ function UserPortal(props) {
               exact
               path="/register"
               component={RegisterForm}
+          />
+          <Route
+              path="/password-reset"
+              component={PasswordResetForm}
           />
           <Route
               exact
