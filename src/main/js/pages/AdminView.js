@@ -1,82 +1,42 @@
 import 'babel-polyfill';
-import {hot} from 'react-hot-loader';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import localStorage from 'local-storage';
 import Grid from '@material-ui/core/Grid';
-import {getAllOffices} from '../api/office';
-import {getAllUsers} from '../api/user';
+import { connect } from 'react-redux';
 import BaseLoadingBar from '../components/BaseLoadingBar';
 import UserList from '../components/UserList';
 import OfficeList from '../components/OfficeList';
+import { fetchOffices, fetchUsers, setAdminViewOffices, setAdminViewUsers } from '../actions';
 
 class AdminView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      users: [],
-      offices: [],
-      finishedLoadingData: false,
-      viewUserList: true
-    };
-
     this.handleClickViewUsers = this.handleClickViewUsers.bind(this);
     this.handleClickViewOffices = this.handleClickViewOffices.bind(this);
   }
 
-  // noinspection JSCheckFunctionSignatures
-  async componentDidMount() {
-    try {
-      // check if there is local storage for current view of the page
-      let viewUserList = true;
-      if (localStorage('viewUserList') !== null && localStorage('viewUserList') === false) {
-        viewUserList = false;
-      }
-      console.debug('TEST');
-      console.debug(`viewUserList: ${localStorage('viewUserList')}`);
-
-      this.setState({viewUserList});
-
-      // load user data
-      let response = await getAllUsers();
-      let users = response.data;
-      this.setState({users});
-
-      // load office data
-      response = await getAllOffices();
-      let offices = response.data;
-      this.setState({offices});
-
-      // data loading is finished
-      this.setState({finishedLoadingData: true});
-    } catch (error) {
-      console.warn('Failed  to load users/offices!');
-    }
+  // fetch data from redux store
+  componentDidMount() {
+    this.props.dispatch(fetchUsers());
+    this.props.dispatch(fetchOffices());
   }
 
   handleClickViewUsers() {
-    this.setState({
-      viewUserList: true
-    });
-
-    // allow state to persist using local session
-    // so that page refresh doesn't reset the current view of the page
-    localStorage('viewUserList', 'true');
+    this.props.dispatch(setAdminViewUsers());
   }
 
   handleClickViewOffices() {
-    this.setState({
-      viewUserList: false
-    });
-
-    // allow state to persist using local session
-    // so that page refresh doesn't reset the current view of the page
-    localStorage('viewUserList', 'false');
+    this.props.dispatch(setAdminViewOffices());
   }
 
   render() {
-    const {viewUserList, offices, users, finishedLoadingData} = this.state;
+    const viewUserList = this.props.views.currentAdminView === 'users';
+    const finishedLoadingData = !this.props.users.loading && !this.props.offices.loading;
+    const users = this.props.users.items;
+    const offices = this.props.offices.items;
+
     let title;
     let viewButton;
     let addButton;
@@ -86,78 +46,84 @@ class AdminView extends React.Component {
       title = <Typography variant="h5">Admin Portal: users</Typography>;
 
       viewButton = (
-          <Button color="primary" variant="contained" onClick={this.handleClickViewOffices}>
-            View Offices
-          </Button>
+        <Button color="primary" variant="contained" onClick={this.handleClickViewOffices}>
+          View Offices
+        </Button>
       );
 
       addButton = (
-          <Button color="primary" variant="contained" href="/users/addForm">
-            Add User
-          </Button>
+        <Button color="primary" variant="contained" href="/users/addForm">
+          Add User
+        </Button>
       );
 
-      list = <UserList users={users}/>;
+      list = <UserList users={users} />;
     } else {
       title = <Typography variant="h5">Admin Portal: offices</Typography>;
 
       viewButton = (
-          <Button color="primary" variant="contained" onClick={this.handleClickViewUsers}>
-            View Users
-          </Button>
+        <Button color="primary" variant="contained" onClick={this.handleClickViewUsers}>
+          View Users
+        </Button>
       );
 
       addButton = (
-          <Button color="primary" variant="contained" href="/offices/addForm">
-            Add Office
-          </Button>
+        <Button color="primary" variant="contained" href="/offices/addForm">
+          Add Office
+        </Button>
       );
 
-      list = <OfficeList offices={offices}/>;
+      list = <OfficeList offices={offices} />;
     }
 
     const queryButton = (
-        <Button color="primary" variant="contained" href="/query">
-          View Queries
-        </Button>
+      <Button color="primary" variant="contained" href="/query">
+        View Queries
+      </Button>
     );
 
     return (
-        <React.Fragment>
-          {/* rendering a loading animation if data has not finished loading */}
-          {finishedLoadingData === false && <BaseLoadingBar/>}
+      <React.Fragment>
+        {/* rendering a loading animation if data has not finished loading */}
+        {finishedLoadingData === false && <BaseLoadingBar />}
 
-          {/* only load the page if data has finished loading */}
-          {finishedLoadingData && (
-              <Grid container direction="row" justify="center" alignItems="center">
-                <div>
-                  <br/>
-                  {title}
+        {/* only load the page if data has finished loading */}
+        {finishedLoadingData && (
+          <Grid container direction="row" justify="center" alignItems="center">
+            <div>
+              <br />
+              {title}
 
-                  <br/>
-                  {viewButton}
-                  <br/>
+              <br />
+              {viewButton}
+              <br />
 
-                  <br/>
-                  {addButton}
-                  <br/>
+              <br />
+              {addButton}
+              <br />
 
-                  <br/>
-                  {queryButton}
-                  <br/>
+              <br />
+              {queryButton}
+              <br />
 
-                  <br/>
-                  {list}
+              <br />
+              {list}
 
-                  <br/>
-                  <br/>
-                  <br/>
-                </div>
-              </Grid>
-          )}
-        </React.Fragment>
+              <br />
+              <br />
+              <br />
+            </div>
+          </Grid>
+        )}
+      </React.Fragment>
     );
   }
 }
 
-export default hot(module)(AdminView);
+const mapStateToProps = state => ({
+  users: state.users,
+  offices: state.offices,
+  views: state.views
+});
+
+export default connect(mapStateToProps)(AdminView);

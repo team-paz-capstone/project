@@ -7,6 +7,7 @@ export * from './offices';
 export * from './select';
 export * from './users';
 export * from './queries';
+export * from './views';
 
 export function logIn(token) {
   return {

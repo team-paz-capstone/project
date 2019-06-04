@@ -7,6 +7,7 @@ import offices from './offices';
 import select from './select';
 import users from './users';
 import queries from './queries';
+import views from './views';
 
 export default combineReducers({
   accountRecovery,
@@ -16,5 +17,6 @@ export default combineReducers({
   offices,
   select,
   users,
-  queries
+  queries,
+  views
 });

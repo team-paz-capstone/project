@@ -1,0 +1,7 @@
+export const ADMIN_VIEW_USERS = 'ADMIN_VIEW_USERS';
+export const ADMIN_VIEW_OFFICES = 'ADMIN_VIEW_OFFICES';
+
+export default {
+  ADMIN_VIEW_USERS,
+  ADMIN_VIEW_OFFICES
+};
