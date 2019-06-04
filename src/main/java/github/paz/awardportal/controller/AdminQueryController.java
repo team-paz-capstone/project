@@ -7,6 +7,7 @@ import github.paz.awardportal.model.User.User;
 import github.paz.awardportal.repository.AwardRepository;
 import github.paz.awardportal.repository.OfficeRepository;
 import github.paz.awardportal.repository.UserRepository;
+import github.paz.awardportal.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -31,10 +32,14 @@ public class AdminQueryController {
     @Autowired
     private AwardRepository awardRepository;
 
+    @Autowired
+    SecurityUtil securityUtil;
+
     @RequestMapping(value = "/office_by_user_count", method = RequestMethod.GET)
     @ApiOperation(value = "list office ranked by user count", response = List.class)
     public ResponseEntity<Map<String, Integer>> getOfficeByUserCount() {
         log.info("Get - Office By User Count");
+        securityUtil.assertAdminUser();
 
         Map<String, Integer> res = new HashMap<>();
 
@@ -65,6 +70,7 @@ public class AdminQueryController {
     @ApiOperation(value = "list user ranked by award count", response = List.class)
     public ResponseEntity<Map<String, Integer>> getUserByAwardCount() {
         log.info("Get - User By Office Count");
+        securityUtil.assertAdminUser();
 
         Map<String, Integer> res = new HashMap<>();
 

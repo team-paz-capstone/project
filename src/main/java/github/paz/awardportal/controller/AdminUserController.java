@@ -4,6 +4,7 @@ import github.paz.awardportal.model.Office.Office;
 import github.paz.awardportal.model.User.User;
 import github.paz.awardportal.repository.OfficeRepository;
 import github.paz.awardportal.repository.UserRepository;
+import github.paz.awardportal.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,6 +27,9 @@ public class AdminUserController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    SecurityUtil securityUtil;
+
     // set up an encoder bean
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -34,6 +38,7 @@ public class AdminUserController {
 
     @GetMapping("/list")
     public String listUsers(Model model) {
+        securityUtil.assertAdminUser();
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "redirect:/admin";
@@ -42,6 +47,7 @@ public class AdminUserController {
 
     @GetMapping("/addForm")
     public String addForm(Model model) {
+        securityUtil.assertAdminUser();
         User user = new User();
         List<Office> offices = officeRepository.findAll();
 
@@ -54,7 +60,7 @@ public class AdminUserController {
 
     @GetMapping("/updateForm")
     public String updateForm(@RequestParam("userId") Long id, Model model) {
-
+        securityUtil.assertAdminUser();
         User user = userRepository.getOne(id);
         List<Office> offices = officeRepository.findAll();
 
@@ -66,6 +72,7 @@ public class AdminUserController {
 
     @GetMapping("/viewSignature")
     public String viewSignature(@RequestParam("userId") Long id, Model model) {
+        securityUtil.assertAdminUser();
         User user = userRepository.getOne(id);
 
         model.addAttribute("user", user);
@@ -76,7 +83,7 @@ public class AdminUserController {
 
     @PostMapping("/create")
     public String save(@ModelAttribute("user") User user) {
-
+        securityUtil.assertAdminUser();
         // encode user password before saving it
         final String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -89,7 +96,7 @@ public class AdminUserController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute("user") User user) {
-
+        securityUtil.assertAdminUser();
         // encode user password before saving it
         final String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -101,6 +108,7 @@ public class AdminUserController {
 
     @GetMapping("/delete")
     public String delete(@RequestParam("userId") Long id) {
+        securityUtil.assertAdminUser();
         userRepository.deleteById(id);
         return "redirect:/users/list";
     }
