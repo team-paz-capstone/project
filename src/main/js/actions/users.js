@@ -10,7 +10,7 @@ export function fetchUsers() {
       let users = response.data;
       dispatch(fetchUsersSuccess(users));
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.statusText));
     }
   };
 }
@@ -23,7 +23,7 @@ export function fetchUser(id) {
       let users = response.data;
       dispatch(fetchUserSuccess(users));
     } catch (error) {
-      dispatch(fetchUserFailure(error));
+      dispatch(fetchUserFailure(error.response.statusText));
     }
   };
 }
@@ -36,7 +36,7 @@ export function createUser(data) {
       let user = response.data;
       dispatch(createUserSuccess(user));
     } catch (error) {
-      dispatch(createUserFailure(error));
+      dispatch(createUserFailure(error.response.statusText));
     }
   };
 }
@@ -49,7 +49,7 @@ export function updateUser(data) {
       let user = response.data;
       dispatch(updateUserSuccess(user));
     } catch (error) {
-      dispatch(updateUserFailure(error));
+      dispatch(updateUserFailure(error.response.statusText));
     }
   };
 }
@@ -62,41 +62,11 @@ export function deleteUser(data) {
       let user = response.data;
       dispatch(deleteUserSuccess(user));
     } catch (error) {
-      dispatch(deleteUserFailure(error));
+      dispatch(deleteUserFailure(error.response.statusText));
     }
   };
 }
 
-/* TODO: Update User Password*/
-// export function updatePassword(data) {
-//   return async dispatch => {
-//     dispatch(updateUserPasswordBegin());
-//     try {
-//       let response = await Api.(data);
-//       let user = response.data;
-//       dispatch(deleteUserSuccess(user));
-//     } catch (error) {
-//       dispatch(deleteUserFailure(error));
-//     }
-//   };
-// }
-
-/* TODO: Request Password Update/
-// export function updatePassword(data) {
-//   return async dispatch => {
-//     dispatch(updateUserPasswordBegin());
-//     try {
-//       let response = await Api.(data);
-//       let user = response.data;
-//       dispatch(deleteUserSuccess(user));
-//     } catch (error) {
-//       dispatch(deleteUserFailure(error));
-//     }
-//   };
-// }
-
-
- */
 /*
 * Fetch Users
 * */

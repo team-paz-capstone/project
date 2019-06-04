@@ -10,7 +10,7 @@ export function fetchOffices() {
       let offices = response.data;
       dispatch(fetchOfficesSuccess(offices));
     } catch (error) {
-      dispatch(fetchOfficesFailure(error));
+      dispatch(fetchOfficesFailure(error.response.statusText));
     }
   };
 }
@@ -23,7 +23,7 @@ export function fetchOffice(id) {
       let offices = response.data;
       dispatch(fetchOfficeSuccess(offices));
     } catch (error) {
-      dispatch(fetchOfficeFailure(error));
+      dispatch(fetchOfficeFailure(error.response.statusText));
     }
   };
 }
@@ -36,7 +36,7 @@ export function createOffice(data) {
       let office = response.data;
       dispatch(createOfficeSuccess(office));
     } catch (error) {
-      dispatch(createOfficeFailure(error));
+      dispatch(createOfficeFailure(error.response.statusText));
     }
   };
 }
@@ -49,7 +49,7 @@ export function updateOffice(data) {
       let office = response.data;
       dispatch(updateOfficeSuccess(office));
     } catch (error) {
-      dispatch(updateOfficeFailure(error));
+      dispatch(updateOfficeFailure(error.response.statusText));
     }
   };
 }
@@ -62,7 +62,7 @@ export function deleteOffice(data) {
       let office = response.data;
       dispatch(deleteOfficeSuccess(office));
     } catch (error) {
-      dispatch(deleteOfficeFailure(error));
+      dispatch(deleteOfficeFailure(error.response.statusText));
     }
   };
 }

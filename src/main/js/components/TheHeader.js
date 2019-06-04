@@ -12,13 +12,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import {logIn, logOut} from "../actions"
-import BaseSelect from "./BaseSelect";
+import DeveloperControls from "./DeveloperControls";
 
 const styles = {
   root: {
@@ -33,7 +30,7 @@ const styles = {
   },
 };
 
-class TheAppBar extends React.Component {
+class TheHeader extends React.Component {
   state = {
     anchorEl: null,
   };
@@ -62,27 +59,20 @@ class TheAppBar extends React.Component {
     const {anchorEl} = this.state;
     const open = Boolean(anchorEl);
 
-    let users = this.props.users.items.map(user => {
-      user.display = user["firstName"] + " " + user["lastName"];
-      return user;
-    });
+    let loggedInUser = this.props.select.items["Logged In As"];
+    let name = loggedInUser ? loggedInUser["display"] : "Invalid User Logged In";
+
+    // TODO: Once the login page is working, uncomment
+    //  let productionMode = process.env.NODE_ENV === 'development';
+    let productionMode = false;
 
     return (
-        <div className={classes.root}>
-          <FormGroup>
-            <FormControlLabel
-                control={
-                  <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch"/>
-                }
-                label={auth ? 'Logout' : 'Login'}
-            />
-            <BaseSelect
-                name={"Logged In As"}
-                items={users}
-                nameKey={"display"}
-                valueKey={"id"}/>
-            <br/>
-          </FormGroup>
+        <form className={classes.root}>
+          {productionMode ? (
+              <div>{null}</div>
+          ) : (
+              <DeveloperControls/>
+          )}
           <AppBar position="static">
             <Toolbar>
               <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
@@ -93,6 +83,7 @@ class TheAppBar extends React.Component {
               </Typography>
               {auth && (
                   <div>
+                    {name}
                     <IconButton
                         aria-owns={open ? 'menu-appbar' : undefined}
                         aria-haspopup="true"
@@ -122,12 +113,12 @@ class TheAppBar extends React.Component {
               )}
             </Toolbar>
           </AppBar>
-        </div>
+        </form>
     );
   }
 }
 
-TheAppBar.propTypes = {
+TheHeader.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -139,4 +130,4 @@ const mapStateToProps = (state) => ({
   users: state.users,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(TheAppBar));
+export default connect(mapStateToProps)(withStyles(styles)(TheHeader));

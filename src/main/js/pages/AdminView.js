@@ -7,11 +7,11 @@ import localStorage from 'local-storage';
 import Grid from '@material-ui/core/Grid';
 import {getAllOffices} from '../api/office';
 import {getAllUsers} from '../api/user';
-import BaseLoadingBar from './BaseLoadingBar';
-import UserList from './UserList';
-import OfficeList from './OfficeList';
+import BaseLoadingBar from '../components/BaseLoadingBar';
+import UserList from '../components/UserList';
+import OfficeList from '../components/OfficeList';
 
-class AdminPortal extends React.Component {
+class AdminView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -160,4 +160,4 @@ class AdminPortal extends React.Component {
   }
 }
 
-export default hot(module)(AdminPortal);
+export default hot(module)(AdminView);

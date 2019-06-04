@@ -38,6 +38,10 @@ module.exports = {
         target: 'http://localhost:8080/',
         secure: false
       },
+      '/src/main/resources/static/css/main.css': {
+        target: 'http://localhost:8080/css/main.css',
+        secure: false
+      },
       '/users': {
         target: 'http://localhost:8080/',
         secure: false

@@ -9,7 +9,7 @@ export function fetchAwards() {
       let awards = response.data;
       dispatch(fetchAwardsSuccess(awards));
     } catch (error) {
-      dispatch(fetchAwardsFailure(error));
+      dispatch(fetchAwardsFailure(error.response.statusText));
     }
   };
 }
@@ -22,7 +22,7 @@ export function fetchAward(id) {
       let awards = response.data;
       dispatch(fetchAwardSuccess(awards));
     } catch (error) {
-      dispatch(fetchAwardFailure(error));
+      dispatch(fetchAwardFailure(error.response.statusText));
     }
   };
 }
@@ -35,7 +35,7 @@ export function fetchAwardByGranter(id) {
       let awards = response.data;
       dispatch(fetchAwardByGranterSuccess(awards));
     } catch (error) {
-      dispatch(fetchAwardByGranterFailure(error));
+      dispatch(fetchAwardByGranterFailure(error.response.statusText));
     }
   };
 }
@@ -48,7 +48,7 @@ export function fetchAwardByRecipient(id) {
       let awards = response.data;
       dispatch(fetchAwardByRecipientSuccess(awards));
     } catch (error) {
-      dispatch(fetchAwardByRecipientFailure(error));
+      dispatch(fetchAwardByRecipientFailure(error.response.statusText));
     }
   };
 }
@@ -61,7 +61,7 @@ export function createAward(data) {
       let award = response.data;
       dispatch(createAwardSuccess(award));
     } catch (error) {
-      dispatch(createAwardFailure(error));
+      dispatch(createAwardFailure(error.response.statusText));
     }
   };
 }
@@ -74,7 +74,7 @@ export function deleteAward(data) {
       let award = response.data;
       dispatch(deleteAwardSuccess(award));
     } catch (error) {
-      dispatch(deleteAwardFailure(error));
+      dispatch(deleteAwardFailure(error.response.statusText));
     }
   };
 }

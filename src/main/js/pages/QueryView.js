@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { CSVLink } from 'react-csv';
 import Divider from '@material-ui/core/Divider';
 import { getOfficeByUserCount, getUserByAwardCount } from '../api/query';
-import BaseLoadingBar from './BaseLoadingBar';
+import BaseLoadingBar from '../components/BaseLoadingBar';
 
 // sort by count from largest to smallest
 function Comparator(a, b) {
@@ -23,7 +23,7 @@ function Comparator(a, b) {
   return 0;
 }
 
-class QueryPage extends Component {
+class QueryView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +70,7 @@ class QueryPage extends Component {
       // data loading is finished
       this.setState({ finishedLoadingData: true });
     } catch (error) {
-      console.warn('Failed to load users/offices!');
+      console.warn('Failed to load users/offices!' + error);
     }
   }
 
@@ -251,4 +251,4 @@ class QueryPage extends Component {
   }
 }
 
-export default QueryPage;
+export default QueryView;

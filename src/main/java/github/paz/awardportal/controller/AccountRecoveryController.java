@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
 
@@ -44,6 +47,13 @@ public class AccountRecoveryController {
     public ResponseEntity<String> requestRecovery(
             @RequestBody String email
     ) {
+        try {
+            email = java.net.URLDecoder.decode(email, StandardCharsets.UTF_8.name());
+            email = email.substring(0, email.length() - 1);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         log.info("Requested recovery for email: " + email);
         RandomStringGenerator generator = new RandomStringGenerator.Builder()
                 .withinRange('0', 'z')
