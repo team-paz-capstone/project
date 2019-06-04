@@ -2,7 +2,6 @@ import 'babel-polyfill';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import localStorage from 'local-storage';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import BaseLoadingBar from '../components/BaseLoadingBar';
