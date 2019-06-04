@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import java.net.URISyntaxException;
+import java.util.Map;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
@@ -45,15 +44,9 @@ public class AccountRecoveryController {
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ApiOperation(value = "Seed the database", response = String.class)
     public ResponseEntity<String> requestRecovery(
-            @RequestBody String email
+            @RequestBody Map<String,Object> body
     ) {
-        try {
-            email = java.net.URLDecoder.decode(email, StandardCharsets.UTF_8.name());
-            email = email.substring(0, email.length() - 1);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
+        String email = body.get("email").toString();
         log.info("Requested recovery for email: " + email);
         RandomStringGenerator generator = new RandomStringGenerator.Builder()
                 .withinRange('0', 'z')
@@ -70,6 +63,8 @@ public class AccountRecoveryController {
             emailService.sendAccountRecoveryEmail(email, token);
         } catch (MessagingException mex) {
             log.warn("Failed to send recovery email to " + email, mex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return ResponseEntity.accepted().build();

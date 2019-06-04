@@ -11,6 +11,11 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping("/home/**")
+    public String wildcard() {
+        return "index";
+    }
+
     @RequestMapping(value = "/admin")
     public String admin() {
         return "index";

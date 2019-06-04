@@ -35,16 +35,16 @@ function UserPortal(props) {
           />
           <Route
               exact
-              path="/register"
+              path="/home/register"
               component={RegisterForm}
           />
           <Route
-              path="/password-reset"
+              path="/home/password-reset"
               component={PasswordResetForm}
           />
           <Route
               exact
-              path="/account-recovery"
+              path="/home/account-recovery"
               component={AccountRecovery}
           />
         </BrowserRouter>

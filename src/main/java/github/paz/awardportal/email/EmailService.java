@@ -3,6 +3,7 @@ package github.paz.awardportal.email;
 import github.paz.awardportal.model.Award.Award;
 import github.paz.awardportal.model.User.User;
 import lombok.extern.log4j.Log4j2;
+import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 @Component
 @Log4j2
@@ -81,27 +85,46 @@ public class EmailService {
         return user.getFirstName() + " " + user.getLastName();
     }
 
-
     /**
      * Send a recovery email to the user.
      *
-     * @param email  - User's Email
+     * @param email - User's Email
      * @param token - Token generated for recovery, should not be displayed
      *              for the user, but it required to reset the password.
      */
     public void sendAccountRecoveryEmail(
             String email,
             String token
-    ) throws MessagingException {
-
-        /* TODO: Create Template with button click to URL with token + email
-        *   token should not be displayed to user.*/
+    ) throws MessagingException, MalformedURLException, URISyntaxException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        String url = getRecoveryURL(email, token);
+        String htmlMsg = getEmailContent(url);
+
+        message.setContent(htmlMsg, "text/html");
+
         helper.setSubject("Account Recovery");
         helper.setTo(email);
-        String text = "Email: " + email + " Token: " + token;
-        helper.setText(text);
+
         javaMailSender.send(message);
+    }
+
+    private String getEmailContent(String url) {
+        return "<h3>Account Recovery</h3>" +
+                "<br>" +
+                "<a href=" + url + ">Click here to reset your password!</a>";
+
+    }
+
+    private String getRecoveryURL(String email, String token)
+            throws URISyntaxException, MalformedURLException {
+        URIBuilder builder = new URIBuilder();
+        builder.setScheme("https");
+        builder.setHost("pazcapstone.herokuapp.com");
+        builder.setPath("/home/password-reset");
+        builder.addParameter("email", email);
+        builder.addParameter("token", token);
+        return builder.build().toURL().toString();
     }
 }

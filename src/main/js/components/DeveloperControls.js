@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import {logIn, logOut} from "../actions"
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import {Link, BrowserRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Card from "@material-ui/core/Card";
 
 const styles = theme => ({
@@ -28,11 +28,9 @@ function DeveloperControls(props) {
   let users;
   const handleChange = () => {
     if (props.auth) {
-      console.debug("Logging out!");
       props.dispatch(logOut());
       return
     }
-    console.debug("Logging in!");
     props.dispatch(logIn("Test Token"));
   };
 
