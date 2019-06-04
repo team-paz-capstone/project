@@ -27,6 +27,7 @@ class App extends React.Component {
           {/* allow customize theme color */}
           <MuiThemeProvider theme={theme}>
             <CssBaseline />
+
             <MainLayout />
           </MuiThemeProvider>
         </div>
