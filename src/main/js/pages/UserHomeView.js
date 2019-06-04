@@ -1,20 +1,15 @@
-import {
-  fetchAwards,
-  fetchAwardTypes,
-  fetchOffices,
-  fetchUsers
-} from "../actions";
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
-import TheAwardForm from "../components/AwardForm";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container/index';
-import {withStyles} from "@material-ui/core/index";
+import { withStyles } from '@material-ui/core/index';
+import Grid from '@material-ui/core/Grid';
+import DeleteAwardForm from '../components/DeleteAwardForm';
+import TheAwardForm from '../components/CreateAwardForm';
+import { fetchAwards, fetchAwardTypes, fetchOffices, fetchUsers } from '../actions';
 
-
-const styles = {Container: {padding: 1}};
+const styles = { Container: { padding: 1 } };
 
 class UserHomeView extends Component {
-
   componentDidMount() {
     this.props.dispatch(fetchUsers());
     this.props.dispatch(fetchAwards());
@@ -24,17 +19,22 @@ class UserHomeView extends Component {
 
   render() {
     return (
+      <div>
         <Container maxWidth="sm">
-          <br/>
-          <TheAwardForm/>
-          <br/>
+          <br />
+          <TheAwardForm />
+          <br />
         </Container>
+        <Grid>
+          <DeleteAwardForm />
+        </Grid>
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  select: state.select,
+const mapStateToProps = state => ({
+  select: state.select
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(UserHomeView))
+export default connect(mapStateToProps)(withStyles(styles)(UserHomeView));

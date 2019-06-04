@@ -33,6 +33,9 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
     inline: true,
+    watchOptions: {
+      poll: 1000
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:8080/',

@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const BASE_URL = "/api/award/";
-const GRANTER = BASE_URL + "granter/";
-const RECIPIENT = BASE_URL + "recipient/";
+const BASE_URL = '/api/award/';
+const GRANTER = BASE_URL + 'granter/';
+const RECIPIENT = BASE_URL + 'recipient/';
 const ALL = BASE_URL + 'all';
-const CREATE = BASE_URL + "create";
-const DELETE = BASE_URL + "delete";
+const CREATE = BASE_URL + 'create';
+const DELETE = BASE_URL + 'delete/';
 
 export async function getAllAwards() {
   return axios.get(ALL);
@@ -28,7 +28,7 @@ export async function createAward(data) {
 }
 
 export async function deleteAward(id) {
-  return axios.get(DELETE + id);
+  return axios.post(DELETE + id);
 }
 
 export default {
@@ -38,4 +38,4 @@ export default {
   getAwardByRecipient,
   createAward,
   deleteAward
-}
+};
