@@ -1,6 +1,6 @@
 /*
-* SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
-* */
+ * SOURCE: https://spring.io/guides/tutorials/react-and-spring-data-rest/
+ * */
 define(function(require) {
   'use strict';
 
@@ -15,6 +15,6 @@ define(function(require) {
         request.path = request.path.split('{')[0];
         return request;
       }
-    },
+    }
   });
 });
