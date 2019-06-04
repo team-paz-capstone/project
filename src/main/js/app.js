@@ -8,8 +8,8 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import MainLayout from './components/MainLayout';
-import reducer from './reducers';
-import { theme } from './ui/theme';
+import reducer from "./reducers";
+import { theme } from "./ui/theme";
 
 let store;
 const middleware = [thunk];
@@ -19,18 +19,42 @@ if (process.env.NODE_ENV === 'development') {
 }
 store = createStore(reducer, composeWithDevTools(applyMiddleware(...middleware)));
 
-class App extends React.Component {
+class                  App extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <div>
           {/* allow customize theme color */}
           <MuiThemeProvider theme={theme}>
-            <CssBaseline />
-            <MainLayout />
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        <CssBaseline />
+
+
+
+
+
+
+
+                                             <MainLayout />
           </MuiThemeProvider>
         </div>
-      </Provider>
+
+
+
+
+                                                  </Provider>
     );
   }
 }
