@@ -45,7 +45,6 @@ class Award extends React.Component {
         <TableCell>{recipientName}</TableCell>
         <TableCell>{granterName}</TableCell>
         <TableCell>{date}</TableCell>
-        <TableCell>{date}</TableCell>
         <TableCell>{deleteButton} </TableCell>
       </TableRow>
     );
