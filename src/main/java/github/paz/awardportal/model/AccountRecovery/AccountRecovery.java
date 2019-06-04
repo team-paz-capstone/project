@@ -26,4 +26,8 @@ public class AccountRecovery {
 
     @Column(name = "expiration", updatable = false)
     private LocalDateTime timestamp;
+
+    public AccountRecovery() {
+    }
+
 }

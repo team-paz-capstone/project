@@ -9,5 +9,6 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface AccountRecoveryRepository extends JpaRepository<AccountRecovery, Long> {
+    AccountRecovery findByToken(String token);
 
 }

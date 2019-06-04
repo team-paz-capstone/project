@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.mail.MessagingException;
 import java.net.URISyntaxException;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class AccountRecoveryController {
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ApiOperation(value = "Seed the database", response = String.class)
     public ResponseEntity<String> requestRecovery(
-            @RequestBody Map<String,Object> body
+            @RequestBody Map<String, Object> body
     ) {
         String email = body.get("email").toString();
         log.info("Requested recovery for email: " + email);
@@ -80,8 +81,8 @@ public class AccountRecoveryController {
         String hashedPassword = passwordEncoder.encode(
                 changedPassword.getPassword());
         log.info(hashedPassword.length());
-
-        User user = userRepository.findByEmail(changedPassword.getEmail());
+        AccountRecovery accountRecovery = accountRecoveryRepository.findByToken(changedPassword.getToken());
+        User user = userRepository.findByEmail(accountRecovery.getEmail());
         user.setPassword(hashedPassword);
         userRepository.save(user);
 
