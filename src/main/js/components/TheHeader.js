@@ -14,7 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { devLogIn, devLogOut } from '../actions';
+import { devLogIn, devLogOut, logOut } from '../actions';
 import DeveloperControls from './DeveloperControls';
 
 const styles = {
@@ -54,6 +54,14 @@ class TheHeader extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleLogOut = () => {
+    try {
+      this.props.dispatch(logOut());
+    } catch {
+      console.log('Logout failed');
+    }
+  };
+
   render() {
     const { classes, auth } = this.props;
     const { anchorEl } = this.state;
@@ -64,9 +72,8 @@ class TheHeader extends React.Component {
       ? loggedInUser.firstName + ' ' + loggedInUser.lastName
       : 'Invalid User Logged In';
 
-    // TODO: Once the login page is working, uncomment
-    //  let productionMode = process.env.NODE_ENV === 'development';
-    let productionMode = false;
+    // Check for development vs. production environment
+    let productionMode = process.env.NODE_ENV === 'production';
 
     return (
       <form className={classes.root}>
@@ -81,31 +88,34 @@ class TheHeader extends React.Component {
             </Typography>
             {auth && (
               <div>
-                {name}
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
                 >
+                  <Typography variant="h6">{name}</Typography>
+
                   <AccountCircle />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
-                  anchorEl={anchorEl}
+                  elevation={0}
+                  getContentAnchorEl={null}
                   anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
+                    vertical: 'bottom',
+                    horizontal: 'center'
                   }}
                   transformOrigin={{
                     vertical: 'top',
-                    horizontal: 'right'
+                    horizontal: 'center'
                   }}
+                  anchorEl={anchorEl}
+                  keepMounted
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.handleLogOut}>Log Out</MenuItem>
                 </Menu>
               </div>
             )}

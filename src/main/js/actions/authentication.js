@@ -35,7 +35,10 @@ export function logIn(data) {
 }
 
 export function logOut() {
-  return { type: LOG_OUT };
+  return {
+    type: LOG_OUT,
+    token: ''
+  };
 }
 
 export const loginBegin = () => ({

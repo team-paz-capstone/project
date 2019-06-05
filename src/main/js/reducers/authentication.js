@@ -3,7 +3,8 @@ import {
   DEV_LOG_OUT,
   LOG_IN_BEGIN,
   LOG_IN_FAILURE,
-  LOG_IN_SUCCESS
+  LOG_IN_SUCCESS,
+  LOG_OUT
 } from '../action-types';
 
 const initialState = {
@@ -49,6 +50,11 @@ export default function(state = initialState, action) {
         auth: false,
         loading: false,
         error: action.payload.error.request.statusText
+      };
+    case LOG_OUT:
+      return {
+        auth: false,
+        token: undefined
       };
     default:
       return state;
