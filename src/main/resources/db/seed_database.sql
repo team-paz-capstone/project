@@ -42,7 +42,7 @@ CREATE TABLE award (
 
 CREATE TABLE account_recovery (
   id SERIAL PRIMARY KEY,
-  email VARCHAR(45) NOT NULL REFERENCES users (email),
+  email VARCHAR(45) NOT NULL REFERENCES users (email) ON DELETE CASCADE,
   token VARCHAR(60) NOT NULL,
   expiration TIMESTAMP default current_timestamp
 );

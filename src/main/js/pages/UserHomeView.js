@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container/index';
 import { withStyles } from '@material-ui/core/index';
 import Grid from '@material-ui/core/Grid';
 import DeleteAwardForm from '../components/DeleteAwardForm';
-import TheAwardForm from '../components/CreateAwardForm';
+import CreateAwardForm from '../components/CreateAwardForm';
 import { fetchAwards, fetchAwardTypes, fetchOffices, fetchUsers } from '../actions';
 
 const styles = { Container: { padding: 1 } };
@@ -22,7 +22,7 @@ class UserHomeView extends Component {
       <div>
         <Container maxWidth="sm">
           <br />
-          <TheAwardForm />
+          <CreateAwardForm />
           <br />
         </Container>
         <Grid>

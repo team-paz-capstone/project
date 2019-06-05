@@ -18,7 +18,7 @@ class DeleteAwardForm extends React.Component {
     }
 
     const awards = this.props.awards.items;
-    const currentUser = this.props.select.items['Logged In As'];
+    const currentUser = this.props.user;
 
     // get all awards granted by current user
     let currentUserAwards;
@@ -52,6 +52,7 @@ class DeleteAwardForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.authentication.user,
   awards: state.awards,
   offices: state.offices,
   views: state.views,

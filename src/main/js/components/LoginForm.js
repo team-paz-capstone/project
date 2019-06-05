@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import BaseError from './BaseError';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -16,7 +15,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { logIn } from '../actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +43,13 @@ function LoginForm(props) {
   const [values, setValues] = React.useState({
     email: '',
     password: '',
-    showPassword: false
+    showPassword: false,
+    formError: {
+      email: false,
+      password: false
+    },
+    requested: false,
+    error: ''
   });
 
   const handleChange = name => event => {
@@ -55,11 +61,26 @@ function LoginForm(props) {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const logIn = () => {
+  const handleLogin = () => {
     console.debug('Log in clicked!');
+    let formError = { email: false, password: false };
+    if (values.email === '') formError.email = true;
+    if (values.password === '') formError.password = true;
+    if (formError.password || formError.email) {
+      setValues({ ...values, formError: formError });
+    } else {
+      setValues({ ...values, formError: formError });
+      props.dispatch(
+        logIn({
+          email: values.email,
+          password: values.password
+        })
+      );
+    }
   };
 
-  let error = '';
+  let error = props.authentication.error;
+  console.debug(props.authentication);
 
   return (
     <div>
@@ -78,9 +99,12 @@ function LoginForm(props) {
               value={values.name}
               onChange={handleChange('email')}
               margin="normal"
+              error={values.formError.email}
             />
             <FormControl className={clsx(classes.margin, classes.textField)}>
-              <InputLabel htmlFor="adornment-password">Password</InputLabel>
+              <InputLabel htmlFor="adornment-password" error={values.formError.password}>
+                Password
+              </InputLabel>
               <Input
                 id="adornment-password"
                 type={values.showPassword ? 'text' : 'password'}
@@ -89,6 +113,7 @@ function LoginForm(props) {
                 autoComplete="password"
                 value={values.password}
                 onChange={handleChange('password')}
+                error={values.formError.password}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -105,7 +130,7 @@ function LoginForm(props) {
               className={clsx(classes.margin, classes.textField)}
               variant="contained"
               color="primary"
-              onClick={logIn}
+              onClick={handleLogin}
             >
               Log In
             </Button>
@@ -127,6 +152,7 @@ function LoginForm(props) {
 }
 
 const mapStateToProps = state => ({
+  authentication: state.authentication,
   awards: state.awards,
   awardTypes: state.awardTypes,
   offices: state.offices,

@@ -1,6 +1,7 @@
 package github.paz.awardportal.controller;
 
 import github.paz.awardportal.model.User.BaseUser;
+import github.paz.awardportal.model.User.LoginUser;
 import github.paz.awardportal.model.User.User;
 import github.paz.awardportal.repository.UserRepository;
 import io.swagger.annotations.Api;
@@ -10,9 +11,12 @@ import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController()
 @RequestMapping(value = "/api/user")
@@ -29,6 +33,21 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         log.info("Get - All Users");
         return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ApiOperation(value = "Checks the email and password", response = List.class)
+    public ResponseEntity<?> logIn(
+            @RequestBody LoginUser login
+    ) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        log.info("Login: " + login.getEmail());
+        User response = userRepository.findByEmail(login.getEmail());
+        if (passwordEncoder.matches(login.getPassword(), response.getPassword())){
+            return  ResponseEntity.ok(response);
+        }
+        return  ResponseEntity.badRequest().build();
     }
 
     // Returns User with the given ID, or 404 NOT FOUND.
@@ -54,7 +73,7 @@ public class UserController {
         System.out.println("Received Request to created user: " + newUser);
         User user = new User(newUser);
         try {
-            User result =  userRepository.save(user);
+            User result = userRepository.save(user);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,7 +121,7 @@ public class UserController {
         try {
             userRepository.deleteById(email);
             return ResponseEntity.accepted().build();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Failed to update");
         }

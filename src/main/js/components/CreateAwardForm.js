@@ -34,7 +34,7 @@ class CreateAwardForm extends Component {
 
   createAward = () => {
     console.debug('Create Award Clicked...');
-    let selectedGranter = this.props.select.items['Logged In As'];
+    let selectedGranter = this.props.user;
     let selectedRecipient = this.props.select.items['Recipient'];
     let selectedAwardType = this.props.select.items['Award Type'];
 
@@ -128,6 +128,7 @@ class CreateAwardForm extends Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.authentication.user,
   awards: state.awards,
   awardTypes: state.awardTypes,
   offices: state.offices,
