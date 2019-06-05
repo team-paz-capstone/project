@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import github.paz.awardportal.model.Award.Award;
 import github.paz.awardportal.model.Office.Office;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Type;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.util.Arrays;
+import java.sql.Timestamp;
 import java.util.Base64;
 import java.util.List;
 
@@ -58,6 +60,10 @@ public class User {
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] signature;
 
+    @Column(name = "created_datetime")
+    @CreationTimestamp
+    private Timestamp timestamp;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipient") // TODO - cascade types.
     @JsonIgnore
     private List<Award> receivedAwards;
@@ -88,7 +94,6 @@ public class User {
     public User() {
     }
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -99,7 +104,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", office=" + office +
                 ", isAdmin=" + isAdmin +
-                ", signature=" + Arrays.toString(signature) +
+                ", timestamp=" + timestamp +
                 ", receivedAwards=" + receivedAwards +
                 '}';
     }

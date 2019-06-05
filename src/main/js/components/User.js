@@ -22,12 +22,13 @@ class User extends Component {
           variant="outlined"
           href={`/users/viewSignature?userId=${this.props.user.id}`}
         >
-          {' '}
           View
-{' '}
         </Button>
       );
     }
+
+    // get the date of account creation
+    const date = new Date(this.props.user.timestamp).toDateString();
 
     return (
       <TableRow>
@@ -36,12 +37,8 @@ class User extends Component {
         <TableCell>{this.props.user.lastName}</TableCell>
         <TableCell>{this.props.user.email}</TableCell>
         <TableCell>{this.props.user.admin.toString()}</TableCell>
-        <TableCell>
-          {' '}
-          {this.props.user.office === null ? '' : this.props.user.office.name}
-{' '}
-        </TableCell>
-
+        <TableCell>{this.props.user.office === null ? '' : this.props.user.office.name}</TableCell>
+        <TableCell>{date}</TableCell>
         <TableCell>{viewSignatureButton}</TableCell>
 
         <TableCell>

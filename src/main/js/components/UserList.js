@@ -23,6 +23,7 @@ class UserList extends Component {
               <TableCell>Email</TableCell>
               <TableCell>Admin</TableCell>
               <TableCell>Office</TableCell>
+              <TableCell>Created On</TableCell>
               <TableCell>Signature</TableCell>
               <TableCell>Update</TableCell>
               <TableCell>Delete</TableCell>
