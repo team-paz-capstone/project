@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
-import java.net.URISyntaxException;
 import java.util.Map;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
