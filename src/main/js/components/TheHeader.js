@@ -64,8 +64,7 @@ class TheHeader extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              <Link component={RouterLink} to="/home/" color="inherit">
-                {' '}
+              <Link component={RouterLink} to="/" color="inherit">
                 Employee Award Recognition
               </Link>
             </Typography>

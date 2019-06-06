@@ -28,7 +28,9 @@ function AccountMenu(props) {
         <MenuItem>
           <Link to="/home/profile">Profile</Link>
         </MenuItem>
-        <MenuItem onClick={props.handleOnClick}>Log Out</MenuItem>
+        <MenuItem component={Link} to="/" onClick={props.handleOnClick}>
+          Log Out
+        </MenuItem>
       </Menu>
     </div>
   );
