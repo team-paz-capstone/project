@@ -14,7 +14,6 @@ function main() {
     load_jdbc_variable
     set_max_connections $@
     start_server
-    set_development_env_variable
 }
 
 function get_heroku_env_variables() {

@@ -4,16 +4,17 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import AwardList from './AwardList';
-import { fetchAwards } from '../actions';
+import { fetchAwards, fetchUsers } from '../actions';
 import BaseLoadingBar from './BaseLoadingBar';
 
-class DeleteAwardForm extends React.Component {
+class AwardsGranted extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     // if award data needs fetching, fetch it from database
+    this.props.dispatch(fetchUsers());
     if (this.props.awards.needFetch === true && this.props.awards.loading === false) {
       this.props.dispatch(fetchAwards());
     }
@@ -63,4 +64,4 @@ const mapStateToProps = state => ({
   select: state.select
 });
 
-export default connect(mapStateToProps)(DeleteAwardForm);
+export default connect(mapStateToProps)(AwardsGranted);

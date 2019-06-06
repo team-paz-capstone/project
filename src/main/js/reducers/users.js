@@ -1,23 +1,25 @@
 /*
-* SOURCE: https://daveceddia.com/where-fetch-data-redux/
-* */
+ * SOURCE: https://daveceddia.com/where-fetch-data-redux/
+ * */
 import {
   FETCH_USERS_BEGIN,
   FETCH_USERS_SUCCESS,
-  FETCH_USERS_FAILURE, CREATE_USER_BEGIN, CREATE_USER_SUCCESS, CREATE_USER_FAILURE
-} from "../action-types/users"
+  FETCH_USERS_FAILURE,
+  CREATE_USER_BEGIN,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_FAILURE
+} from '../action-types/users';
 
 const initialState = {
   items: [],
   loading: false,
   error: null,
   createLoading: false,
-  createError: null,
-
+  createError: null
 };
 
 export default function usersReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case FETCH_USERS_BEGIN:
       return {
         ...state,
@@ -54,8 +56,9 @@ export default function usersReducer(state = initialState, action) {
       return {
         ...state,
         createLoading: false,
-        createError: action.payload.error,
+        createError: action.payload.error
       };
+
     default:
       return state;
   }

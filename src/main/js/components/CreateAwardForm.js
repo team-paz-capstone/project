@@ -74,7 +74,7 @@ class CreateAwardForm extends Component {
     let selectedOffice = this.props.select.items['Office Filter'];
     let users = this.props.users.items
       .filter(user => {
-        if (selectedOffice === undefined) {
+        if (selectedOffice === undefined || selectedOffice === '') {
           return true;
         }
         return user['office'] !== null && user['office']['id'] === selectedOffice['id'];

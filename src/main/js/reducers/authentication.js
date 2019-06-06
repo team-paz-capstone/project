@@ -4,7 +4,10 @@ import {
   LOG_IN_BEGIN,
   LOG_IN_FAILURE,
   LOG_IN_SUCCESS,
-  LOG_OUT
+  LOG_OUT,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_FAILURE,
+  UPDATE_USER_SUCCESS
 } from '../action-types';
 
 const initialState = {
@@ -13,7 +16,9 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
-  isAdmin: false
+  isAdmin: false,
+  updateLoading: false,
+  updateError: null
 };
 
 export default function(state = initialState, action) {
@@ -60,6 +65,27 @@ export default function(state = initialState, action) {
         isAdmin: false,
         token: undefined
       };
+
+    case UPDATE_USER_BEGIN:
+      return {
+        ...state,
+        updateLoading: false,
+        updateError: null
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        updateLoading: false,
+        updateError: null,
+        user: action.payload.user
+      };
+    case UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        updateLoading: false,
+        updateError: action.payload.error
+      };
+
     default:
       return state;
   }

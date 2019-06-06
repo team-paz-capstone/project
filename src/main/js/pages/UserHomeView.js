@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container/index';
 import { withStyles } from '@material-ui/core/index';
 import Grid from '@material-ui/core/Grid';
-import DeleteAwardForm from '../components/DeleteAwardForm';
+import DeleteAwardForm from '../components/AwardsGranted';
 import CreateAwardForm from '../components/CreateAwardForm';
 import { fetchAwards, fetchAwardTypes, fetchOffices, fetchUsers } from '../actions';
+import { Route } from 'react-router';
+import Profile from '../components/Profile';
 
 const styles = { Container: { padding: 1 } };
 
@@ -22,11 +24,13 @@ class UserHomeView extends Component {
       <div>
         <Container maxWidth="sm">
           <br />
-          <CreateAwardForm />
+          <Route exact path="/home/profile" component={Profile} />
+          <Route exact path="/home/" component={CreateAwardForm} />
+          <Route exact path="/" component={CreateAwardForm} />
           <br />
         </Container>
         <Grid>
-          <DeleteAwardForm />
+          <Route exact path="/home/" component={DeleteAwardForm} />
         </Grid>
       </div>
     );

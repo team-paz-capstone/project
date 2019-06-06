@@ -19,7 +19,7 @@ import CardActions from '@material-ui/core/CardActions';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import UserHomeView from '../pages/UserHomeView';
 import PublicHomeView from '../pages/PublicHomeView';
-import { createAward, createUser } from '../actions';
+import { createAward, createUser, fetchUsers, updateUser } from '../actions';
 import Toolbar from '@material-ui/core/Toolbar';
 
 const useStyles = makeStyles(theme => ({
@@ -44,19 +44,23 @@ const useStyles = makeStyles(theme => ({
 
 function RegistrationForm(props) {
   const classes = useStyles();
+  let user = props.user || props.select.items['Logged In As'];
+
+  let firstName,
+    lastName,
+    email = '';
+  if (user) {
+    firstName = user.firstName;
+    lastName = user.lastName;
+    email = user.email;
+  }
+
   const [values, setValues] = React.useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    showPassword: false,
+    firstName: firstName,
+    lastName: lastName,
     formError: {
       firstName: false,
-      lastName: false,
-      email: false,
-      password: false,
-      confirmPassword: false
+      lastName: false
     },
     error: '',
     requested: false
@@ -66,8 +70,8 @@ function RegistrationForm(props) {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+  const resetForm = () => {
+    setValues({ ...values, requested: false });
   };
 
   const register = () => {
@@ -76,12 +80,8 @@ function RegistrationForm(props) {
     let textError = '';
     let formError = values.formError;
 
-    let formValues = ['firstName', 'lastName', 'email', 'password', 'confirmPassword'];
-    let form = {};
-    if (values.password !== values.confirmPassword) {
-      validationError = true;
-      textError = 'Passwords must match!';
-    }
+    let formValues = ['firstName', 'lastName'];
+    let form = user;
 
     formValues.forEach(value => {
       if (values[value] === '') {
@@ -98,7 +98,7 @@ function RegistrationForm(props) {
       return;
     }
 
-    props.dispatch(createUser(form));
+    props.dispatch(updateUser(form));
     setValues({
       ...values,
       formError: formError,
@@ -108,12 +108,12 @@ function RegistrationForm(props) {
   };
 
   let requestStatusMessage = '';
-  if (props.users.createLoading === true) {
+  if (props.authentication.updateLoading === true) {
     requestStatusMessage = 'Loading...';
-  } else if (props.users.createError !== null) {
-    requestStatusMessage = 'Problem Creating your account: ' + props.users.createError;
+  } else if (props.authentication.updateError !== null) {
+    requestStatusMessage = 'Problem updating your account: ' + props.users.createError;
   } else {
-    requestStatusMessage = 'Successfully created your account!';
+    requestStatusMessage = 'Successfully updated your account!';
   }
 
   return (
@@ -123,7 +123,12 @@ function RegistrationForm(props) {
           <h2>{requestStatusMessage}</h2>
           <CardActions>
             <Button size="small">
-              <Link to="/">Log In</Link>
+              <Link onClick={resetForm} to="/home/profile">
+                Profile
+              </Link>
+            </Button>
+            <Button size="small">
+              <Link to="/home/">Home</Link>
             </Button>
           </CardActions>
         </Card>
@@ -132,7 +137,7 @@ function RegistrationForm(props) {
           <BaseError error={values.error} />
           <form>
             <FormGroup className={classes.root}>
-              <h2>Register</h2>
+              <h2>Profile</h2>
               <TextField
                 required
                 id="first-name"
@@ -159,92 +164,19 @@ function RegistrationForm(props) {
                 margin="normal"
                 error={values.formError.lastName}
               />
-              <TextField
-                required
-                id="email"
-                label="Email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                className={classes.textField}
-                value={values.email}
-                onChange={handleChange('email')}
-                margin="normal"
-                error={values.formError.email}
-              />
-              <FormControl className={clsx(classes.margin, classes.textField)}>
-                <InputLabel required error={values.formError.password} htmlFor="adornment-password">
-                  Password
-                </InputLabel>
-                <Input
-                  required
-                  id="adornment-password"
-                  type={values.showPassword ? 'text' : 'password'}
-                  label="Password"
-                  name="password"
-                  autoComplete="new-password"
-                  value={values.password}
-                  onChange={handleChange('password')}
-                  error={values.formError.password}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={handleClickShowPassword}
-                        aria-label="Toggle password visibility"
-                      >
-                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControl className={clsx(classes.margin, classes.textField)}>
-                <InputLabel
-                  required
-                  error={values.formError.confirmPassword}
-                  htmlFor="adornment-password"
-                >
-                  Confirm Password
-                </InputLabel>
-                <Input
-                  id="confirm-password"
-                  type={values.showPassword ? 'text' : 'password'}
-                  label="Confirm Password"
-                  name="confirm-password"
-                  autoComplete="new-password"
-                  value={values.confirmPassword}
-                  onChange={handleChange('confirmPassword')}
-                  error={values.formError.confirmPassword}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={handleClickShowPassword}
-                        aria-label="Toggle password visibility"
-                      >
-                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
               <Button
                 className={clsx(classes.margin, classes.textField)}
                 variant="contained"
                 color="primary"
                 onClick={register}
               >
-                Register
+                Update Profile
               </Button>
             </FormGroup>
           </form>
           <CardActions>
             <Button size="small">
-              <Link to="/">Already have an account?</Link>
-            </Button>
-          </CardActions>
-          <CardActions>
-            <Button size="small">
-              <Link to="/home/account-recovery">Account Recovery</Link>
+              <Link to="/home/">Home</Link>
             </Button>
           </CardActions>
         </Card>
@@ -254,11 +186,13 @@ function RegistrationForm(props) {
 }
 
 const mapStateToProps = state => ({
+  authentication: state.authentication,
   awards: state.awards,
   awardTypes: state.awardTypes,
   offices: state.offices,
   select: state.select,
-  users: state.users
+  users: state.users,
+  user: state.authentication.user
 });
 
 export default connect(mapStateToProps)(RegistrationForm);

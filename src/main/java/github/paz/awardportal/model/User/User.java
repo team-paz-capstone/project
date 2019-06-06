@@ -80,13 +80,13 @@ public class User {
         this.isAdmin = baseUser.isAdmin();
     }
 
+    /**
+     *  Do not update the password here.
+     *  */
     public void updateUser(BaseUser update) {
         this.firstName = update.getFirstName();
         this.lastName = update.getLastName();
         this.email = update.getEmail();
-
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = passwordEncoder.encode(update.getPassword());
         this.isAdmin = update.isAdmin();
         this.signature = update.getSignature();
     }

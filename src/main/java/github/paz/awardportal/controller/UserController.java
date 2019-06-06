@@ -88,7 +88,7 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successfully updated user."),
             @ApiResponse(code = 500, message = "Failed to update the user. Try again later.")
     })
-    public ResponseEntity<String> updateUser(
+    public ResponseEntity<?> updateUser(
             @RequestBody BaseUser update) {
 
         System.out.println("Received Request to update user: "
@@ -101,10 +101,10 @@ public class UserController {
             User loadedUser = userRepository.findByEmail(update.getEmail());
             loadedUser.updateUser(update);
             userRepository.save(loadedUser);
-            return ResponseEntity.accepted().build();
+            return ResponseEntity.ok(loadedUser);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("Failed to update");
+            return ResponseEntity.badRequest().build();
         }
     }
 

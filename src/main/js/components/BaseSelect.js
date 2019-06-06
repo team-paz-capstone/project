@@ -1,12 +1,10 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import {
-  selectItem
-} from "../actions";
+import { selectItem } from '../actions';
 
 /**
  * The value that is selected in here is made available in the store...
@@ -23,49 +21,49 @@ import {
  * this.props.select.items[@name]
  * */
 class BaseSelect extends Component {
-  handleChange = (event) => {
+  handleChange = event => {
     this.props.dispatch(selectItem(this.props.name, event.target.value));
   };
 
   render() {
     let name = this.props.name;
-    let id = name + "-select";
+    let id = name + '-select';
     let nameKey = this.props.nameKey;
     let valueKey = this.props.valueKey;
     let items = this.props.items;
     let selected = this.props.select.items[this.props.name];
     let fallback = {};
-    fallback[nameKey] = "";
-    let value = selected? selected[nameKey] : fallback[nameKey] ;
+    fallback[nameKey] = '';
+    let value = selected ? selected[nameKey] : fallback[nameKey];
 
     return (
-        <FormControl>
-          <InputLabel htmlFor={id}>{name}</InputLabel>
-          <Select
-              value={value}
-              onChange={this.handleChange}
-              renderValue={value => value}
-              inputProps={{
-                name: name,
-                id: id,
-              }}
-          >
-            {items.map(item => (
-                <MenuItem
-                    key={item[valueKey]}
-                    value={item}>
-                  {item[nameKey]}
-                </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+      <FormControl>
+        <InputLabel htmlFor={id}>{name}</InputLabel>
+        <Select
+          value={value}
+          onChange={this.handleChange}
+          renderValue={value => value}
+          inputProps={{
+            name: name,
+            id: id
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {items.map(item => (
+            <MenuItem key={item[valueKey]} value={item}>
+              {item[nameKey]}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   select: state.select
 });
-
 
 export default connect(mapStateToProps)(BaseSelect);

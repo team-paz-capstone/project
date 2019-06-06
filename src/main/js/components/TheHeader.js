@@ -9,14 +9,11 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import { devLogIn, devLogOut, logOut } from '../actions';
 import DeveloperControls from './DeveloperControls';
-import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
+import AccountMenu from './AccountMenu';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 const styles = {
   root: {
@@ -29,21 +26,6 @@ const styles = {
     marginLeft: -12,
     marginRight: 20
   }
-};
-
-export const LogOutMenu = props => {
-  const popupState = usePopupState({ variant: 'popover', popupId: 'menu-appbar' });
-
-  return (
-    <div>
-      <IconButton {...bindTrigger(popupState)} color="inherit">
-        <AccountCircle />
-      </IconButton>
-      <Menu {...bindMenu(popupState)} id="menu-appbar" color="inherit">
-        <MenuItem onClick={props.handleOnClick}>Log Out</MenuItem>
-      </Menu>
-    </div>
-  );
 };
 
 class TheHeader extends React.Component {
@@ -81,16 +63,15 @@ class TheHeader extends React.Component {
         {productionMode ? <div>{null}</div> : <DeveloperControls />}
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Employee Award Recognition
+              <Link component={RouterLink} to="/home/" color="inherit">
+                {' '}
+                Employee Award Recognition
+              </Link>
             </Typography>
             {auth && (
               <div>
-                <LogOutMenu handleOnClick={this.handleLogOut} />
-                {name}
+                <AccountMenu handleOnClick={this.handleLogOut} />
               </div>
             )}
           </Toolbar>
@@ -112,5 +93,4 @@ const mapStateToProps = state => ({
   users: state.users
 });
 
-connect(mapStateToProps)(LogOutMenu);
 export default connect(mapStateToProps)(withStyles(styles)(TheHeader));
