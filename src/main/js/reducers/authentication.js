@@ -12,7 +12,8 @@ const initialState = {
   token: '',
   user: null,
   loading: false,
-  error: null
+  error: null,
+  isAdmin: false
 };
 
 export default function(state = initialState, action) {
@@ -42,7 +43,8 @@ export default function(state = initialState, action) {
         ...state,
         auth: true,
         loading: false,
-        user: action.payload.users
+        user: action.payload.users,
+        isAdmin: action.payload.users.admin
       };
     case LOG_IN_FAILURE:
       return {
@@ -53,7 +55,9 @@ export default function(state = initialState, action) {
       };
     case LOG_OUT:
       return {
+        ...state,
         auth: false,
+        isAdmin: false,
         token: undefined
       };
     default:
