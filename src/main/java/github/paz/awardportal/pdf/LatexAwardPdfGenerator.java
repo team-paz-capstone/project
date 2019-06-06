@@ -72,7 +72,9 @@ public class LatexAwardPdfGenerator implements AwardPdfGenerator {
     private Path createSignatureImageFile(AwardPdfTemplateData data) throws IOException {
         Path currentDirectory = Paths.get(".");
         Path signatureFile = Files.createTempFile(currentDirectory, "signature", ".jpg");
-        Files.write(signatureFile, data.getSignatureImage());
+        if(data.getSignatureImage() != null) {
+            Files.write(signatureFile, data.getSignatureImage());
+        }
         data.setSignatureImageFile(signatureFile.getFileName().toString());
 
         return signatureFile;
