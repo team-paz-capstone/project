@@ -130,8 +130,10 @@ class CreateAwardForm extends Component {
               valueKey={'id'}
             />
             <br />
+            <br />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
+                label="Award Grant Date"
                 variant="inline"
                 format="yyyy/MM/dd"
                 value={this.state.selectedDate}

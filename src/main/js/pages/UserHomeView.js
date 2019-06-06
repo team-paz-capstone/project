@@ -8,6 +8,7 @@ import CreateAwardForm from '../components/CreateAwardForm';
 import { fetchAwards, fetchAwardTypes, fetchOffices, fetchUsers } from '../actions';
 import { Route } from 'react-router';
 import Profile from '../components/Profile';
+import Button from '@material-ui/core/Button';
 
 const styles = { Container: { padding: 1 } };
 
@@ -31,6 +32,7 @@ class UserHomeView extends Component {
         </Container>
         <Grid>
           <Route exact path="/home/" component={DeleteAwardForm} />
+          <Route exact path="/" component={DeleteAwardForm} />
         </Grid>
       </div>
     );
