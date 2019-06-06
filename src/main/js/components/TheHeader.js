@@ -16,6 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { devLogIn, devLogOut, logOut } from '../actions';
 import DeveloperControls from './DeveloperControls';
+import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
 
 const styles = {
   root: {
@@ -30,28 +31,30 @@ const styles = {
   }
 };
 
-class TheHeader extends React.Component {
-  state = {
-    anchorEl: null
-  };
+export const LogOutMenu = props => {
+  const popupState = usePopupState({ variant: 'popover', popupId: 'menu-appbar' });
 
+  return (
+    <div>
+      <IconButton {...bindTrigger(popupState)} color="inherit">
+        <AccountCircle />
+      </IconButton>
+      <Menu {...bindMenu(popupState)} id="menu-appbar" color="inherit">
+        <MenuItem onClick={props.handleOnClick}>Log Out</MenuItem>
+      </Menu>
+    </div>
+  );
+};
+
+class TheHeader extends React.Component {
   handleChange = () => {
     if (this.props.auth) {
       console.debug('Logging out!');
       this.props.dispatch(devLogOut());
       return;
     }
-
     console.debug('Logging in!');
     this.props.dispatch(devLogIn('Test Token'));
-  };
-
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
   };
 
   handleLogOut = () => {
@@ -64,8 +67,6 @@ class TheHeader extends React.Component {
 
   render() {
     const { classes, auth } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
 
     let loggedInUser = this.props.user;
     let name = loggedInUser
@@ -88,35 +89,8 @@ class TheHeader extends React.Component {
             </Typography>
             {auth && (
               <div>
-                <IconButton
-                  aria-owns={open ? 'menu-appbar' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="inherit"
-                >
-                  <Typography variant="h6">{name}</Typography>
-
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  elevation={0}
-                  getContentAnchorEl={null}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center'
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center'
-                  }}
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleLogOut}>Log Out</MenuItem>
-                </Menu>
+                <LogOutMenu handleOnClick={this.handleLogOut} />
+                {name}
               </div>
             )}
           </Toolbar>
@@ -138,4 +112,5 @@ const mapStateToProps = state => ({
   users: state.users
 });
 
+connect(mapStateToProps)(LogOutMenu);
 export default connect(mapStateToProps)(withStyles(styles)(TheHeader));
