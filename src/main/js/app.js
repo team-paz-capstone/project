@@ -16,8 +16,8 @@ let store;
 
 // save/load athentication redux state to/from local storage
 // this is needed to allow thymleaf pages to work with redux
-const save_state_to_localstorage = save({ states: ['authentication'] });
-const load_state_from_localstorage = load({ states: ['authentication'] });
+const save_state_to_localstorage = save({ states: ['authentication', 'views'] });
+const load_state_from_localstorage = load({ states: ['authentication', 'views'] });
 
 const middleware = [thunk, save_state_to_localstorage];
 if (process.env.NODE_ENV === 'development') {
