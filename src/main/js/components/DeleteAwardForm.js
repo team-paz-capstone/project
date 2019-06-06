@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import AwardList from './AwardList';
 import { fetchAwards } from '../actions';
+import BaseLoadingBar from './BaseLoadingBar';
 
 class DeleteAwardForm extends React.Component {
   constructor(props) {
@@ -28,24 +29,27 @@ class DeleteAwardForm extends React.Component {
       currentUserAwards = awards;
     }
 
-    const title = <Typography variant="h5">Past Awards Issued</Typography>;
+    const title = <Typography variant="h5">Awards Granted</Typography>;
     const list = <AwardList awards={currentUserAwards} />;
 
     return (
       <React.Fragment>
-        <Grid container direction="row" justify="center" alignItems="center">
-          <div>
-            <br />
-            {title}
+        {this.props.awards.loading === true && <BaseLoadingBar />}
+        {this.props.awards.loading === false && (
+          <Grid container direction="row" justify="center" alignItems="center">
+            <div>
+              <br />
+              {title}
 
-            <br />
-            {list}
+              <br />
+              {list}
 
-            <br />
-            <br />
-            <br />
-          </div>
-        </Grid>
+              <br />
+              <br />
+              <br />
+            </div>
+          </Grid>
+        )}
       </React.Fragment>
     );
   }
