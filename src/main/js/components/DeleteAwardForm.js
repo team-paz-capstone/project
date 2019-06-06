@@ -14,7 +14,7 @@ class DeleteAwardForm extends React.Component {
 
   render() {
     // if award data needs fetching, fetch it from database
-    if (this.props.awards.needFetch === true) {
+    if (this.props.awards.needFetch === true && this.props.awards.loading === false) {
       this.props.dispatch(fetchAwards());
     }
 
