@@ -60,7 +60,7 @@ public class User {
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] signature;
 
-    @Column(name = "created_datetime")
+    @Column(name = "created_datetime", updatable = false)
     @CreationTimestamp
     private Timestamp timestamp;
 
