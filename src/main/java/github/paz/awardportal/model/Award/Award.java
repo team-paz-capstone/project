@@ -20,8 +20,7 @@ public class Award{
     @GeneratedValue
     private Long id;
 
-    @Column(name = "awarded_datetime", updatable = false)
-    @GeneratedValue
+    @Column(name = "awarded_datetime")
     private Timestamp timestamp;
 
     @OneToOne

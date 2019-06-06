@@ -7,6 +7,8 @@ import { withStyles } from '@material-ui/core';
 import BaseError from './BaseError';
 import { createAward, fetchAwards } from '../actions';
 import Paper from '@material-ui/core/Paper';
+import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 const styles = theme => ({
   root: {
@@ -29,11 +31,17 @@ const styles = theme => ({
 class CreateAwardForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { error: '', created: false };
+    this.state = { error: '', created: false, selectedDate: new Date() };
   }
+
+  handleDateChange = date => {
+    this.setState({ selectedDate: date });
+    console.log(date);
+  };
 
   createAward = () => {
     console.debug('Create Award Clicked...');
+
     let selectedGranter = this.props.user;
     let selectedRecipient = this.props.select.items['Recipient'];
     let selectedAwardType = this.props.select.items['Award Type'];
@@ -55,11 +63,16 @@ class CreateAwardForm extends Component {
       let recipientID = selectedRecipient.id;
       let awardTypeID = selectedAwardType.id;
 
+      let awardDate = this.state.selectedDate;
+
+      console.debug('Award date: ' + awardDate);
+
       this.props.dispatch(
         createAward({
           granterID: granterID,
           recipientID: recipientID,
-          awardTypeID: awardTypeID
+          awardTypeID: awardTypeID,
+          timestamp: awardDate
         })
       );
     }
@@ -101,8 +114,6 @@ class CreateAwardForm extends Component {
             <h2>Recognize Hard Work!</h2>
             <h3>{created}</h3>
             <BaseError error={error} />
-            <BaseSelect name={'Recipient'} items={users} nameKey={'display'} valueKey={'id'} />
-            <br />
             <BaseSelect
               name={'Office Filter'}
               items={this.props.offices.items}
@@ -110,12 +121,23 @@ class CreateAwardForm extends Component {
               valueKey={'id'}
             />
             <br />
+            <BaseSelect name={'Recipient'} items={users} nameKey={'display'} valueKey={'id'} />
+            <br />
             <BaseSelect
               name={'Award Type'}
               items={this.props.awardTypes.items}
               nameKey={'name'}
               valueKey={'id'}
             />
+            <br />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                variant="inline"
+                format="yyyy/MM/dd"
+                value={this.state.selectedDate}
+                onChange={date => this.handleDateChange(date)}
+              />
+            </MuiPickersUtilsProvider>
             <br />
             <Button variant="contained" color="primary" onClick={this.createAward}>
               Send Award
