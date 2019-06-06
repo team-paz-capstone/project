@@ -45,15 +45,7 @@ function MainLayout(props) {
             {/* If we are not logged in, redirect to home */}
             <Route
               render={() =>
-                props.auth ? (
-                  props.authentication.user !== null && props.authentication.user.admin ? (
-                    <AdminPortal />
-                  ) : (
-                    <UserHomeView />
-                  )
-                ) : (
-                  <PublicHomeView />
-                )
+                props.auth ? props.isAdmin ? <AdminPortal /> : <UserHomeView /> : <PublicHomeView />
               }
             />
           </Switch>
@@ -66,7 +58,7 @@ function MainLayout(props) {
 
 const mapStateToProps = state => ({
   auth: state.authentication.auth,
-  authentication: state.authentication
+  isAdmin: state.authentication.isAdmin
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(MainLayout));
