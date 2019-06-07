@@ -77,7 +77,7 @@ class AdminView extends React.Component {
 
     const queryButton = (
       <Button color="primary" variant="contained" href="/query">
-        View Queries
+        View BI Queries
       </Button>
     );
 
@@ -94,15 +94,15 @@ class AdminView extends React.Component {
               {title}
 
               <br />
+              {queryButton}
+              <br />
+
+              <br />
               {viewButton}
               <br />
 
               <br />
               {addButton}
-              <br />
-
-              <br />
-              {queryButton}
               <br />
 
               <br />

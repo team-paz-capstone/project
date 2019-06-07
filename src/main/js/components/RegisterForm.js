@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import BaseError from './BaseError';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -16,11 +15,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import UserHomeView from '../pages/UserHomeView';
-import PublicHomeView from '../pages/PublicHomeView';
-import { createAward, createUser } from '../actions';
-import Toolbar from '@material-ui/core/Toolbar';
+import { Link } from 'react-router-dom';
+import { createUser } from '../actions';
+import { linkStyle } from '../ui/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -123,7 +120,9 @@ function RegistrationForm(props) {
           <h2>{requestStatusMessage}</h2>
           <CardActions>
             <Button size="small">
-              <Link to="/">Log In</Link>
+              <Link to="/" style={linkStyle}>
+                Log In
+              </Link>
             </Button>
           </CardActions>
         </Card>
@@ -239,12 +238,16 @@ function RegistrationForm(props) {
           </form>
           <CardActions>
             <Button size="small">
-              <Link to="/">Already have an account?</Link>
+              <Link to="/" style={linkStyle}>
+                Already have an account?
+              </Link>
             </Button>
           </CardActions>
           <CardActions>
             <Button size="small">
-              <Link to="/home/account-recovery">Account Recovery</Link>
+              <Link to="/home/account-recovery" style={linkStyle}>
+                Account Recovery
+              </Link>
             </Button>
           </CardActions>
         </Card>

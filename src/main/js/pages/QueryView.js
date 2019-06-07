@@ -16,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import { connect } from 'react-redux';
 import BaseLoadingBar from '../components/BaseLoadingBar';
 import { fetchUserByAwardCount, fetchOfficeByUserCount } from '../actions';
+import { lightChartLabelStyle, darkChartLabelStyle } from '../ui/styles';
 
 // sort by count from largest to smallest
 function Comparator(a, b) {
@@ -73,20 +74,24 @@ class QueryView extends Component {
   renderOfficeByUserCountQuerySection() {
     const officeByUserData = this.transformOfficeByUserData(this.props.queries.officeByUser);
 
+    // get the current theme
+    const labelColor =
+      this.props.currentTheme === 'light' ? lightChartLabelStyle : darkChartLabelStyle;
+
     const renderChart = (
       <React.Fragment>
-        <h4>Office By User Count</h4>
+        <Typography variant="h6">Office with the most users</Typography>
         <BarChart data={officeByUserData} width={960} height={300}>
           <Label value="User Count By Office" position="top" />
           <CartesianGrid strokeDasharray="3 3" />
           <Line type="monotone" dataKey="office_name" />
-          <XAxis dataKey="office_name" />
-          <YAxis
-            dataKey="user_count"
-            allowDecimals={false}
-            label={{ value: 'User Count', angle: -90, position: 'insideLeft' }}
-          />
-          <Tooltip />
+          <XAxis dataKey="office_name" stroke={labelColor} />
+          <YAxis dataKey="user_count" allowDecimals={false}>
+            <Label angle={-90} position="insideLeft" fill={labelColor}>
+              User Count
+            </Label>
+          </YAxis>
+          <Tooltip contentStyle={{ color: 'grey' }} />
           <Bar dataKey="user_count" fill={blue[500]} name="User Count" />
         </BarChart>
       </React.Fragment>
@@ -142,20 +147,24 @@ class QueryView extends Component {
   renderUserByAwardCountSection() {
     const userByAwardData = this.transformUserByAwardData(this.props.queries.userByAward);
 
+    // get the current theme
+    const labelColor =
+      this.props.currentTheme === 'light' ? lightChartLabelStyle : darkChartLabelStyle;
+
     const renderChart = (
       <React.Fragment>
-        <h4>User By Award Count</h4>
+        <Typography variant="h6">User with the most awards</Typography>
         <BarChart data={userByAwardData} width={960} height={300}>
           <Label value="User Award Count" position="top" />
           <CartesianGrid strokeDasharray="3 3" />
           <Line type="monotone" dataKey="user_email" />
-          <XAxis dataKey="user_email" />
-          <YAxis
-            dataKey="award_count"
-            allowDecimals={false}
-            label={{ value: 'Award Count', angle: -90, position: 'insideLeft' }}
-          />
-          <Tooltip />
+          <XAxis dataKey="user_email" stroke={labelColor} />
+          <YAxis dataKey="award_count" allowDecimals={false}>
+            <Label angle={-90} position="insideLeft" fill={labelColor}>
+              Award Count
+            </Label>
+          </YAxis>
+          <Tooltip contentStyle={{ color: 'grey' }} />
           <Bar dataKey="award_count" fill={blue[500]} name="Award Count" />
         </BarChart>
       </React.Fragment>
@@ -247,7 +256,8 @@ class QueryView extends Component {
 }
 
 const mapStateToProps = state => ({
-  queries: state.queries
+  queries: state.queries,
+  currentTheme: state.views.currentTheme
 });
 
 export default connect(mapStateToProps)(QueryView);

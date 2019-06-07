@@ -8,6 +8,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { linkStyle } from '../ui/styles';
 
 function AccountMenu(props) {
   const popupState = usePopupState({ variant: 'popover', popupId: 'menu-appbar' });
@@ -27,11 +28,15 @@ function AccountMenu(props) {
       <Menu {...bindMenu(popupState)} id="menu-appbar" color="inherit">
         {props.isAdmin === false && (
           <MenuItem>
-            <Link to="/home/profile">Profile</Link>
+            <Link to="/home/profile" style={linkStyle}>
+              Profile
+            </Link>
           </MenuItem>
         )}
-        <MenuItem component={Link} to="/" onClick={props.handleOnClick}>
-          Log Out
+        <MenuItem onClick={props.handleOnClick}>
+          <Link to="/" style={linkStyle}>
+            Log Out
+          </Link>
         </MenuItem>
       </Menu>
     </div>

@@ -17,6 +17,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
 import { logIn } from '../actions';
+import { linkStyle } from '../ui/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -139,12 +140,16 @@ function LoginForm(props) {
         </form>
         <CardActions>
           <Button size="small">
-            <Link to="/home/register">Register new account</Link>
+            <Link to="/home/register" style={linkStyle}>
+              Register new account
+            </Link>
           </Button>
         </CardActions>
         <CardActions>
           <Button size="small">
-            <Link to="/home/account-recovery">Account Recovery</Link>
+            <Link to="/home/account-recovery" style={linkStyle}>
+              Account Recovery
+            </Link>
           </Button>
         </CardActions>
       </Card>

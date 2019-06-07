@@ -5,12 +5,12 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import BaseError from './BaseError';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
-import { accountRecovery, createUser } from '../actions';
+import { accountRecovery } from '../actions';
+import { linkStyle } from '../ui/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -79,7 +79,9 @@ function AccountRecoveryForm(props) {
           <h2>{requestStatusMessage}</h2>
           <CardActions>
             <Button size="small">
-              <Link to="/">Log In</Link>
+              <Link to="/" style={linkStyle}>
+                Log In
+              </Link>
             </Button>
           </CardActions>
         </Card>
@@ -112,12 +114,16 @@ function AccountRecoveryForm(props) {
           </form>
           <CardActions>
             <Button size="small">
-              <Link to="/home/register">Register new account</Link>
+              <Link to="/home/register" style={linkStyle}>
+                Register new account
+              </Link>
             </Button>
           </CardActions>
           <CardActions>
             <Button size="small">
-              <Link to="/">Back to Log In</Link>
+              <Link to="/" style={linkStyle}>
+                Back to Log In
+              </Link>
             </Button>
           </CardActions>
         </Card>
