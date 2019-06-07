@@ -25,9 +25,11 @@ function AccountMenu(props) {
         </SvgIcon>
       </IconButton>
       <Menu {...bindMenu(popupState)} id="menu-appbar" color="inherit">
-        <MenuItem>
-          <Link to="/home/profile">Profile</Link>
-        </MenuItem>
+        {props.isAdmin === false && (
+          <MenuItem>
+            <Link to="/home/profile">Profile</Link>
+          </MenuItem>
+        )}
         <MenuItem component={Link} to="/" onClick={props.handleOnClick}>
           Log Out
         </MenuItem>
@@ -39,6 +41,7 @@ function AccountMenu(props) {
 const mapStateToProps = state => ({
   auth: state.authentication,
   user: state.authentication.user,
+  isAdmin: state.authentication.isAdmin,
   token: state.authentication.token,
   select: state.select,
   users: state.users

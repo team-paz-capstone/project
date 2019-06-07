@@ -153,7 +153,7 @@ function LoginForm(props) {
             <Link to="/home/account-recovery">Account Recovery</Link>
           </Button>
         </CardActions>
-        <BaseError error={error} open={loginFailed} />
+        <BaseError error={error} />
       </Card>
     </div>
   );
