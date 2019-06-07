@@ -8,6 +8,9 @@ import BaseLoadingBar from '../components/BaseLoadingBar';
 import UserList from '../components/UserList';
 import OfficeList from '../components/OfficeList';
 import { fetchOffices, fetchUsers, setAdminViewOffices, setAdminViewUsers } from '../actions';
+import { NavLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import { linkStyle } from '../ui/styles';
 
 class AdminView extends React.Component {
   constructor(props) {
@@ -51,9 +54,11 @@ class AdminView extends React.Component {
       );
 
       addButton = (
-        <Button color="primary" variant="contained" href="/users/addForm">
-          Add User
-        </Button>
+        <Link style={linkStyle} href="/users/addForm">
+          <Button color="primary" variant="contained">
+            Add User
+          </Button>
+        </Link>
       );
 
       list = <UserList users={users} />;
@@ -67,18 +72,22 @@ class AdminView extends React.Component {
       );
 
       addButton = (
-        <Button color="primary" variant="contained" href="/offices/addForm">
-          Add Office
-        </Button>
+        <Link style={linkStyle} href="/offices/addForm">
+          <Button color="primary" variant="contained">
+            Add Office
+          </Button>
+        </Link>
       );
 
       list = <OfficeList offices={offices} />;
     }
 
     const queryButton = (
-      <Button color="primary" variant="contained" href="/query">
-        View BI Queries
-      </Button>
+      <NavLink to="/query" style={linkStyle}>
+        <Button color="primary" variant="contained">
+          View BI Queries
+        </Button>
+      </NavLink>
     );
 
     return (

@@ -8,6 +8,7 @@ import BaseError from './BaseError';
 import { createAward, fetchAwards } from '../actions';
 import Paper from '@material-ui/core/Paper';
 import DateFnsUtils from '@date-io/date-fns';
+import Spacer from './Spacer';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 const styles = theme => ({
@@ -129,8 +130,7 @@ class CreateAwardForm extends Component {
               nameKey={'name'}
               valueKey={'id'}
             />
-            <br />
-            <br />
+            <Spacer />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 label="Award Grant Date"
@@ -140,7 +140,7 @@ class CreateAwardForm extends Component {
                 onChange={date => this.handleDateChange(date)}
               />
             </MuiPickersUtilsProvider>
-            <br />
+            <Spacer />
             <Button variant="contained" color="primary" onClick={this.createAward}>
               Send Award
             </Button>

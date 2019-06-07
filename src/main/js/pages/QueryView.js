@@ -17,6 +17,9 @@ import { connect } from 'react-redux';
 import BaseLoadingBar from '../components/BaseLoadingBar';
 import { fetchUserByAwardCount, fetchOfficeByUserCount } from '../actions';
 import { lightChartLabelStyle, darkChartLabelStyle } from '../ui/styles';
+import { NavLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import { linkStyle } from '../ui/styles';
 
 // sort by count from largest to smallest
 function Comparator(a, b) {
@@ -222,9 +225,11 @@ class QueryView extends Component {
     const title = <Typography variant="h5">Admin Portal: users</Typography>;
 
     const backButton = (
-      <Button color="primary" variant="contained" href="/admin">
-        Back to Admin Portal
-      </Button>
+      <NavLink to="/admin" style={linkStyle}>
+        <Button color="primary" variant="contained">
+          Back to Admin Portal
+        </Button>
+      </NavLink>
     );
 
     return (

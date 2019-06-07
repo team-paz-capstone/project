@@ -12,9 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import { devLogIn, devLogOut, logOut } from '../actions';
 import DeveloperControls from './DeveloperControls';
 import AccountMenu from './AccountMenu';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 import ThemeSwitchMenu from './ThemeSwitchMenu';
+import { linkStyle } from '../ui/styles';
 
 const styles = {
   root: {
@@ -67,10 +67,10 @@ class TheHeader extends React.Component {
             <div>
               <ThemeSwitchMenu />
             </div>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              <Link component={RouterLink} to="/" color="inherit">
+            <Typography variant="h6" className={classes.grow}>
+              <NavLink to="/" style={linkStyle}>
                 Employee Award Recognition
-              </Link>
+              </NavLink>
             </Typography>
             {auth && (
               <div>

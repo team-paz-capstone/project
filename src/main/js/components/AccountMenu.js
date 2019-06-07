@@ -27,13 +27,18 @@ function AccountMenu(props) {
       </IconButton>
       <Menu {...bindMenu(popupState)} id="menu-appbar" color="inherit">
         {props.isAdmin === false && (
-          <MenuItem>
+          <MenuItem onClick={popupState.close}>
             <Link to="/home/profile" style={linkStyle}>
               Profile
             </Link>
           </MenuItem>
         )}
-        <MenuItem onClick={props.handleOnClick}>
+        <MenuItem
+          onClick={() => {
+            props.handleOnClick();
+            popupState.close();
+          }}
+        >
           <Link to="/" style={linkStyle}>
             Log Out
           </Link>
