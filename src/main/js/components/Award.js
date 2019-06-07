@@ -5,7 +5,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { connect } from 'react-redux';
 
-import { deleteAward, fetchAwards } from '../actions';
+import { deleteAward } from '../actions';
+
+import Confirmation from './Confirmation';
 
 class Award extends React.Component {
   constructor(props) {
@@ -14,9 +16,6 @@ class Award extends React.Component {
   }
 
   handleDeleteAward() {
-    if (!confirm('Are you sure you want to delete this award?')) {
-      return false;
-    }
     // delete the award
     this.props.dispatch(deleteAward(this.props.award.id));
   }
@@ -33,9 +32,15 @@ class Award extends React.Component {
     const date = new Date(this.props.award.timestamp).toDateString();
 
     const deleteButton = (
-      <Button color="secondary" variant="outlined" id={awardId} onClick={this.handleDeleteAward}>
-        Delete
-      </Button>
+      <Confirmation
+        color="secondary"
+        variant="outlined"
+        id={awardId}
+        confirmationAction={this.handleDeleteAward}
+        buttonText="Delete Award"
+        confirmationText="Are you sure you want to delete this award?"
+        confirmationTitle="Award Deletion Confirmation"
+      />
     );
 
     return (

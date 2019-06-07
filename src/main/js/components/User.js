@@ -3,12 +3,10 @@ import Button from '@material-ui/core/Button';
 
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Confirmation from './Confirmation';
+import { connect } from 'react-redux';
 
 class User extends Component {
-  handleClick(e) {
-    if (!confirm('Are you sure you want to delete this user?')) return false;
-  }
-
   render() {
     // check if the user has a signature stored
     const hasSignature = this.props.user.encodedSignature !== '';
@@ -36,7 +34,7 @@ class User extends Component {
         <TableCell>{this.props.user.firstName}</TableCell>
         <TableCell>{this.props.user.lastName}</TableCell>
         <TableCell>{this.props.user.email}</TableCell>
-        <TableCell>{this.props.user.admin.toString()}</TableCell>
+        <TableCell>{this.props.user.admin.toString() === 'true' ? 'Yes' : 'No'}</TableCell>
         <TableCell>{this.props.user.office === null ? '' : this.props.user.office.name}</TableCell>
         <TableCell>{date}</TableCell>
         <TableCell>{viewSignatureButton}</TableCell>
@@ -52,18 +50,19 @@ class User extends Component {
         </TableCell>
 
         <TableCell>
-          <Button
+          <Confirmation
             color="secondary"
             variant="outlined"
-            href={`/users/delete?userId=${this.props.user.id}`}
-            onClick={this.handleClick}
-          >
-            Delete
-          </Button>
+            id={this.props.user.id}
+            buttonText="Delete User"
+            confirmationText="Are you sure you want to delete this user?"
+            confirmationTitle="User Deletion Confirmation"
+            confirmationURL={`/users/delete?userId=${this.props.user.id}`}
+          />
         </TableCell>
       </TableRow>
     );
   }
 }
 
-export default User;
+export default connect()(User);
