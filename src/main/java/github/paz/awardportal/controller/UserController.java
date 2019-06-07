@@ -44,7 +44,7 @@ public class UserController {
 
         log.info("Login: " + login.getEmail());
         User response = userRepository.findByEmail(login.getEmail());
-        if (passwordEncoder.matches(login.getPassword(), response.getPassword())){
+        if (response != null && passwordEncoder.matches(login.getPassword(), response.getPassword())){
             return  ResponseEntity.ok(response);
         }
         return  ResponseEntity.badRequest().build();
