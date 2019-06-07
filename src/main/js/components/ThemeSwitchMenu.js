@@ -22,6 +22,10 @@ function ThemeSwitchMenu(props) {
   };
 
   const popupState = usePopupState({ variant: 'popover', popupId: 'menu-appbar' });
+
+  const nextThemeChoice = props.currentTheme === 'light' ? 'dark' : 'light';
+  const menuItemTextContent = 'Switch to ' + nextThemeChoice + ' theme';
+
   return (
     <div>
       <IconButton {...bindTrigger(popupState)} color="inherit">
@@ -36,7 +40,7 @@ function ThemeSwitchMenu(props) {
             popupState.close();
           }}
         >
-          Switch Theme
+          {menuItemTextContent}
         </MenuItem>
       </Menu>
     </div>
