@@ -82,13 +82,10 @@ function LoginForm(props) {
   let error = props.authentication.error;
   console.debug(props.authentication);
 
-  const SHOW_REGISTRATION = false;
-
-  const loginFailed = props.authentication.loginFailed;
-
   return (
     <div>
       <Card className={classes.card}>
+        <BaseError error={error} />
         <form onSubmit={logIn}>
           <FormGroup className={classes.root}>
             <h2>Log In</h2>
@@ -140,20 +137,16 @@ function LoginForm(props) {
             </Button>
           </FormGroup>
         </form>
-        {SHOW_REGISTRATION && (
-          <CardActions>
-            <Button size="small">
-              <Link to="/home/register">Register new account</Link>
-            </Button>
-            <br />
-          </CardActions>
-        )}
+        <CardActions>
+          <Button size="small">
+            <Link to="/home/register">Register new account</Link>
+          </Button>
+        </CardActions>
         <CardActions>
           <Button size="small">
             <Link to="/home/account-recovery">Account Recovery</Link>
           </Button>
         </CardActions>
-        <BaseError error={error} />
       </Card>
     </div>
   );
