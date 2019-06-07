@@ -82,10 +82,11 @@ function LoginForm(props) {
   let error = props.authentication.error;
   console.debug(props.authentication);
 
+  const SHOW_REGISTRATION = false;
+
   return (
     <div>
       <Card className={classes.card}>
-        <BaseError error={error} />
         <form onSubmit={logIn}>
           <FormGroup className={classes.root}>
             <h2>Log In</h2>
@@ -126,6 +127,7 @@ function LoginForm(props) {
                 }
               />
             </FormControl>
+            <br />
             <Button
               className={clsx(classes.margin, classes.textField)}
               variant="contained"
@@ -140,12 +142,16 @@ function LoginForm(props) {
           <Button size="small">
             <Link to="/home/register">Register new account</Link>
           </Button>
+          <br />
         </CardActions>
-        <CardActions>
-          <Button size="small">
-            <Link to="/home/account-recovery">Account Recovery</Link>
-          </Button>
-        </CardActions>
+        {SHOW_REGISTRATION && (
+          <CardActions>
+            <Button size="small">
+              <Link to="/home/account-recovery">Account Recovery</Link>
+            </Button>
+          </CardActions>
+        )}
+        <BaseError error={error} />
       </Card>
     </div>
   );
