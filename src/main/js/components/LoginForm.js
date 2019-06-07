@@ -84,6 +84,8 @@ function LoginForm(props) {
 
   const SHOW_REGISTRATION = false;
 
+  const loginFailed = props.authentication.loginFailed;
+
   return (
     <div>
       <Card className={classes.card}>
@@ -138,20 +140,20 @@ function LoginForm(props) {
             </Button>
           </FormGroup>
         </form>
-        <CardActions>
-          <Button size="small">
-            <Link to="/home/register">Register new account</Link>
-          </Button>
-          <br />
-        </CardActions>
         {SHOW_REGISTRATION && (
           <CardActions>
             <Button size="small">
-              <Link to="/home/account-recovery">Account Recovery</Link>
+              <Link to="/home/register">Register new account</Link>
             </Button>
+            <br />
           </CardActions>
         )}
-        <BaseError error={error} />
+        <CardActions>
+          <Button size="small">
+            <Link to="/home/account-recovery">Account Recovery</Link>
+          </Button>
+        </CardActions>
+        <BaseError error={error} open={loginFailed} />
       </Card>
     </div>
   );

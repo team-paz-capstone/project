@@ -9,11 +9,9 @@ class BaseError extends Component {
     return (
       <div>
         <Snackbar
-          variant="error"
-          autoHideDuration={3000}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          message={`Failed to login : ${this.props.error}`}
-          open
+          message={this.props.error}
+          open={true}
         />
       </div>
     );
