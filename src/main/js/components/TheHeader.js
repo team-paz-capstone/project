@@ -14,6 +14,7 @@ import DeveloperControls from './DeveloperControls';
 import AccountMenu from './AccountMenu';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
+import ThemeSwitchMenu from './ThemeSwitchMenu';
 
 const styles = {
   root: {
@@ -63,6 +64,9 @@ class TheHeader extends React.Component {
         {productionMode ? <div>{null}</div> : <DeveloperControls />}
         <AppBar position="static">
           <Toolbar>
+            <div>
+              <ThemeSwitchMenu />
+            </div>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link component={RouterLink} to="/" color="inherit">
                 Employee Award Recognition

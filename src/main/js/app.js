@@ -1,7 +1,5 @@
 import 'babel-polyfill';
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
@@ -10,7 +8,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { save, load } from 'redux-localstorage-simple';
 import MainLayout from './components/MainLayout';
 import reducer from './reducers';
-import { theme } from './ui/theme';
 
 let store;
 
@@ -35,12 +32,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <div>
-          {/* allow customize theme color */}
-          <MuiThemeProvider theme={theme}>
-            <CssBaseline />
-
-            <MainLayout />
-          </MuiThemeProvider>
+          <MainLayout />
         </div>
       </Provider>
     );
