@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function getAllOffices() {
-  return axios.get('/api/office/all')
+  return axios.get('/api/office/all');
 }
 
 export function getOffice(id) {
@@ -26,4 +26,4 @@ export default {
   createOffice,
   updateOffice,
   deleteOffice
-}
+};

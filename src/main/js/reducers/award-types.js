@@ -2,7 +2,7 @@ import {
   FETCH_AWARD_TYPES_BEGIN,
   FETCH_AWARD_TYPES_SUCCESS,
   FETCH_AWARD_TYPES_FAILURE
-} from "../action-types/award-types"
+} from '../action-types/award-types';
 
 const initialState = {
   items: [],
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export default function awardTypesReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case FETCH_AWARD_TYPES_BEGIN:
       return {
         ...state,

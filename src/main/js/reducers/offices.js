@@ -1,11 +1,11 @@
 /*
-* SOURCE: https://daveceddia.com/where-fetch-data-redux/
-* */
+ * SOURCE: https://daveceddia.com/where-fetch-data-redux/
+ * */
 import {
   FETCH_OFFICES_BEGIN,
   FETCH_OFFICES_SUCCESS,
   FETCH_OFFICES_FAILURE
-} from "../action-types/offices"
+} from '../action-types/offices';
 
 const initialState = {
   items: [],
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 export default function officesReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case FETCH_OFFICES_BEGIN:
       return {
         ...state,

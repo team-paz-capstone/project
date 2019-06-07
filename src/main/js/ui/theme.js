@@ -1,5 +1,5 @@
-import {createMuiTheme} from '@material-ui/core/styles';
-import {blue, red} from '@material-ui/core/colors';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { blue, red } from '@material-ui/core/colors';
 
 const primary = blue;
 const secondary = red;
@@ -11,13 +11,13 @@ export const theme = createMuiTheme({
   },
   paper: {
     padding: 50,
-    textAlign: "center",
+    textAlign: 'center',
     margin: 10
   },
   card: {
     padding: 50,
-    textAlign: "center",
+    textAlign: 'center',
     margin: 10
   },
-  typography: {useNextVariants: true}
+  typography: { useNextVariants: true }
 });

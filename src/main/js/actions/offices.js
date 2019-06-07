@@ -1,6 +1,6 @@
-import Api, {getAllOffices} from "../api/office"
+import Api, { getAllOffices } from '../api/office';
 
-import ActionTypes from "../action-types/offices"
+import ActionTypes from '../action-types/offices';
 
 export function fetchOffices() {
   return async dispatch => {
@@ -68,86 +68,86 @@ export function deleteOffice(data) {
 }
 
 /*
-* Fetch Offices
-* */
+ * Fetch Offices
+ * */
 export const fetchOfficesBegin = () => ({
   type: ActionTypes.FETCH_OFFICES_BEGIN
 });
 
 export const fetchOfficesSuccess = offices => ({
   type: ActionTypes.FETCH_OFFICES_SUCCESS,
-  payload: {offices}
+  payload: { offices }
 });
 
 export const fetchOfficesFailure = error => ({
   type: ActionTypes.FETCH_OFFICES_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Fetch Office
-* */
+ * Fetch Office
+ * */
 export const fetchOfficeBegin = () => ({
   type: ActionTypes.FETCH_OFFICE_BEGIN
 });
 
 export const fetchOfficeSuccess = office => ({
   type: ActionTypes.FETCH_OFFICE_SUCCESS,
-  payload: {office}
+  payload: { office }
 });
 
 export const fetchOfficeFailure = error => ({
   type: ActionTypes.FETCH_OFFICE_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Create Office
-* */
+ * Create Office
+ * */
 export const createOfficeBegin = () => ({
   type: ActionTypes.CREATE_OFFICE_BEGIN
 });
 
 export const createOfficeSuccess = office => ({
   type: ActionTypes.CREATE_OFFICE_SUCCESS,
-  payload: {office}
+  payload: { office }
 });
 
 export const createOfficeFailure = error => ({
   type: ActionTypes.CREATE_OFFICE_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Update Office
-* */
+ * Update Office
+ * */
 export const updateOfficeBegin = () => ({
   type: ActionTypes.UPDATE_OFFICE_BEGIN
 });
 
 export const updateOfficeSuccess = office => ({
   type: ActionTypes.UPDATE_OFFICE_SUCCESS,
-  payload: {office}
+  payload: { office }
 });
 
 export const updateOfficeFailure = error => ({
   type: ActionTypes.UPDATE_OFFICE_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Delete Office
-* */
+ * Delete Office
+ * */
 export const deleteOfficeBegin = () => ({
   type: ActionTypes.UPDATE_OFFICE_BEGIN
 });
 
 export const deleteOfficeSuccess = office => ({
   type: ActionTypes.UPDATE_OFFICE_SUCCESS,
-  payload: {office}
+  payload: { office }
 });
 
 export const deleteOfficeFailure = error => ({
   type: ActionTypes.UPDATE_OFFICE_FAILURE,
-  payload: {error}
+  payload: { error }
 });

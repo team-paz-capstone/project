@@ -1,5 +1,5 @@
-import Api from "../api/award-types"
-import ActionTypes from "../action-types/award-types"
+import Api from '../api/award-types';
+import ActionTypes from '../action-types/award-types';
 
 export function fetchAwardTypes() {
   return async dispatch => {
@@ -53,69 +53,69 @@ export function deleteAwardType(data) {
 }
 
 /*
-* Fetch AwardTypes
-* */
+ * Fetch AwardTypes
+ * */
 export const fetchAwardTypesBegin = () => ({
   type: ActionTypes.FETCH_AWARD_TYPES_BEGIN
 });
 
 export const fetchAwardTypesSuccess = awardTypes => ({
   type: ActionTypes.FETCH_AWARD_TYPES_SUCCESS,
-  payload: {awardTypes}
+  payload: { awardTypes }
 });
 
 export const fetchAwardTypesFailure = error => ({
   type: ActionTypes.FETCH_AWARD_TYPES_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Fetch AwardType
-* */
+ * Fetch AwardType
+ * */
 export const fetchAwardTypeBegin = () => ({
   type: ActionTypes.FETCH_AWARD_TYPE_BEGIN
 });
 
 export const fetchAwardTypeSuccess = awardType => ({
   type: ActionTypes.FETCH_AWARD_TYPE_SUCCESS,
-  payload: {awardType}
+  payload: { awardType }
 });
 
 export const fetchAwardTypeFailure = error => ({
   type: ActionTypes.FETCH_AWARD_TYPE_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Create AwardType
-* */
+ * Create AwardType
+ * */
 export const createAwardTypeBegin = () => ({
   type: ActionTypes.CREATE_AWARD_TYPE_BEGIN
 });
 
 export const createAwardTypeSuccess = awardType => ({
   type: ActionTypes.CREATE_AWARD_TYPE_SUCCESS,
-  payload: {awardType}
+  payload: { awardType }
 });
 
 export const createAwardTypeFailure = error => ({
   type: ActionTypes.CREATE_AWARD_TYPE_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Delete AwardType
-* */
+ * Delete AwardType
+ * */
 export const deleteAwardTypeBegin = () => ({
   type: ActionTypes.DELETE_AWARD_TYPE_BEGIN
 });
 
 export const deleteAwardTypeSuccess = awardType => ({
   type: ActionTypes.DELETE_AWARD_TYPE_SUCCESS,
-  payload: {awardType}
+  payload: { awardType }
 });
 
 export const deleteAwardTypeFailure = error => ({
   type: ActionTypes.DELETE_AWARD_TYPE_FAILURE,
-  payload: {error}
+  payload: { error }
 });

@@ -1,6 +1,6 @@
-import Api from "../api/user"
+import Api from '../api/user';
 
-import ActionTypes from "../action-types/users"
+import ActionTypes from '../action-types/users';
 
 export function fetchUsers() {
   return async dispatch => {
@@ -68,104 +68,103 @@ export function deleteUser(data) {
 }
 
 /*
-* Fetch Users
-* */
+ * Fetch Users
+ * */
 export const fetchUsersBegin = () => ({
   type: ActionTypes.FETCH_USERS_BEGIN
 });
 
 export const fetchUsersSuccess = users => ({
   type: ActionTypes.FETCH_USERS_SUCCESS,
-  payload: {users}
+  payload: { users }
 });
 
 export const fetchUsersFailure = error => ({
   type: ActionTypes.FETCH_USERS_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Fetch User
-* */
+ * Fetch User
+ * */
 export const fetchUserBegin = () => ({
   type: ActionTypes.FETCH_USER_BEGIN
 });
 
 export const fetchUserSuccess = user => ({
   type: ActionTypes.FETCH_USER_SUCCESS,
-  payload: {user}
+  payload: { user }
 });
 
 export const fetchUserFailure = error => ({
   type: ActionTypes.FETCH_USER_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Create User
-* */
+ * Create User
+ * */
 export const createUserBegin = () => ({
   type: ActionTypes.CREATE_USER_BEGIN
 });
 
 export const createUserSuccess = user => ({
   type: ActionTypes.CREATE_USER_SUCCESS,
-  payload: {user}
+  payload: { user }
 });
 
 export const createUserFailure = error => ({
   type: ActionTypes.CREATE_USER_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Update User
-* */
+ * Update User
+ * */
 export const updateUserBegin = () => ({
   type: ActionTypes.UPDATE_USER_BEGIN
 });
 
 export const updateUserSuccess = user => ({
   type: ActionTypes.UPDATE_USER_SUCCESS,
-  payload: {user}
+  payload: { user }
 });
 
 export const updateUserFailure = error => ({
   type: ActionTypes.UPDATE_USER_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
-
 /*
-* Delete User
-* */
+ * Delete User
+ * */
 export const deleteUserBegin = () => ({
   type: ActionTypes.UPDATE_USER_BEGIN
 });
 
 export const deleteUserSuccess = user => ({
   type: ActionTypes.UPDATE_USER_SUCCESS,
-  payload: {user}
+  payload: { user }
 });
 
 export const deleteUserFailure = error => ({
   type: ActionTypes.UPDATE_USER_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 /*
-* Delete User
-* */
+ * Delete User
+ * */
 export const updateUserPasswordBegin = () => ({
   type: ActionTypes.UPDATE_USER_PASSWORD_BEGIN
 });
 
 export const updateUserPasswordSuccess = user => ({
   type: ActionTypes.UPDATE_USER_PASSWORD_SUCCESS,
-  payload: {user}
+  payload: { user }
 });
 
 export const updateUserPasswordFailure = error => ({
   type: ActionTypes.UPDATE_USER_PASSWORD_FAILURE,
-  payload: {error}
+  payload: { error }
 });

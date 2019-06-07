@@ -1,30 +1,30 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   root: {
-    padding: 20,
+    padding: 20
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
-  },
+  }
 });
 
 function TheFooter(props) {
-  const {classes} = props;
+  const { classes } = props;
   return (
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Team PAZ
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Thank you for visiting our site!
-        </Typography>
-      </footer>
-  )
+    <footer className={classes.footer}>
+      <Typography variant="h6" align="center" gutterBottom>
+        Team PAZ
+      </Typography>
+      <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+        Thank you for visiting our site!
+      </Typography>
+    </footer>
+  );
 }
 
 const mapStateToProps = state => ({

@@ -1,5 +1,5 @@
-import ActionTypes from "../action-types/account-recovery"
-import Api from "../api/account-recovery"
+import ActionTypes from '../action-types/account-recovery';
+import Api from '../api/account-recovery';
 
 export function updatePassword(data) {
   return async dispatch => {
@@ -31,12 +31,12 @@ export const updatePasswordBegin = () => ({
 
 export const updatePasswordSuccess = users => ({
   type: ActionTypes.UPDATE_PASSWORD_SUCCESS,
-  payload: {users}
+  payload: { users }
 });
 
 export const updatePasswordFailure = error => ({
   type: ActionTypes.UPDATE_PASSWORD_FAILURE,
-  payload: {error}
+  payload: { error }
 });
 
 export const accountRecoveryBegin = () => ({
@@ -45,11 +45,10 @@ export const accountRecoveryBegin = () => ({
 
 export const accountRecoverySuccess = users => ({
   type: ActionTypes.ACCOUNT_RECOVERY_SUCCESS,
-  payload: {users}
+  payload: { users }
 });
 
 export const accountRecoveryFailure = error => ({
   type: ActionTypes.ACCOUNT_RECOVERY_FAILURE,
-  payload: {error}
+  payload: { error }
 });
-

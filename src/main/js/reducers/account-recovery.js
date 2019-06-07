@@ -5,7 +5,7 @@ import {
   UPDATE_PASSWORD_BEGIN,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAILURE
-} from "../action-types/account-recovery"
+} from '../action-types/account-recovery';
 
 const initialState = {
   updatePasswordResponse: null,
@@ -13,7 +13,7 @@ const initialState = {
   updatePasswordError: null,
   accountRecoveryResponse: null,
   accountRecoveryLoading: false,
-  accountRecoveryError: null,
+  accountRecoveryError: null
 };
 
 export default function accountRecoveryReducer(state = initialState, action) {
