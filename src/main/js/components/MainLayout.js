@@ -12,17 +12,6 @@ import QueryView from '../pages/QueryView';
 import TheFooter from './TheFooter';
 import { lightTheme, darkTheme } from '../ui/theme';
 
-const styles = theme => ({
-  root: {
-    padding: 20
-  },
-  main: {
-    display: 'flex',
-    minHeight: 'calc(100vh - 15em)',
-    flexDirection: 'column'
-  }
-});
-
 function MainLayout(props) {
   const { classes } = props;
 

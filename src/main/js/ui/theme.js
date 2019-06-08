@@ -15,24 +15,38 @@ const card = {
   margin: 10
 };
 
+const main = {
+  display: 'flex',
+  minHeight: 'calc(100vh - 15em)',
+  flexDirection: 'column'
+};
+
+const root = {
+  padding: 20
+};
+
 export const lightTheme = createMuiTheme({
+  root,
+  main,
+  paper,
+  card,
+  typography,
   palette: {
     primary,
     secondary,
     type: 'light'
-  },
-  paper,
-  card,
-  typography
+  }
 });
 
 export const darkTheme = createMuiTheme({
+  root,
+  main,
+  paper,
+  card,
+  typography,
   palette: {
     primary,
     secondary,
     type: 'dark'
-  },
-  paper,
-  card,
-  typography
+  }
 });
