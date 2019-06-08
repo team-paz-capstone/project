@@ -56,8 +56,9 @@ class TheHeader extends React.Component {
       ? loggedInUser.firstName + ' ' + loggedInUser.lastName
       : 'Invalid User Logged In';
 
-    // Check for development vs. production environment
-    let productionMode = process.env.NODE_ENV === 'production';
+    // Disable developer control since login is working now
+    // let productionMode = process.env.NODE_ENV === 'production';
+    let productionMode = true;
 
     return (
       <form className={classes.root}>

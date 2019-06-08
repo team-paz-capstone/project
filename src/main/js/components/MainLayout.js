@@ -28,6 +28,8 @@ function MainLayout(props) {
 
   const currentTheme = props.currentTheme === 'light' ? lightTheme : darkTheme;
 
+  const SHOW_FOOTER = false;
+
   return (
     <div>
       <MuiThemeProvider theme={currentTheme}>
@@ -65,7 +67,7 @@ function MainLayout(props) {
               />
             </Switch>
           </div>
-          <TheFooter />
+          {SHOW_FOOTER && <TheFooter />}
         </BrowserRouter>
       </MuiThemeProvider>
     </div>
