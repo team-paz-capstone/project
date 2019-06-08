@@ -8,7 +8,7 @@ const styles = theme => ({
     padding: 20
   },
   footer: {
-    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1)
   }
 });
@@ -17,11 +17,10 @@ function TheFooter(props) {
   const { classes } = props;
   return (
     <footer className={classes.footer}>
-      <hr />
-      <Typography variant="body1" align="center" gutterBottom>
-        <b>Team PAZ</b>
+      <Typography variant="subtitle2" align="center" gutterBottom>
+        Team PAZ
       </Typography>
-      <Typography variant="body2" align="center" color="textSecondary" component="p">
+      <Typography variant="subtitle2" align="center" color="textSecondary" component="p">
         Thank you for visiting our site.
       </Typography>
     </footer>

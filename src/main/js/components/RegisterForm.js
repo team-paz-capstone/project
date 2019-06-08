@@ -4,7 +4,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
-import BaseError from './BaseError';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -16,8 +15,10 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import MaterialLink from '@material-ui/core/Link';
 import { createUser } from '../actions';
-import { linkStyle } from '../ui/styles';
+import BaseError from './BaseError';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,10 +72,10 @@ function RegistrationForm(props) {
     console.debug(values);
     let validationError = false;
     let textError = '';
-    let formError = values.formError;
+    const { formError } = values;
 
-    let formValues = ['firstName', 'lastName', 'email', 'password', 'confirmPassword'];
-    let form = {};
+    const formValues = ['firstName', 'lastName', 'email', 'password', 'confirmPassword'];
+    const form = {};
     if (values.password !== values.confirmPassword) {
       validationError = true;
       textError = 'Passwords must match!';
@@ -91,14 +92,14 @@ function RegistrationForm(props) {
     });
 
     if (validationError) {
-      setValues({ ...values, formError: formError, error: textError });
+      setValues({ ...values, formError, error: textError });
       return;
     }
 
     props.dispatch(createUser(form));
     setValues({
       ...values,
-      formError: formError,
+      formError,
       error: textError,
       requested: true
     });
@@ -108,7 +109,7 @@ function RegistrationForm(props) {
   if (props.users.createLoading === true) {
     requestStatusMessage = 'Loading...';
   } else if (props.users.createError !== null) {
-    requestStatusMessage = 'Problem Creating your account: ' + props.users.createError;
+    requestStatusMessage = `Problem Creating your account: ${props.users.createError}`;
   } else {
     requestStatusMessage = 'Successfully created your account!';
   }
@@ -131,7 +132,7 @@ function RegistrationForm(props) {
           <BaseError error={values.error} />
           <form>
             <FormGroup className={classes.root}>
-              <h2>Register</h2>
+              <Typography variant="h5">Register</Typography>
               <TextField
                 required
                 id="first-name"
@@ -237,18 +238,19 @@ function RegistrationForm(props) {
             </FormGroup>
           </form>
           <CardActions>
-            <Button size="small">
-              <Link to="/" style={linkStyle}>
-                Already have an account?
-              </Link>
-            </Button>
+            <MaterialLink to="/" variant="body1" color="inherit" component={Link}>
+              Already have an account?
+            </MaterialLink>
           </CardActions>
           <CardActions>
-            <Button size="small">
-              <Link to="/home/account-recovery" style={linkStyle}>
-                Account Recovery
-              </Link>
-            </Button>
+            <MaterialLink
+              to="/home/account-recovery"
+              variant="body1"
+              color="inherit"
+              component={Link}
+            >
+              Account Recovery
+            </MaterialLink>
           </CardActions>
         </Card>
       )}

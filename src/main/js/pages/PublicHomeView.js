@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LoginForm from '../components/LoginForm';
 import Container from '@material-ui/core/Container';
 import { Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
-import RegisterForm from '../components/RegisterForm';
-import AccountRecovery from '../components/AccountRecoveryForm';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import RegisterForm from '../components/RegisterForm';
+import AccountRecovery from '../components/AccountRecoveryForm';
 import PasswordResetForm from '../components/PasswordResetForm';
+import LoginForm from '../components/LoginForm';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function UserPortal(props) {
+function UserPortal() {
   const classes = useStyles();
   return (
     <Container maxWidth="sm">
@@ -28,7 +29,7 @@ function UserPortal(props) {
         p={2}
         m={1}
       >
-        <h2>Welcome {name}!</h2>
+        <Typography variant="h4">Welcome to Employee Award Portal</Typography>
       </Paper>
       <BrowserRouter>
         <Route exact path="/" component={LoginForm} />
