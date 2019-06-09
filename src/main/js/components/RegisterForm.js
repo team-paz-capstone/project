@@ -121,9 +121,7 @@ function RegistrationForm(props) {
           <h2>{requestStatusMessage}</h2>
           <CardActions>
             <Button size="small">
-              <Link to="/" style={linkStyle}>
-                Log In
-              </Link>
+              <Link to="/">Log In</Link>
             </Button>
           </CardActions>
         </Card>

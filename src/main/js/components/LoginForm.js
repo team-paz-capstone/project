@@ -64,7 +64,6 @@ function LoginForm(props) {
   };
 
   const handleLogin = () => {
-    // console.debug('Log in clicked!');
     const formError = { email: false, password: false };
     if (values.email === '') formError.email = true;
     if (values.password === '') formError.password = true;
@@ -82,7 +81,6 @@ function LoginForm(props) {
   };
 
   const { error } = props.authentication;
-  // console.debug(props.authentication);
 
   return (
     <div>
