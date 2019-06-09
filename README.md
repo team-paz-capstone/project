@@ -1,5 +1,5 @@
 # CS467 - Capstone Project
- <img src="/images/logos.png" width="400" alt="Tech we used">
+ <img src="/images/logos.png" width="600" alt="Tech we used">
 
 
 ## About
