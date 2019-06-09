@@ -43,7 +43,7 @@ heroku pg:psql -a pazcapstone
 - After started the backend server, run `npm run dev-server` and go to `localhost:3000` in the browser.
 
 ## Contributors
-1. Matthew Anderson - 
+1. Matthew Anderson - anderma8@oregonstate.edu
 2. Patrick Rice - ricep@oregonstate.edu
 3. Zi Wei Wu - wuzi@oregonstate.edu 
 
