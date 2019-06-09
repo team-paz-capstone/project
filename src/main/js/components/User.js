@@ -53,7 +53,7 @@ class User extends Component {
             color="secondary"
             variant="outlined"
             id={this.props.user.id}
-            buttonText="Delete User"
+            buttonText="Delete"
             confirmationText="Are you sure you want to delete this user?"
             confirmationTitle="User Deletion Confirmation"
             confirmationURL={`/users/delete?userId=${this.props.user.id}`}
