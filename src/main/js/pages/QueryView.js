@@ -244,12 +244,12 @@ class QueryView extends Component {
               {backButton}
               <br />
               <br />
-              {this.renderOfficeByUserCountQuerySection()}
+              {this.renderUserByAwardCountSection()}
               <br />
               <br />
               <Divider />
               <br />
-              {this.renderUserByAwardCountSection()}
+              {this.renderOfficeByUserCountQuerySection()}
               <br />
               <br />
             </div>
