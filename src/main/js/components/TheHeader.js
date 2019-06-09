@@ -12,8 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import { devLogIn, devLogOut, logOut } from '../actions';
 import DeveloperControls from './DeveloperControls';
 import AccountMenu from './AccountMenu';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
+import ThemeSwitchMenu from './ThemeSwitchMenu';
+import { linkStyle } from '../ui/styles';
 
 const styles = {
   root: {
@@ -55,18 +56,22 @@ class TheHeader extends React.Component {
       ? loggedInUser.firstName + ' ' + loggedInUser.lastName
       : 'Invalid User Logged In';
 
-    // Check for development vs. production environment
-    let productionMode = process.env.NODE_ENV === 'production';
+    // Disable developer control since login is working now
+    // let productionMode = process.env.NODE_ENV === 'production';
+    let productionMode = true;
 
     return (
       <form className={classes.root}>
         {productionMode ? <div>{null}</div> : <DeveloperControls />}
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              <Link component={RouterLink} to="/" color="inherit">
+            <div>
+              <ThemeSwitchMenu />
+            </div>
+            <Typography variant="h6" className={classes.grow}>
+              <NavLink to="/" style={linkStyle}>
                 Employee Award Recognition
-              </Link>
+              </NavLink>
             </Typography>
             {auth && (
               <div>

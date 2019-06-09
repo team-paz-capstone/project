@@ -8,8 +8,9 @@ import select from './select';
 import users from './users';
 import queries from './queries';
 import views from './views';
+import { LOG_OUT } from '../action-types';
 
-export default combineReducers({
+const appReducer = combineReducers({
   accountRecovery,
   authentication,
   awards,
@@ -20,3 +21,14 @@ export default combineReducers({
   queries,
   views
 });
+
+// when log out, root reducer will reset all states in redux tree to initial states
+const rootReducer = (state, action) => {
+  if (action.type === LOG_OUT) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
+
+export default rootReducer;

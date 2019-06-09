@@ -4,13 +4,14 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
-import BaseError from './BaseError';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
-import { accountRecovery, createUser } from '../actions';
+import Typography from '@material-ui/core/Typography';
+import MaterialLink from '@material-ui/core/Link';
+import { accountRecovery } from '../actions';
+import BaseError from './BaseError';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,7 +43,7 @@ function AccountRecoveryForm(props) {
   });
 
   const handleChange = name => event => {
-    console.debug(name + ': ' + event.target.value);
+    console.debug(`${name}: ${event.target.value}`);
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -61,14 +62,14 @@ function AccountRecoveryForm(props) {
   if (props.users.createLoading === true) {
     requestStatusMessage = 'Loading...';
   } else if (props.users.createError !== null) {
-    requestStatusMessage = 'Problem Creating your account: ' + props.users.createError;
+    requestStatusMessage = `Problem Creating your account: ${props.users.createError}`;
   } else {
-    requestStatusMessage = 'Recovery email sent to ' + values.email;
+    requestStatusMessage = `Recovery email sent to ${values.email}`;
   }
 
   let error = '';
   if (props.accountRecovery.accountRecoveryError) {
-    error = 'Failed to recover account! ' + props.accountRecovery.accountRecoveryError;
+    error = `Failed to recover account! ${props.accountRecovery.accountRecoveryError}`;
   }
 
   return (
@@ -79,7 +80,9 @@ function AccountRecoveryForm(props) {
           <h2>{requestStatusMessage}</h2>
           <CardActions>
             <Button size="small">
-              <Link to="/">Log In</Link>
+              <Link to="/" style={linkStyle}>
+                Log In
+              </Link>
             </Button>
           </CardActions>
         </Card>
@@ -87,10 +90,10 @@ function AccountRecoveryForm(props) {
         <Card className={classes.card}>
           <form>
             <FormGroup className={classes.root}>
-              <h2>Account Recovery</h2>
+              <Typography variant="h5">Account Recovery</Typography>
               <TextField
                 id="standard-name"
-                label="Email"
+                label="Please enter an email address"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -111,14 +114,14 @@ function AccountRecoveryForm(props) {
             </FormGroup>
           </form>
           <CardActions>
-            <Button size="small">
-              <Link to="/home/register">Register new account</Link>
-            </Button>
+            <MaterialLink to="/home/register" variant="body1" color="inherit" component={Link}>
+              Register new account
+            </MaterialLink>
           </CardActions>
           <CardActions>
-            <Button size="small">
-              <Link to="/">Back to Log In</Link>
-            </Button>
+            <MaterialLink to="/" variant="body1" color="inherit" component={Link}>
+              Back to Log In
+            </MaterialLink>
           </CardActions>
         </Card>
       )}

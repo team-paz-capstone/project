@@ -1,7 +1,13 @@
-import { ADMIN_VIEW_OFFICES, ADMIN_VIEW_USERS } from '../action-types/views';
+import {
+  ADMIN_VIEW_OFFICES,
+  ADMIN_VIEW_USERS,
+  SET_THEME_DARK,
+  SET_THEME_LIGHT
+} from '../action-types/views';
 
 const initialState = {
-  currentAdminView: 'users'
+  currentAdminView: 'users',
+  currentTheme: 'light'
 };
 
 export default function viewsReducer(state = initialState, action) {
@@ -15,6 +21,16 @@ export default function viewsReducer(state = initialState, action) {
       return {
         ...state,
         currentAdminView: 'offices'
+      };
+    case SET_THEME_DARK:
+      return {
+        ...state,
+        currentTheme: 'dark'
+      };
+    case SET_THEME_LIGHT:
+      return {
+        ...state,
+        currentTheme: 'light'
       };
     default:
       return state;

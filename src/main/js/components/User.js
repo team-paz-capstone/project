@@ -5,6 +5,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Confirmation from './Confirmation';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import { linkStyle } from '../ui/styles';
 
 class User extends Component {
   render() {
@@ -15,13 +18,11 @@ class User extends Component {
 
     if (hasSignature) {
       viewSignatureButton = (
-        <Button
-          color="primary"
-          variant="outlined"
-          href={`/users/viewSignature?userId=${this.props.user.id}`}
-        >
-          View
-        </Button>
+        <Link href={`/users/viewSignature?userId=${this.props.user.id}`} style={linkStyle}>
+          <Button color="primary" variant="outlined">
+            View
+          </Button>
+        </Link>
       );
     }
 
@@ -40,13 +41,11 @@ class User extends Component {
         <TableCell>{viewSignatureButton}</TableCell>
 
         <TableCell>
-          <Button
-            color="primary"
-            variant="outlined"
-            href={`/users/updateForm?userId=${this.props.user.id}`}
-          >
-            Update
-          </Button>
+          <Link href={`/users/updateForm?userId=${this.props.user.id}`} style={linkStyle}>
+            <Button color="primary" variant="outlined">
+              Update
+            </Button>
+          </Link>
         </TableCell>
 
         <TableCell>
@@ -54,7 +53,7 @@ class User extends Component {
             color="secondary"
             variant="outlined"
             id={this.props.user.id}
-            buttonText="Delete User"
+            buttonText="Delete"
             confirmationText="Are you sure you want to delete this user?"
             confirmationTitle="User Deletion Confirmation"
             confirmationURL={`/users/delete?userId=${this.props.user.id}`}

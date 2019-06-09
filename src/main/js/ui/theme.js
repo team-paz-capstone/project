@@ -3,21 +3,50 @@ import { blue, red } from '@material-ui/core/colors';
 
 const primary = blue;
 const secondary = red;
+const typography = { useNextVariants: true };
+const paper = {
+  padding: 50,
+  textAlign: 'center',
+  margin: 10
+};
+const card = {
+  padding: 50,
+  textAlign: 'center',
+  margin: 10
+};
 
-export const theme = createMuiTheme({
+const main = {
+  display: 'flex',
+  minHeight: 'calc(100vh - 15em)',
+  flexDirection: 'column'
+};
+
+const root = {
+  padding: 20
+};
+
+export const lightTheme = createMuiTheme({
+  root,
+  main,
+  paper,
+  card,
+  typography,
   palette: {
-    primary: primary,
-    secondary: secondary
-  },
-  paper: {
-    padding: 50,
-    textAlign: 'center',
-    margin: 10
-  },
-  card: {
-    padding: 50,
-    textAlign: 'center',
-    margin: 10
-  },
-  typography: { useNextVariants: true }
+    primary,
+    secondary,
+    type: 'light'
+  }
+});
+
+export const darkTheme = createMuiTheme({
+  root,
+  main,
+  paper,
+  card,
+  typography,
+  palette: {
+    primary,
+    secondary,
+    type: 'dark'
+  }
 });

@@ -8,7 +8,9 @@ import BaseError from './BaseError';
 import { createAward, fetchAwards } from '../actions';
 import Paper from '@material-ui/core/Paper';
 import DateFnsUtils from '@date-io/date-fns';
+import Spacer from './Spacer';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
@@ -100,19 +102,38 @@ class CreateAwardForm extends Component {
     let error = this.props.awards.error ? this.props.awards.error : this.state.error;
     let created = !this.props.awards.error && this.state.created ? this.state.created : null;
 
+    const awardCreated = this.props.awards.awardCreated;
+
+    let recipientName = '';
+    if (this.props.select.items && this.props.select.items.Recipient) {
+      recipientName =
+        this.props.select.items.Recipient.firstName +
+        ' ' +
+        this.props.select.items.Recipient.lastName;
+      console.log(recipientName);
+    }
+
     return (
       <Paper className={classes.paper}>
         {created ? (
           <div>
-            <h3>{created}</h3>
-            <Button variant="contained" color="primary" onClick={this.createAnother}>
-              Create Another Award
-            </Button>
+            {!awardCreated ? (
+              <Typography variant={'h5'}>Sending award to to {recipientName}</Typography>
+            ) : (
+              <div>
+                <Typography variant={'h5'}>
+                  Award has successfully sent to {recipientName}
+                </Typography>
+                <br />
+                <Button variant="contained" color="primary" onClick={this.createAnother}>
+                  Create Another Award
+                </Button>
+              </div>
+            )}
           </div>
         ) : (
           <FormGroup className={classes.root}>
-            <h2>Recognize Hard Work!</h2>
-            <h3>{created}</h3>
+            <Typography variant={'h5'}>Create Award Form</Typography>
             <BaseError error={error} />
             <BaseSelect
               name={'Office Filter'}
@@ -129,8 +150,7 @@ class CreateAwardForm extends Component {
               nameKey={'name'}
               valueKey={'id'}
             />
-            <br />
-            <br />
+            <Spacer />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 label="Award Grant Date"
@@ -140,7 +160,7 @@ class CreateAwardForm extends Component {
                 onChange={date => this.handleDateChange(date)}
               />
             </MuiPickersUtilsProvider>
-            <br />
+            <Spacer />
             <Button variant="contained" color="primary" onClick={this.createAward}>
               Send Award
             </Button>

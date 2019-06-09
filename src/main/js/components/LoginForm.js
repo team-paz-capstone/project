@@ -4,7 +4,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
-import BaseError from './BaseError';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -16,7 +15,10 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import MaterialLink from '@material-ui/core/Link';
 import { logIn } from '../actions';
+import BaseError from './BaseError';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,7 +55,7 @@ function LoginForm(props) {
   });
 
   const handleChange = name => event => {
-    console.debug(name + ': ' + event.target.value);
+    // console.debug(`${name}: ${event.target.value}`);
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -62,14 +64,13 @@ function LoginForm(props) {
   };
 
   const handleLogin = () => {
-    console.debug('Log in clicked!');
-    let formError = { email: false, password: false };
+    const formError = { email: false, password: false };
     if (values.email === '') formError.email = true;
     if (values.password === '') formError.password = true;
     if (formError.password || formError.email) {
-      setValues({ ...values, formError: formError });
+      setValues({ ...values, formError });
     } else {
-      setValues({ ...values, formError: formError });
+      setValues({ ...values, formError });
       props.dispatch(
         logIn({
           email: values.email,
@@ -79,19 +80,15 @@ function LoginForm(props) {
     }
   };
 
-  let error = props.authentication.error;
-  console.debug(props.authentication);
-
-  const SHOW_REGISTRATION = false;
-
-  const loginFailed = props.authentication.loginFailed;
+  const { error } = props.authentication;
 
   return (
     <div>
       <Card className={classes.card}>
+        <BaseError error={error} />
         <form onSubmit={logIn}>
           <FormGroup className={classes.root}>
-            <h2>Log In</h2>
+            <Typography variant="h5">Log In</Typography>
             <TextField
               id="standard-name"
               label="Email"
@@ -140,20 +137,21 @@ function LoginForm(props) {
             </Button>
           </FormGroup>
         </form>
-        {SHOW_REGISTRATION && (
-          <CardActions>
-            <Button size="small">
-              <Link to="/home/register">Register new account</Link>
-            </Button>
-            <br />
-          </CardActions>
-        )}
         <CardActions>
-          <Button size="small">
-            <Link to="/home/account-recovery">Account Recovery</Link>
-          </Button>
+          <MaterialLink to="/home/register" color="inherit" variant="body1" component={Link}>
+            Register new account
+          </MaterialLink>
         </CardActions>
-        <BaseError error={error} />
+        <CardActions>
+          <MaterialLink
+            to="/home/account-recovery"
+            color="inherit"
+            variant="body1"
+            component={Link}
+          >
+            Account Recovery
+          </MaterialLink>
+        </CardActions>
       </Card>
     </div>
   );

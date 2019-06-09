@@ -1,4 +1,5 @@
 # CS467 - Capstone Project
+ <img src="/images/logos.png" width="600" alt="Tech we used">
 
 ## About
 
@@ -22,12 +23,6 @@ contributors of the project.
 
 Go to https://pazcapstone.herokuapp.com
 
-## Local Backend Dev Server Setup
-- Start the backend server using `./start.sh`
-
-## Local Frontend Dev Server Setup 
-- After started the backend server, run `npm run dev-server` and go to `localhost:3000` in the browser 
-
 ### Configure your local heroku installation
 ```bash
 heroku config -a pazcapstone
@@ -38,13 +33,17 @@ heroku config -a pazcapstone
 heroku pg:psql -a pazcapstone
 ```
 
-### Start the local server
+## Local Backend Dev Server Setup
+- Start the backend server using 
 ```bash
 ./start.sh
 ``` 
 
+## Local Frontend Dev Server Setup 
+- After started the backend server, run `npm run dev-server` and go to `localhost:3000` in the browser.
+
 ## Contributors
-1. Matthew Anderson - 
+1. Matthew Anderson - anderma8@oregonstate.edu
 2. Patrick Rice - ricep@oregonstate.edu
 3. Zi Wei Wu - wuzi@oregonstate.edu 
 

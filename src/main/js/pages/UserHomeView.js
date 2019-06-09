@@ -8,7 +8,6 @@ import CreateAwardForm from '../components/CreateAwardForm';
 import { fetchAwards, fetchAwardTypes, fetchOffices, fetchUsers } from '../actions';
 import { Route } from 'react-router';
 import Profile from '../components/Profile';
-import Button from '@material-ui/core/Button';
 
 const styles = { Container: { padding: 1 } };
 

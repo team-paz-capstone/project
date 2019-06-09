@@ -4,23 +4,14 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
-import BaseError from './BaseError';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import UserHomeView from '../pages/UserHomeView';
-import PublicHomeView from '../pages/PublicHomeView';
-import { createAward, createUser, fetchUsers, updateUser } from '../actions';
-import Toolbar from '@material-ui/core/Toolbar';
+import MaterialLink from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import { updateUser } from '../actions';
+import BaseError from './BaseError';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,11 +35,11 @@ const useStyles = makeStyles(theme => ({
 
 function RegistrationForm(props) {
   const classes = useStyles();
-  let user = props.user || props.select.items['Logged In As'];
+  const user = props.user || props.select.items['Logged In As'];
 
-  let firstName,
-    lastName,
-    email = '';
+  let firstName;
+  let lastName;
+  let email = '';
   if (user) {
     firstName = user.firstName;
     lastName = user.lastName;
@@ -56,8 +47,8 @@ function RegistrationForm(props) {
   }
 
   const [values, setValues] = React.useState({
-    firstName: firstName,
-    lastName: lastName,
+    firstName,
+    lastName,
     formError: {
       firstName: false,
       lastName: false
@@ -77,11 +68,11 @@ function RegistrationForm(props) {
   const register = () => {
     console.debug(values);
     let validationError = false;
-    let textError = '';
-    let formError = values.formError;
+    const textError = '';
+    const { formError } = values;
 
-    let formValues = ['firstName', 'lastName'];
-    let form = user;
+    const formValues = ['firstName', 'lastName'];
+    const form = user;
 
     formValues.forEach(value => {
       if (values[value] === '') {
@@ -94,14 +85,14 @@ function RegistrationForm(props) {
     });
 
     if (validationError) {
-      setValues({ ...values, formError: formError, error: textError });
+      setValues({ ...values, formError, error: textError });
       return;
     }
 
     props.dispatch(updateUser(form));
     setValues({
       ...values,
-      formError: formError,
+      formError,
       error: textError,
       requested: true
     });
@@ -111,7 +102,7 @@ function RegistrationForm(props) {
   if (props.authentication.updateLoading === true) {
     requestStatusMessage = 'Loading...';
   } else if (props.authentication.updateError !== null) {
-    requestStatusMessage = 'Problem updating your account: ' + props.users.createError;
+    requestStatusMessage = `Problem updating your account: ${props.users.createError}`;
   } else {
     requestStatusMessage = 'Successfully updated your account!';
   }
@@ -137,7 +128,7 @@ function RegistrationForm(props) {
           <BaseError error={values.error} />
           <form>
             <FormGroup className={classes.root}>
-              <h2>Profile</h2>
+              <Typography variant="h5">Profile</Typography>
               <TextField
                 required
                 id="first-name"
@@ -175,9 +166,9 @@ function RegistrationForm(props) {
             </FormGroup>
           </form>
           <CardActions>
-            <Button size="small">
-              <Link to="/home/">Home</Link>
-            </Button>
+            <MaterialLink to="/home/" variant="body1" color="inherit" component={Link}>
+              Go Back to Home Page
+            </MaterialLink>
           </CardActions>
         </Card>
       )}
