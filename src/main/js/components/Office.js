@@ -6,6 +6,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { NavLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { linkStyle } from '../ui/styles';
+import Confirmation from './Confirmation';
 
 class Office extends React.Component {
   handleClick(e) {
@@ -28,11 +29,15 @@ class Office extends React.Component {
         </TableCell>
 
         <TableCell>
-          <Link href={`/offices/delete?officeId=${this.props.office.id}`} style={linkStyle}>
-            <Button color="secondary" variant="outlined" onClick={this.handleClick}>
-              Delete
-            </Button>
-          </Link>
+          <Confirmation
+            color="secondary"
+            variant="outlined"
+            id={this.props.office.id}
+            buttonText="Delete"
+            confirmationText="Are you sure you want to delete this office?"
+            confirmationTitle="Office Deletion Confirmation"
+            confirmationURL={`/offices/delete?officeId=${this.props.office.id}`}
+          />
         </TableCell>
       </TableRow>
     );
