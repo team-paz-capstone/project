@@ -14,7 +14,8 @@ const initialState = {
   items: [],
   loading: false,
   error: null,
-  needFetch: false
+  needFetch: false,
+  awardCreated: false
 };
 
 export default function awardsReducer(state = initialState, action) {
@@ -44,13 +45,15 @@ export default function awardsReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
+        awardCreated: false
       };
     case CREATE_AWARD_SUCCESS:
       return {
         ...state,
         loading: false,
-        needFetch: true
+        needFetch: true,
+        awardCreated: true
       };
     case CREATE_AWARD_FAILURE:
       return {
